@@ -20,9 +20,12 @@ function App() {
     //     {id:2,title:"Gentlemens of fortune",isDone:false},
     //     {id:3,title:"Avatar",isDone:false},
     // ]
+
     return (
         <div className="App">
-            <Todolist title={"What to learn"} tasks={task1}/>
+            <Todolist
+                title={"What to learn"}
+                tasks={task1}/>
             {/*<Todolist title={"What to buy"} tasks={task2}/>*/}
             {/*<Todolist title={"What to watch"} tasks={task3}/>*/}
         </div>
