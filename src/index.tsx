@@ -5,7 +5,7 @@ import App, {Counter} from './App';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
-    <Counter />,
+    <App />,
   document.getElementById('root')
 );
 
