@@ -11,13 +11,14 @@ export function Counter(){
         <button onClick={()=>{setData(data+1)}}>+</button> {data}
         <button  onClick={()=>{setData(data-1)}}>-</button></div>
 }
-
+export type FilterValuesType="all"|"active"|"completed"
 function App() {
     let [tasks, setTasks]=useState([
         {id:1,title:"CSS",isDone:true},
         {id:2,title:"JS",isDone:true},
         {id:3,title:"React",isDone:false}
     ])
+    let [filter, setFilter]=useState<FilterValuesType>("active")
     // let task2:Array<TaskPropsType>=[
     //     {id:1,title:"Broccoli",isDone:true},
     //     {id:2,title:"Juice",isDone:false},
