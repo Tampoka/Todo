@@ -2,6 +2,16 @@ import React, {useState} from 'react';
 import './App.css';
 import {TaskPropsType, Todolist} from "./Todolist";
 
+
+export function Counter(){
+    let arr=useState(5)
+    let data=arr[0]
+    let setData=arr[1]
+    return <div>
+        <button onClick={()=>{setData(data+1)}}>+</button> {data}
+        <button  onClick={()=>{setData(data-1)}}>-</button></div>
+}
+
 function App() {
     let [tasks, setTasks]=useState([
         {id:1,title:"CSS",isDone:true},
