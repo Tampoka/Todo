@@ -26,7 +26,7 @@ export function Todolist(props: PropsType) {
             <input value={newTaskTitle}
                    onChange={onNewTitleChangeHandler}
                    onKeyPress={(e) => {
-                       if (e.ctrlKey && e.key === "Enter") {
+                       if (e.key === "Enter") {
                            props.addTask(newTaskTitle)
                            setNewTaskTitle("")
                        }
