@@ -11,7 +11,7 @@ type PropsType = {
     tasks: Array<TaskPropsType>
     removeTask: (id: string) => void
     changeFilter: (value: FilterValuesType) => void
-    addTask: (title:string) => void
+    addTask: (title: string) => void
 }
 
 export function Todolist(props: PropsType) {
@@ -24,7 +24,11 @@ export function Todolist(props: PropsType) {
                        setNewTaskTitle((e.currentTarget.value))
                    }
                    }/>
-            <button onClick={()=>{props.addTask(newTaskTitle)}}>+</button>
+            <button onClick={() => {
+                props.addTask(newTaskTitle)
+                setNewTaskTitle("")
+            }}>+
+            </button>
         </div>
         <ul>
             {
