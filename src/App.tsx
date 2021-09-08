@@ -48,6 +48,11 @@ function App() {
         setTasks(filteredTasks)
     }
 
+    function  addTask(){
+        let newTask={id:v1(),title:"New Task",isDone:false}
+        let newTasks=[newTask,...tasks]
+        setTasks(newTasks)
+    }
     function changeFilter(value: FilterValuesType) {
         setFilter(value)
     }
