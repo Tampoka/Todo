@@ -48,11 +48,20 @@ function App() {
         setTasks(filteredTasks)
     }
 
-    function  addTask(title:string){
-        let newTask={id:v1(),title:title,isDone:false}
-        let newTasks=[newTask,...tasks]
+    function addTask(title: string) {
+        let newTask = {id: v1(), title: title, isDone: false}
+        let newTasks = [newTask, ...tasks]
         setTasks(newTasks)
     }
+
+    function changeStatus(taskId: string, isDone: boolean) {
+        let task = tasks.find(t => t.id === taskId)
+        if (task) {
+            task.isDone = isDone
+        }
+        setTasks([...tasks])
+    }
+
     function changeFilter(value: FilterValuesType) {
         setFilter(value)
     }
@@ -72,6 +81,7 @@ function App() {
                 removeTask={removeTask}
                 changeFilter={changeFilter}
                 addTask={addTask}
+                changeTaskStatus={changeStatus}
             />
             {/*<Todolist title={"What to buy"} tasks={task2}/>*/}
             {/*<Todolist title={"What to watch"} tasks={task3}/>*/}
