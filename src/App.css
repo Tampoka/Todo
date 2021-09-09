@@ -2,7 +2,15 @@
   padding: 30px;
     display: flex;
 }
+
 .App>div {
     margin-right: 50px;
 }
 
+.error {
+    border: 1px solid red;
+}
+
+.error-message {
+    color:red;
+}
