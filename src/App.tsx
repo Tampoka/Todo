@@ -84,7 +84,7 @@ function App() {
                     return <Todolist
                         key={tl.id}
                         id={tl.id}
-                        title={"What to learn"}
+                        title={tl.title}
                         tasks={tasksForTodolist}
                         removeTask={removeTask}
                         changeFilter={changeFilter}
