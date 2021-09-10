@@ -18,3 +18,7 @@
 .is-done {
     opacity: 0.5;
 }
+
+.active-filter {
+    background-color: darkturquoise;
+}
