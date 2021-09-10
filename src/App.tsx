@@ -66,6 +66,10 @@ function App() {
         setFilter(value)
     }
 
+    let todolists = [
+        {id: v1(), title: "What to learn", filter: "active"},
+        {id: v1(), title: "What to buy", filter: "completed"}
+    ]
     let tasksForTodolist = tasks
     if (filter === "active") {
         tasksForTodolist = tasks.filter(t => !t.isDone)
