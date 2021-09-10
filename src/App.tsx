@@ -34,7 +34,6 @@ function App() {
         {id: v1(), title: "JS", isDone: true},
         {id: v1(), title: "React", isDone: false}
     ])
-    let [filter, setFilter] = useState<FilterValuesType>("all")
     // let task2:Array<TaskPropsType>=[
     //     {id:1,title:"Broccoli",isDone:true},
     //     {id:2,title:"Juice",isDone:false},
