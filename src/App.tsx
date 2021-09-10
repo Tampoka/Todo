@@ -82,6 +82,7 @@ function App() {
             {
                 todolists.map(tl => {
                     return <Todolist
+                        key={tl.id}
                         title={"What to learn"}
                         tasks={tasksForTodolist}
                         removeTask={removeTask}
