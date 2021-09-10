@@ -22,6 +22,11 @@ export function Counter() {
 }
 
 export type FilterValuesType = "all" | "active" | "completed"
+export type TodolistType={
+    id:string
+    title:string
+    filter:FilterValuesType
+}
 
 function App() {
     let [tasks, setTasks] = useState<Array<TaskPropsType>>([
@@ -66,7 +71,7 @@ function App() {
         setFilter(value)
     }
 
-    let todolists = [
+    let todolists:Array<TodolistType> = [
         {id: v1(), title: "What to learn", filter: "active"},
         {id: v1(), title: "What to buy", filter: "completed"}
     ]
