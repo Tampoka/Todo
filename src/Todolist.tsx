@@ -7,6 +7,7 @@ export type TaskPropsType = {
     isDone: boolean
 }
 type PropsType = {
+    id:string
     title: string
     tasks: Array<TaskPropsType>
     removeTask: (id: string) => void
