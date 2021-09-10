@@ -87,8 +87,6 @@ function App() {
                 addTask={addTask}
                 changeTaskStatus={changeStatus}
             />
-            {/*<Todolist title={"What to buy"} tasks={task2}/>*/}
-            {/*<Todolist title={"What to watch"} tasks={task3}/>*/}
         </div>
     );
 }
