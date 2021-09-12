@@ -22,10 +22,10 @@ export function Counter() {
 }
 
 export type FilterValuesType = "all" | "active" | "completed"
-export type TodolistType={
-    id:string
-    title:string
-    filter:FilterValuesType
+export type TodolistType = {
+    id: string
+    title: string
+    filter: FilterValuesType
 }
 
 function App() {
@@ -66,11 +66,15 @@ function App() {
         setTasks([...tasks])
     }
 
-    function changeFilter(value: FilterValuesType,todolistId:string) {
-
+    function changeFilter(value: FilterValuesType, todolistId: string) {
+    let todolist=todolists.find(tl=>tl.id===todolistId)
+        if(todolist){
+            todolist.filter=value
+            setTodolists([...todolists])
+        }
     }
 
-    const [todolists,setTodolists]= useState<Array<TodolistType>>([
+    const [todolists, setTodolists] = useState<Array<TodolistType>>([
         {id: v1(), title: "What to learn", filter: "active"},
         {id: v1(), title: "What to buy", filter: "completed"}
     ])
