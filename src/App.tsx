@@ -66,8 +66,8 @@ function App() {
         setTasks([...tasks])
     }
 
-    function changeFilter(value: FilterValuesType) {
-        setFilter(value)
+    function changeFilter(value: FilterValuesType,todolistId:string) {
+
     }
 
     let todolists:Array<TodolistType> = [
