@@ -45,9 +45,9 @@ export function Todolist(props: PropsType) {
             setError("Title is required")
         }
     }
-    const onAllClickHandler = () => props.changeFilter("all")
-    const onActiveClickHandler = () => props.changeFilter("active")
-    const onCompletedClickHandler = () => props.changeFilter("completed")
+    const onAllClickHandler = () => props.changeFilter("all",props.id)
+    const onActiveClickHandler = () => props.changeFilter("active",props.id)
+    const onCompletedClickHandler = () => props.changeFilter("completed",props.id)
     return <div>
         <h3>{props.title}</h3>
         <div>
