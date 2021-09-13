@@ -29,31 +29,32 @@ export type TodolistType = {
 }
 
 function App() {
-    let [tasks, setTasks] = useState<Array<TaskPropsType>>([
-        {id: v1(), title: "CSS", isDone: true},
-        {id: v1(), title: "JS", isDone: true},
-        {id: v1(), title: "React", isDone: false}
-    ])
+
     const todolistId1 = v1()
     const todolistId2 = v1()
     const todolistId3 = v1()
+
     const [todolists, setTodolists] = useState<Array<TodolistType>>([
         {id: v1(), title: "What to learn", filter: "active"},
         {id: v1(), title: "What to buy", filter: "completed"}
     ])
-
-    // let task2:Array<TaskPropsType>=[
-    //     {id:1,title:"Broccoli",isDone:true},
-    //     {id:2,title:"Juice",isDone:false},
-    //     {id:3,title:"Bread",isDone:false},
-    //     {id:4,title:"Milk",isDone:true},
-    //     {id:5,title:"Mayonnaise",isDone:false}
-    // ]
-    // let task3:Array<TaskPropsType>=[
-    //     {id:1,title:"Terminator",isDone:true},
-    //     {id:2,title:"Gentlemen of fortune",isDone:false},
-    //     {id:3,title:"Avatar",isDone:false},
-    // ]
+    let [tasks, setTasks] = useState({
+        [todolistId1]: [
+            {id: v1(), title: "CSS", isDone: true},
+            {id: v1(), title: "JS", isDone: true},
+            {id: v1(), title: "React", isDone: false}
+        ], [todolistId2]: [
+            {id: 1, title: "Broccoli", isDone: true},
+            {id: 2, title: "Juice", isDone: false},
+            {id: 3, title: "Bread", isDone: false},
+            {id: 4, title: "Milk", isDone: true},
+            {id: 5, title: "Mayonnaise", isDone: false}
+        ], [todolistId3]: [
+            {id: 1, title: "Terminator", isDone: true},
+            {id: 2, title: "Gentlemen of fortune", isDone: false},
+            {id: 3, title: "Avatar", isDone: false},
+        ]
+    })
 
     function removeTask(id: string) {
         let filteredTasks = tasks.filter(t => t.id !== id)
