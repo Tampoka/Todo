@@ -34,6 +34,14 @@ function App() {
         {id: v1(), title: "JS", isDone: true},
         {id: v1(), title: "React", isDone: false}
     ])
+    const todolistId1 = v1()
+    const todolistId2 = v1()
+    const todolistId3 = v1()
+    const [todolists, setTodolists] = useState<Array<TodolistType>>([
+        {id: v1(), title: "What to learn", filter: "active"},
+        {id: v1(), title: "What to buy", filter: "completed"}
+    ])
+
     // let task2:Array<TaskPropsType>=[
     //     {id:1,title:"Broccoli",isDone:true},
     //     {id:2,title:"Juice",isDone:false},
@@ -67,17 +75,13 @@ function App() {
     }
 
     function changeFilter(value: FilterValuesType, todolistId: string) {
-    let todolist=todolists.find(tl=>tl.id===todolistId)
-        if(todolist){
-            todolist.filter=value
+        let todolist = todolists.find(tl => tl.id === todolistId)
+        if (todolist) {
+            todolist.filter = value
             setTodolists([...todolists])
         }
     }
 
-    const [todolists, setTodolists] = useState<Array<TodolistType>>([
-        {id: v1(), title: "What to learn", filter: "active"},
-        {id: v1(), title: "What to buy", filter: "completed"}
-    ])
 
     return (
         <div className="App">
