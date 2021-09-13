@@ -39,35 +39,36 @@ function App() {
         {id: todolistId2, title: "What to buy", filter: "completed"},
         {id: todolistId3, title: "What to watch", filter: "all"}
     ])
-    let [tasksObj, setTasksObj] = useState({
+    let [tasksObj, setTasks] = useState({
         [todolistId1]: [
             {id: v1(), title: "CSS", isDone: true},
             {id: v1(), title: "JS", isDone: true},
             {id: v1(), title: "React", isDone: false}
         ],
         [todolistId2]: [
-            {id: 1, title: "Broccoli", isDone: true},
-            {id: 2, title: "Juice", isDone: false},
-            {id: 3, title: "Bread", isDone: false},
-            {id: 4, title: "Milk", isDone: true},
-            {id: 5, title: "Mayonnaise", isDone: false}
+            {id: v1(), title: "Broccoli", isDone: true},
+            {id: v1(), title: "Juice", isDone: false},
+            {id: v1(), title: "Bread", isDone: false},
+            {id: v1(), title: "Milk", isDone: true},
+            {id: v1(), title: "Mayonnaise", isDone: false}
         ],
         [todolistId3]: [
-            {id: 1, title: "Terminator", isDone: true},
-            {id: 2, title: "Gentlemen of fortune", isDone: false},
-            {id: 3, title: "Avatar", isDone: false},
+            {id: v1(), title: "Terminator", isDone: true},
+            {id: v1(), title: "Gentlemen of fortune", isDone: false},
+            {id: v1(), title: "Avatar", isDone: false},
         ]
     })
 
-    function removeTask(id: string) {
-        let filteredTasks = tasksObj.filter(t => t.id !== id)
-        setTasksObj(filteredTasks)
+    function removeTask(id: string,todolistId:string) {
+        let tasks=tasksObj[todolistId]
+        let filteredTasks = tasks.filter(t => t.id !== id)
+        setTasks(filteredTasks)
     }
 
     function addTask(title: string) {
         let newTask = {id: v1(), title: title, isDone: false}
         let newTasks = [newTask, ...tasksObj]
-        setTasksObj(newTasks)
+        setTasks(newTasks)
     }
 
     function changeStatus(taskId: string, isDone: boolean) {
@@ -75,7 +76,7 @@ function App() {
         if (task) {
             task.isDone = isDone
         }
-        setTasksObj([...tasksObj])
+        setTasks([...tasksObj])
     }
 
     function changeFilter(value: FilterValuesType, todolistId: string) {
