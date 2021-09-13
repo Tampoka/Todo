@@ -35,21 +35,24 @@ function App() {
     const todolistId3 = v1()
 
     const [todolists, setTodolists] = useState<Array<TodolistType>>([
-        {id: v1(), title: "What to learn", filter: "active"},
-        {id: v1(), title: "What to buy", filter: "completed"}
+        {id: todolistId1, title: "What to learn", filter: "active"},
+        {id: todolistId2, title: "What to buy", filter: "completed"},
+        {id: todolistId3, title: "What to watch", filter: "all"}
     ])
     let [tasks, setTasks] = useState({
         [todolistId1]: [
             {id: v1(), title: "CSS", isDone: true},
             {id: v1(), title: "JS", isDone: true},
             {id: v1(), title: "React", isDone: false}
-        ], [todolistId2]: [
+        ],
+        [todolistId2]: [
             {id: 1, title: "Broccoli", isDone: true},
             {id: 2, title: "Juice", isDone: false},
             {id: 3, title: "Bread", isDone: false},
             {id: 4, title: "Milk", isDone: true},
             {id: 5, title: "Mayonnaise", isDone: false}
-        ], [todolistId3]: [
+        ],
+        [todolistId3]: [
             {id: 1, title: "Terminator", isDone: true},
             {id: 2, title: "Gentlemen of fortune", isDone: false},
             {id: 3, title: "Avatar", isDone: false},
@@ -90,10 +93,10 @@ function App() {
                 todolists.map(tl => {
                     let tasksForTodolist = tasks[tl.id]
                     if (tl.filter === "active") {
-                        tasksForTodolist = tasks[tl.id].filter(t => !t.isDone)
+                        tasksForTodolist = tasksForTodolist.filter(t => !t.isDone)
                     }
                     if (tl.filter === "completed") {
-                        tasksForTodolist = tasks[tl.id].filter(t => t.isDone)
+                        tasksForTodolist = tasksForTodolist.filter(t => t.isDone)
                     }
                     return <Todolist
                         key={tl.id}
