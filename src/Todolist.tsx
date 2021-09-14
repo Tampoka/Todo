@@ -54,14 +54,7 @@ export function Todolist(props: PropsType) {
         <h3>{props.title}
             <button onClick={onRemoveTodolistHandler}>x</button>
         </h3>
-        <div>
-            <input value={newTaskTitle}
-                   onChange={onNewTitleChangeHandler}
-                   onKeyPress={onKeyPressHandler}
-                   className={error ? "error" : ""}/>
-            <button onClick={addTask}>+</button>
-            {error && <div className="error-message">{error}</div>}
-        </div>
+        <AddItemForm/>
         <ul>
             {
                 props.tasks.map(t => {
