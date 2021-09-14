@@ -87,17 +87,17 @@ export function Todolist(props: PropsType) {
             </button>
         </div>
     </div>
+}
 
-    type addItemFormPropsType = {}
+type addItemFormPropsType = {}
 
-    function addItemForm(props: addItemFormPropsType) {
-        return <div>
-                <input value={newTaskTitle}
-                       onChange={onNewTitleChangeHandler}
-                       onKeyPress={onKeyPressHandler}
-                       className={error ? "error" : ""}/>
-                <button onClick={addTask}>+</button>
-                {error && <div className="error-message">{error}</div>}
-            </div>
-    }
+function addItemForm(props: addItemFormPropsType) {
+    return <div>
+        <input value={newTaskTitle}
+               onChange={onNewTitleChangeHandler}
+               onKeyPress={onKeyPressHandler}
+               className={error ? "error" : ""}/>
+        <button onClick={addTask}>+</button>
+        {error && <div className="error-message">{error}</div>}
+    </div>
 }
