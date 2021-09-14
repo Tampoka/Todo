@@ -78,7 +78,6 @@ function App() {
         if (task) {
             task.isDone = isDone
         }
-        let changedTasks=[...tasksObj[todolistId]]
         setTasks({...tasksObj})
     }
 
