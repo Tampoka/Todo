@@ -19,33 +19,7 @@ type PropsType = {
 }
 
 export function Todolist(props: PropsType) {
-    const [newTaskTitle, setNewTaskTitle] = useState("")
-    const [error, setError] = useState<string | null>(null)
 
-    const onNewTitleChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setNewTaskTitle((e.currentTarget.value))
-    }
-    const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        setError(null)
-        if (e.key === "Enter") {
-            if (newTaskTitle.trim() !== ""
-                && newTaskTitle !== "hell") {
-                props.addTask(newTaskTitle, props.id)
-                setNewTaskTitle("")
-            } else {
-                setError("Title is required")
-            }
-        }
-    }
-    const addTask = () => {
-        if (newTaskTitle.trim() !== ""
-            && newTaskTitle !== "hell") {
-            props.addTask(newTaskTitle, props.id)
-            setNewTaskTitle("")
-        } else {
-            setError("Title is required")
-        }
-    }
     const onAllClickHandler = () => props.changeFilter("all", props.id)
     const onActiveClickHandler = () => props.changeFilter("active", props.id)
     const onCompletedClickHandler = () => props.changeFilter("completed", props.id)
