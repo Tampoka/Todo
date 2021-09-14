@@ -73,12 +73,13 @@ function App() {
         setTasks({newTasks})
     }
 
-    function changeStatus(taskId: string, isDone: boolean) {
-        let task = tasksObj.find(t => t.id === taskId)
+    function changeStatus(taskId: string, isDone: boolean,todolistId:string) {
+        let task = tasksObj[todolistId].find(t => t.id === taskId)
         if (task) {
             task.isDone = isDone
         }
-        setTasks([...tasksObj])
+        let changedTasks=[...tasksObj[todolistId]]
+        setTasks({...tasksObj})
     }
 
     function changeFilter(value: FilterValuesType, todolistId: string) {
