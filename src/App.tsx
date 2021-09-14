@@ -39,7 +39,7 @@ function App() {
         {id: todolistId2, title: "What to buy", filter: "completed"},
         {id: todolistId3, title: "What to watch", filter: "all"}
     ])
-    let [tasksObj, setTasks] = useState({
+    const [tasksObj, setTasks] = useState({
         [todolistId1]: [
             {id: v1(), title: "CSS", isDone: true},
             {id: v1(), title: "JS", isDone: true},
@@ -90,6 +90,11 @@ function App() {
         }
     }
 
+        function removeTodolist (id:string){
+        setTodolists(todolists.filter(tl=>tl.id!==id))
+            delete tasksObj[id]
+            setTasks({...tasksObj})
+        }
 
     return (
         <div className="App">
