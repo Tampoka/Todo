@@ -10,10 +10,10 @@ type PropsType = {
     id:string
     title: string
     tasks: Array<TaskPropsType>
-    removeTask: (id: string) => void
-    changeFilter: (value: FilterValuesType,todolistId:string) => void
-    addTask: (title: string) => void
-    changeTaskStatus: (taskId: string, isDone: boolean) => void
+    removeTask: (id: string,todolistId:string) => void
+    changeFilter: (value: FilterValuesType,todolistId:string,) => void
+    addTask: (title: string,todolistId:string) => void
+    changeTaskStatus: (taskId: string, isDone: boolean,todolistId:string) => void
     filter:FilterValuesType
 }
 
@@ -29,7 +29,7 @@ export function Todolist(props: PropsType) {
         if (e.key === "Enter") {
             if (newTaskTitle.trim() !== ""
                 && newTaskTitle !== "hell") {
-                props.addTask(newTaskTitle)
+                props.addTask(newTaskTitle,props.id)
                 setNewTaskTitle("")
             } else {
                 setError("Title is required")
@@ -39,7 +39,7 @@ export function Todolist(props: PropsType) {
     const addTask = () => {
         if (newTaskTitle.trim() !== ""
             && newTaskTitle !== "hell") {
-            props.addTask(newTaskTitle)
+            props.addTask(newTaskTitle,props.id)
             setNewTaskTitle("")
         } else {
             setError("Title is required")
@@ -62,10 +62,10 @@ export function Todolist(props: PropsType) {
             {
                 props.tasks.map(t => {
                     const onRemoveHandler = () => {
-                        props.removeTask(t.id)
+                        props.removeTask(t.id, props.id)
                     }
                     const onCheckboxChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-                        props.changeTaskStatus(t.id, e.currentTarget.checked)
+                        props.changeTaskStatus(t.id, e.currentTarget.checked, props.id)
                     }
                     return <li key={t.id} className={t.isDone?"is-done":""}>
                         <button onClick={onRemoveHandler}>x</button>
