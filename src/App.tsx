@@ -63,7 +63,8 @@ function App() {
     })
 
     function removeTask(id: string,todolistId:string) {
-        tasksObj[todolistId].filter(t => t.id !== id)
+        let todolistTasks=tasksObj[todolistId]
+        tasksObj[todolistId]=todolistTasks.filter(t => t.id !== id)
         setTasks({...tasksObj})
     }
 
