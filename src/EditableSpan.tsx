@@ -2,7 +2,7 @@ import React, {ChangeEvent, KeyboardEvent, useState} from "react";
 
 type EditableSpanPropsType = {
     title: string
-    onChange:(newTitle:string)=>void
+    onChange:(newValue:string)=>void
 }
 
 export function EditableSpan(props: EditableSpanPropsType) {
@@ -22,6 +22,7 @@ export function EditableSpan(props: EditableSpanPropsType) {
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter") {
             setEditMode(false)
+            props.onChange(title)
         }
     }
 
