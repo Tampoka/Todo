@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {KeyboardEvent, useState} from "react";
 
 type EditableSpanPropsType = {
     title: string
@@ -11,10 +11,13 @@ export function EditableSpan(props: EditableSpanPropsType) {
 
     const activateViewMode=()=> setEditMode(false)
 
-
-
+    const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+        if(e.key==="Enter"){
+            setEditMode(false)
+        }
+    }
     return editMode
-        ?<input value={props.title}/>
-    :<span onDoubleClick={activateEditMode}
-        onBlur={activateViewMode}>{props.title}</span>
+        ?<input value={props.title}  onBlur={activateViewMode}
+        onKeyPress={onKeyPressHandler} autoFocus/>
+    :<span onDoubleClick={activateEditMode}>{props.title}</span>
 }
