@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import './App.css';
 import {TaskPropsType, Todolist} from "./Todolist";
 import {v1} from "uuid";
+import {AddItemForm} from "./AddItemForm";
 
 
 export function Counter() {
@@ -98,6 +99,7 @@ function App() {
 
     return (
         <div className="App">
+            <AddItemForm addItem={(value)=>{alert(value)}}/>
             {
                 todolists.map(tl => {
                     let tasksForTodolist = tasksObj[tl.id]
