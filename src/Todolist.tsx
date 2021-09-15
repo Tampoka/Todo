@@ -48,7 +48,7 @@ export function Todolist(props: PropsType) {
                         <button onClick={onRemoveHandler}>x</button>
                         <input type="checkbox" checked={t.isDone}
                                onChange={onCheckboxChangeHandler}/>
-                        <EditableSpan title={t.title}/>
+                        <EditableSpan title={t.title} onChange={(value)=>{alert(value)}}/>
                     </li>
                 })
             }
