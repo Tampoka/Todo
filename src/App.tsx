@@ -3,7 +3,7 @@ import './App.css';
 import {TaskPropsType, Todolist} from "./Todolist";
 import {v1} from "uuid";
 import {AddItemForm} from "./AddItemForm";
-import {AppBar, Button, Container, IconButton, Toolbar, Typography} from "@material-ui/core";
+import {AppBar, Button, Container, Grid, IconButton, Toolbar, Typography} from "@material-ui/core";
 import {Menu} from "@material-ui/icons";
 
 
@@ -143,7 +143,9 @@ function App() {
                 </Toolbar>
             </AppBar>
             <Container fixed>
+                <Grid container>
                 <AddItemForm addItem={addTodolist}/>
+                </Grid>
                 {
                     todolists.map(tl => {
                         let tasksForTodolist = tasksObj[tl.id]
