@@ -143,7 +143,7 @@ function App() {
                 </Toolbar>
             </AppBar>
             <Container fixed>
-                <Grid container style={{padding:"10px"}}>
+                <Grid container style={{padding:"20px"}}>
                     <AddItemForm addItem={addTodolist}/>
                 </Grid>
                 <Grid container spacing={10}>
@@ -157,7 +157,7 @@ function App() {
                                 tasksForTodolist = tasksForTodolist.filter(t => t.isDone)
                             }
                             return <Grid item>
-                                <Paper elevation={3} style={{padding:"10px"}}>
+                                <Paper elevation={12} style={{padding:"10px"}}>
                                     <Todolist
                                         key={tl.id}
                                         id={tl.id}
