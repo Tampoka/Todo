@@ -25,3 +25,17 @@ test('user reducer should increment only childrenCount', ()=>{
     expect(endState.childrenCount).toBe(3)
     expect(endState.age).toBe(20)
 })
+
+test('user reducer should change only user name', ()=>{
+    const startState={
+        age:20,
+        childrenCount:2,
+        name:'Kate'
+    }
+    const newName='Ann'
+    const endState=userReducer(startState,{type:'CHANGE-NAME',newName:newName})
+
+    expect(endState.name).toBe(newName)
+    expect(endState.age).toBe(20)
+    expect(endState.childrenCount).toBe(2)
+})
