@@ -14,6 +14,7 @@ export type AddTaskActionType = {
 export type ChangeTaskTitleActionType = {
     type: 'CHANGE-TASK-TITLE'
     id: string
+    todolistId:string
     title: string
 }
 export type ChangeTaskStatusActionType = {
@@ -46,12 +47,12 @@ export const taskReducer = (state: TasksStateType, action: ActionsType) => {
             return {...state}
 
 
-        // case 'CHANGE-TASK-TITLE':
-        //     let todolistToChangeFilter = state.find(tl => tl.id === action.id)
-        //     if (todolistToChangeFilter) {
-        //         todolistToChangeFilter.filter = action.filter
-        //     }
-        //     return [...state]
+        case 'CHANGE-TASK-TITLE':
+            let taskToChangeTitle=state[action.todolistId].find(t=>t.id===action.id)
+            if(taskToChangeTitle){
+                taskToChangeTitle.title=action.title
+            }
+            return {...state}
 
         default:
             throw new Error("I don't understand this type")
@@ -69,18 +70,19 @@ export const AddTaskAC = (title: string, todolistId: string): AddTaskActionType 
     todolistId: todolistId
 })
 
-export const ChangeTaskStatusAC = (id:string,isDone:boolean,todolistId: string): ChangeTaskStatusActionType => ({
+export const ChangeTaskStatusAC = (id:string,todolistId: string,isDone:boolean): ChangeTaskStatusActionType => ({
     type: 'CHANGE-TASK-STATUS',
     todolistId: todolistId,
     id: id,
     isDone:isDone
 })
 
-// export const ChangeTodolisFiltertAC = (todolistId: string,todolistFilter:FilterValuesType): ChangeTodolistFilterActionType => ({
-//     type: 'CHANGE-TODOLIST-FILTER',
-//     id: todolistId,
-//     filter: todolistFilter
-// })
-//
-//
-//
+export const ChangeTaskTitleAC = (id:string,todolistId: string,newTitle:string): ChangeTaskTitleActionType => ({
+    type: 'CHANGE-TASK-TITLE',
+    id: id,
+    todolistId:todolistId,
+    title:newTitle
+})
+
+
+
