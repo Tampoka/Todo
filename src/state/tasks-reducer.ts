@@ -1,4 +1,4 @@
-import {FilterValuesType, TasksStateType} from "../App";
+import {TasksStateType} from "../App";
 import {v1} from "uuid";
 
 export type RemoveTaskActionType = {
@@ -19,7 +19,8 @@ export type ChangeTaskTitleActionType = {
 export type ChangeTaskStatusActionType = {
     type: 'CHANGE-TASK-STATUS'
     id: string
-    filter: FilterValuesType
+    todolistId: string
+    isDone:boolean
 }
 type ActionsType = RemoveTaskActionType | AddTaskActionType | ChangeTaskStatusActionType | ChangeTaskTitleActionType
 
@@ -37,12 +38,14 @@ export const taskReducer = (state: TasksStateType, action: ActionsType) => {
                 return {...state,
                 [action.todolistId]:[newTask,...state[action.todolistId]]
         }
-        // case 'CHANGE-TASK-STATUS':
-        //     let todolistToChangeTitle = state.find(tl => tl.id === action.id)
-        //     if (todolistToChangeTitle) {
-        //         todolistToChangeTitle.title = action.title
-        //     }
-        //     return [...state]
+        case 'CHANGE-TASK-STATUS':
+            let task=state[action.todolistId].find(t=>t.id===action.id)
+            if(task){
+                task.isDone=action.isDone
+            }
+            return {...state}
+
+
         // case 'CHANGE-TASK-TITLE':
         //     let todolistToChangeFilter = state.find(tl => tl.id === action.id)
         //     if (todolistToChangeFilter) {
@@ -65,13 +68,14 @@ export const AddTaskAC = (title: string, todolistId: string): AddTaskActionType 
     title: title,
     todolistId: todolistId
 })
-//
-// export const ChangeTodolistTitleAC = (todolistId: string,newTitle:string): ChangeTodolistTitleActionType => ({
-//     type: 'CHANGE-TODOLIST-TITLE',
-//     id: todolistId,
-//     title: newTitle
-// })
-//
+
+export const ChangeTaskStatusAC = (id:string,isDone:boolean,todolistId: string): ChangeTaskStatusActionType => ({
+    type: 'CHANGE-TASK-STATUS',
+    todolistId: todolistId,
+    id: id,
+    isDone:isDone
+})
+
 // export const ChangeTodolisFiltertAC = (todolistId: string,todolistFilter:FilterValuesType): ChangeTodolistFilterActionType => ({
 //     type: 'CHANGE-TODOLIST-FILTER',
 //     id: todolistId,
