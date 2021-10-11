@@ -1,6 +1,6 @@
 import {TasksStateType} from "../App";
 import {AddTaskAC, ChangeTaskStatusAC, ChangeTaskTitleAC, RemoveTaskAC, taskReducer} from "./tasks-reducer";
-import {AddTodolistAC} from "./todolist-reducer";
+import {AddTodolistAC, RemoveTodolistAC} from "./todolist-reducer";
 
 test('correct task should be deleted from correct array', () => {
     const startState: TasksStateType = {
@@ -140,4 +140,29 @@ test('new array should be added when new todolist is added', () => {
 
     expect(keys.length).toBe(3)
     expect(endState[newKey]).toEqual([])
+})
+
+test('property with todolist should be deleted', () => {
+    const startState: TasksStateType = {
+        "todolistId1": [
+            {id: "1", title: "CSS", isDone: true},
+            {id: "2", title: "JS", isDone: true},
+            {id: "3", title: "React", isDone: false}
+        ],
+        "todolistId2": [
+            {id: "1", title: "Broccoli", isDone: true},
+            {id: "2", title: "Juice", isDone: false},
+            {id: "3", title: "Bread", isDone: false},
+            {id: "4", title: "Milk", isDone: true},
+            {id: "5", title: "Mayonnaise", isDone: false}
+        ]
+    }
+
+    const action = RemoveTodolistAC("todolistId2")
+    const endState = taskReducer(startState, action)
+
+    const keys = Object.keys(endState)
+
+    expect(keys.length).toBe(1)
+    expect(endState["todolistId2"]).not.toBeDefined()
 })
