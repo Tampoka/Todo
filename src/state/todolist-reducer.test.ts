@@ -2,7 +2,7 @@ import {v1} from "uuid";
 import {FilterValuesType, TodolistType} from "../App";
 import {
     AddTodolistAC,
-    ChangeTodolisFiltertAC,
+    ChangeTodolistFilterAC,
     ChangeTodolistTitleAC,
     RemoveTodolistAC,
     todolistReducer
@@ -79,7 +79,7 @@ test('correct filter of todolist should be changed',()=>{
         {id: todolistId3, title: "What to watch", filter: "all"}
     ]
 
-    const endState=todolistReducer(startState,ChangeTodolisFiltertAC(todolistId2,newFilter))
+    const endState=todolistReducer(startState,ChangeTodolistFilterAC(todolistId2,newFilter))
 
     expect(endState[0].filter).toBe("active")
     expect(endState[1].filter).toBe(newFilter)

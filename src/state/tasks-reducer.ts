@@ -1,5 +1,6 @@
 import {TasksStateType} from "../App";
 import {v1} from "uuid";
+import {AddTodolistActionType} from "./todolist-reducer";
 
 export type RemoveTaskActionType = {
     type: 'REMOVE-TASK'
@@ -14,16 +15,22 @@ export type AddTaskActionType = {
 export type ChangeTaskTitleActionType = {
     type: 'CHANGE-TASK-TITLE'
     id: string
-    todolistId:string
+    todolistId: string
     title: string
 }
 export type ChangeTaskStatusActionType = {
     type: 'CHANGE-TASK-STATUS'
     id: string
     todolistId: string
-    isDone:boolean
+    isDone: boolean
 }
-type ActionsType = RemoveTaskActionType | AddTaskActionType | ChangeTaskStatusActionType | ChangeTaskTitleActionType
+
+type ActionsType =
+    RemoveTaskActionType
+    | AddTaskActionType
+    | ChangeTaskStatusActionType
+    | ChangeTaskTitleActionType
+    | AddTodolistActionType
 
 export const taskReducer = (state: TasksStateType, action: ActionsType) => {
     switch (action.type) {
@@ -36,23 +43,30 @@ export const taskReducer = (state: TasksStateType, action: ActionsType) => {
 
         case 'ADD-TASK':
             let newTask = {id: v1(), title: action.title, isDone: false}
-                return {...state,
-                [action.todolistId]:[newTask,...state[action.todolistId]]
-        }
+            return {
+                ...state,
+                [action.todolistId]: [newTask, ...state[action.todolistId]]
+            }
         case 'CHANGE-TASK-STATUS':
-            let task=state[action.todolistId].find(t=>t.id===action.id)
-            if(task){
-                task.isDone=action.isDone
+            let task = state[action.todolistId].find(t => t.id === action.id)
+            if (task) {
+                task.isDone = action.isDone
             }
             return {...state}
 
 
         case 'CHANGE-TASK-TITLE':
-            let taskToChangeTitle=state[action.todolistId].find(t=>t.id===action.id)
-            if(taskToChangeTitle){
-                taskToChangeTitle.title=action.title
+            let taskToChangeTitle = state[action.todolistId].find(t => t.id === action.id)
+            if (taskToChangeTitle) {
+                taskToChangeTitle.title = action.title
             }
             return {...state}
+        case 'ADD-TODOLIST':
+            let todolistId = v1()
+            return {
+                ...state,
+                [todolistId]: []
+            }
 
         default:
             throw new Error("I don't understand this type")
@@ -70,18 +84,18 @@ export const AddTaskAC = (title: string, todolistId: string): AddTaskActionType 
     todolistId: todolistId
 })
 
-export const ChangeTaskStatusAC = (id:string,todolistId: string,isDone:boolean): ChangeTaskStatusActionType => ({
+export const ChangeTaskStatusAC = (id: string, todolistId: string, isDone: boolean): ChangeTaskStatusActionType => ({
     type: 'CHANGE-TASK-STATUS',
     todolistId: todolistId,
     id: id,
-    isDone:isDone
+    isDone: isDone
 })
 
-export const ChangeTaskTitleAC = (id:string,todolistId: string,newTitle:string): ChangeTaskTitleActionType => ({
+export const ChangeTaskTitleAC = (id: string, todolistId: string, newTitle: string): ChangeTaskTitleActionType => ({
     type: 'CHANGE-TASK-TITLE',
     id: id,
-    todolistId:todolistId,
-    title:newTitle
+    todolistId: todolistId,
+    title: newTitle
 })
 
 
