@@ -1,6 +1,6 @@
 import {v1} from "uuid";
 import {FilterValuesType, TodolistType} from "../App";
-import {todolistReducer} from "./todolist-reducer";
+import {RemoveTodolistAC, todolistReducer} from "./todolist-reducer";
 
 test('correct todolist should be removed',()=>{
     let todolistId1=v1()
@@ -13,7 +13,7 @@ test('correct todolist should be removed',()=>{
         {id: todolistId3, title: "What to watch", filter: "all"}
     ]
 
-    const endState=todolistReducer(startState,{type:'REMOVE-TODOLIST', id:todolistId1})
+    const endState=todolistReducer(startState,RemoveTodolistAC(todolistId1))
 
     expect(endState.length).toBe(2)
     expect(endState[0].id).toBe(todolistId2)
