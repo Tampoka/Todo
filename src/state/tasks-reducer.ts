@@ -1,4 +1,5 @@
 import {FilterValuesType, TasksStateType} from "../App";
+import {v1} from "uuid";
 
 export type RemoveTaskActionType = {
     type: 'REMOVE-TASK'
@@ -26,19 +27,16 @@ export const taskReducer = (state: TasksStateType, action: ActionsType) => {
     switch (action.type) {
         case 'REMOVE-TASK':
             let newState = state[action.todolistId].filter(t => t.id !== action.id)
-            return {...state,
-                [action.todolistId]:newState}
+            return {
+                ...state,
+                [action.todolistId]: newState
+            }
 
-        // case 'ADD-TASK':
-        //     let task: TaskPropsType = {
-        //         id: ,
-        //         title: action.title
-        //         isDone:false
-        //     }
-        //
-        //
-        //
-        //     return [...state, todolist]
+        case 'ADD-TASK':
+            let newTask = {id: v1(), title: action.title, isDone: false}
+                return {...state,
+                [action.todolistId]:[newTask,...state[action.todolistId]]
+        }
         // case 'CHANGE-TASK-STATUS':
         //     let todolistToChangeTitle = state.find(tl => tl.id === action.id)
         //     if (todolistToChangeTitle) {
@@ -62,10 +60,11 @@ export const RemoveTaskAC = (taskId: string, todolistId: string): RemoveTaskActi
     id: taskId,
     todolistId: todolistId
 })
-// export const AddTodolistAC = (title:string): AddTodolistActionType => ({
-//     type: 'ADD-TODOLIST',
-//     title: title
-// })
+export const AddTaskAC = (title: string, todolistId: string): AddTaskActionType => ({
+    type: 'ADD-TASK',
+    title: title,
+    todolistId: todolistId
+})
 //
 // export const ChangeTodolistTitleAC = (todolistId: string,newTitle:string): ChangeTodolistTitleActionType => ({
 //     type: 'CHANGE-TODOLIST-TITLE',
