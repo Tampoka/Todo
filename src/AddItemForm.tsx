@@ -7,6 +7,7 @@ type addItemFormPropsType = {
 }
 
 export function AddItemForm(props: addItemFormPropsType) {
+    console.log("additemform")
     const [newTaskTitle, setNewTaskTitle] = useState("")
     const [error, setError] = useState<string | null>(null)
 
@@ -14,15 +15,18 @@ export function AddItemForm(props: addItemFormPropsType) {
         setNewTaskTitle((e.currentTarget.value))
     }
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        setError(null)
+        if(error!==null){
+            setError(null)
+        }
         if (e.key === "Enter") {
             if (newTaskTitle.trim() !== ""
                 && newTaskTitle !== "hell") {
                 props.addItem(newTaskTitle)
                 setNewTaskTitle("")
-            } else {
-                setError("Title is required")
             }
+        }
+        else {
+            setError("Title is required")
         }
     }
     const addTask = () => {
