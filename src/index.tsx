@@ -2,10 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import AppWithReducers from "./AppWithReducers";
+import AppWithRedux from "./AppWithRedux";
 
 ReactDOM.render(
-    <AppWithReducers />,
+    <AppWithRedux />,
   document.getElementById('root')
 );
 
