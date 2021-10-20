@@ -1,4 +1,4 @@
-import React, {ChangeEvent} from "react";
+import React, {ChangeEvent, useCallback} from "react";
 import {FilterValuesType} from "./App";
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
@@ -33,9 +33,9 @@ export function Todolist(props: PropsType) {
     const onchangeTodolistTitleHandler = (newValue: string) => {
         props.changeTodolistTitle(newValue, props.id)
     }
-    const addTask = (title: string) => {
+    const addTask = useCallback((title: string) => {
         props.addTask(title, props.id)
-    }
+    },[])
     return <div>
         <h3><EditableSpan onChange={onchangeTodolistTitleHandler} title={props.title}/>
             <IconButton onClick={onRemoveTodolistHandler} aria-label="delete">
