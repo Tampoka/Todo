@@ -13,6 +13,8 @@ import {
     todolistReducer
 } from "./state/todolist-reducer";
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, taskReducer} from "./state/tasks-reducer";
+import {useDispatch, useSelector} from "react-redux";
+import {AppRootStateType} from "./state/store";
 
 
 /*export function Counter() {
@@ -48,30 +50,9 @@ function AppWithRedux() {
     const todolistId2 = v1()
     const todolistId3 = v1()
 
-    const [todolists, dispatchToTodolists] = useReducer(todolistReducer, [
-        {id: todolistId1, title: "What to learn", filter: "active"},
-        {id: todolistId2, title: "What to buy", filter: "completed"},
-        {id: todolistId3, title: "What to watch", filter: "all"}
-    ])
-    const [tasksObj, dispatchToTasks] = useReducer(taskReducer, {
-        [todolistId1]: [
-            {id: v1(), title: "CSS", isDone: true},
-            {id: v1(), title: "JS", isDone: true},
-            {id: v1(), title: "React", isDone: false}
-        ],
-        [todolistId2]: [
-            {id: v1(), title: "Broccoli", isDone: true},
-            {id: v1(), title: "Juice", isDone: false},
-            {id: v1(), title: "Bread", isDone: false},
-            {id: v1(), title: "Milk", isDone: true},
-            {id: v1(), title: "Mayonnaise", isDone: false}
-        ],
-        [todolistId3]: [
-            {id: v1(), title: "Terminator", isDone: true},
-            {id: v1(), title: "Gentlemen of fortune", isDone: false},
-            {id: v1(), title: "Avatar", isDone: false},
-        ]
-    })
+    const todolists=useSelector<AppRootStateType,Array<TodolistType>>(state=>state.todolists)
+    const tasks=useSelector<AppRootStateType,TasksStateType>(state=>state.tasks)
+    const dispatch=useDispatch()
 
     function removeTask(id: string, todolistId: string) {
       const action=removeTaskAC(id,todolistId)
