@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App, {Counter} from './App';
 import reportWebVitals from './reportWebVitals';
+import AppWithReducers from "./AppWithReducers";
 
 ReactDOM.render(
-    <App />,
+    <AppWithReducers />,
   document.getElementById('root')
 );
 
