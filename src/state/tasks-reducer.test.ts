@@ -35,6 +35,8 @@ test('correct task should be deleted from correct array', () => {
             {id: "5", title: "Mayonnaise", isDone: false}
         ]
     })
+    expect(endState["todolistId2"].length).toBe(4)
+    expect(endState["todolistId2"].every(t => t.id != "2")).toBeTruthy()
 })
 
 test('correct task should be added to correct array', () => {
@@ -82,6 +84,8 @@ test('status of specified task should be changed', () => {
     const action = changeTaskStatusAC("2", "todolistId2", true)
     const endState = taskReducer(startState, action)
 
+    expect(endState["todolistId1"].length).toBe(3)
+    expect(endState["todolistId1"][1].isDone).toBe(true)
     expect(endState["todolistId2"].length).toBe(5)
     expect(endState["todolistId2"][1].title).toBe("Juice")
     expect(endState["todolistId2"][1].isDone).toBe(true)
