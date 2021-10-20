@@ -25,40 +25,40 @@ function AppWithRedux() {
     const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
     const dispatch = useDispatch()
 
-    function removeTask(id: string, todolistId: string) {
+    const removeTask=useCallback((id: string, todolistId: string)=> {
         const action = removeTaskAC(id, todolistId)
         dispatch(action)
-    }
+    },[])
 
-    function addTask(title: string, todolistId: string) {
+    const addTask=useCallback((title: string, todolistId: string) =>{
         const action = addTaskAC(title, todolistId)
         dispatch(action)
-    }
+    },[])
 
-    function changeStatus(taskId: string, isDone: boolean, todolistId: string) {
+    const changeStatus=useCallback((taskId: string, isDone: boolean, todolistId: string)=> {
         const action = changeTaskStatusAC(taskId, todolistId, isDone)
         dispatch(action)
-    }
+    },[])
 
-    function changeTaskTitle(taskId: string, newTitle: string, todolistId: string) {
+    const changeTaskTitle=useCallback((taskId: string, newTitle: string, todolistId: string)=> {
         const action = changeTaskTitleAC(taskId, todolistId, newTitle)
         dispatch(action)
-    }
+    },[])
 
-    function changeTodolistTitle(newTitle: string, todolistId: string) {
+    const changeTodolistTitle=useCallback((newTitle: string, todolistId: string)=> {
         const action = changeTodolistTitleAC(todolistId, newTitle)
         dispatch(action)
-    }
+    },[])
 
-    function changeFilter(value: FilterValuesType, todolistId: string) {
+    const changeFilter=useCallback((value: FilterValuesType, todolistId: string) =>{
         const action = changeTodolistFilterAC(todolistId, value)
         dispatch(action)
-    }
+    },[])
 
-    function removeTodolist(id: string) {
+    const removeTodolist=useCallback((id: string)=> {
         const action = removeTodolistAC(id)
         dispatch(action)
-    }
+    },[])
 
     const  addTodolist=useCallback((title: string) =>{
         const action = addTodolistAC(title)
