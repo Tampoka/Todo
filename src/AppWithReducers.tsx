@@ -12,7 +12,7 @@ import {
     removeTodolistAC,
     todolistReducer
 } from "./state/todolist-reducer";
-import {taskReducer} from "./state/tasks-reducer";
+import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, taskReducer} from "./state/tasks-reducer";
 
 
 /*export function Counter() {
@@ -48,12 +48,12 @@ function AppWithReducers() {
     const todolistId2 = v1()
     const todolistId3 = v1()
 
-    const [todolists, dispatchToTodolists] = useReducer(todolistReducer,[
+    const [todolists, dispatchToTodolists] = useReducer(todolistReducer, [
         {id: todolistId1, title: "What to learn", filter: "active"},
         {id: todolistId2, title: "What to buy", filter: "completed"},
         {id: todolistId3, title: "What to watch", filter: "all"}
     ])
-    const [tasksObj, dispatchToTasks] = useReducer(taskReducer,{
+    const [tasksObj, dispatchToTasks] = useReducer(taskReducer, {
         [todolistId1]: [
             {id: v1(), title: "CSS", isDone: true},
             {id: v1(), title: "JS", isDone: true},
@@ -74,51 +74,43 @@ function AppWithReducers() {
     })
 
     function removeTask(id: string, todolistId: string) {
-        let todolistTasks = tasksObj[todolistId]
-        tasksObj[todolistId] = todolistTasks.filter(t => t.id !== id)
-        setTasks({...tasksObj})
+      const action=removeTaskAC(id,todolistId)
+        dispatchToTasks(action)
     }
 
     function addTask(title: string, todolistId: string) {
-        let newTask = {id: v1(), title: title, isDone: false}
-        tasksObj[todolistId] = [newTask, ...tasksObj[todolistId]]
-        setTasks({...tasksObj})
+        const action=addTaskAC(title,todolistId)
+        dispatchToTasks(action)
     }
 
     function changeStatus(taskId: string, isDone: boolean, todolistId: string) {
-        let task = tasksObj[todolistId].find(t => t.id === taskId)
-        if (task) {
-            task.isDone = isDone
-        }
-        setTasks({...tasksObj})
+        const action=changeTaskStatusAC(taskId,todolistId,isDone)
+        dispatchToTasks(action)
     }
 
     function changeTaskTitle(taskId: string, newTitle: string, todolistId: string) {
-        let task = tasksObj[todolistId].find(t => t.id === taskId)
-        if (task) {
-            task.title = newTitle
-            setTasks({...tasksObj})
-        }
-
+        const action=changeTaskTitleAC(taskId,todolistId,newTitle)
+        dispatchToTasks(action)
     }
 
     function changeTodolistTitle(newTitle: string, todolistId: string) {
-     const action=changeTodolistTitleAC(todolistId,newTitle)
+        const action = changeTodolistTitleAC(todolistId, newTitle)
         dispatchToTodolists(action)
     }
 
     function changeFilter(value: FilterValuesType, todolistId: string) {
-      const action =changeTodolistFilterAC(todolistId, value)
+        const action = changeTodolistFilterAC(todolistId, value)
         dispatchToTodolists(action)
     }
 
     function removeTodolist(id: string) {
-        const action=removeTodolistAC(id)
+        const action = removeTodolistAC(id)
+        dispatchToTasks(action)
         dispatchToTodolists(action)
     }
 
     function addTodolist(title: string) {
-       const action=addTodolistAC(title)
+        const action = addTodolistAC(title)
         dispatchToTasks(action)
         dispatchToTodolists(action)
     }
@@ -137,7 +129,7 @@ function AppWithReducers() {
                 </Toolbar>
             </AppBar>
             <Container fixed>
-                <Grid container style={{padding:"20px"}}>
+                <Grid container style={{padding: "20px"}}>
                     <AddItemForm addItem={addTodolist}/>
                 </Grid>
                 <Grid container spacing={10}>
@@ -151,7 +143,7 @@ function AppWithReducers() {
                                 tasksForTodolist = tasksForTodolist.filter(t => t.isDone)
                             }
                             return <Grid item>
-                                <Paper elevation={12} style={{padding:"10px"}}>
+                                <Paper elevation={12} style={{padding: "10px"}}>
                                     <Todolist
                                         key={tl.id}
                                         id={tl.id}
