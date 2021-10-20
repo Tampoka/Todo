@@ -24,8 +24,8 @@ type PropsType = {
     filter: FilterValuesType
 }
 
-export function Todolist(props: PropsType) {
-
+export const Todolist=React.memo(function (props: PropsType) {
+    console.log("todolist is rendering")
     const onAllClickHandler = () => props.changeFilter("all", props.id)
     const onActiveClickHandler = () => props.changeFilter("active", props.id)
     const onCompletedClickHandler = () => props.changeFilter("completed", props.id)
@@ -77,5 +77,5 @@ export function Todolist(props: PropsType) {
             </Button>
         </div>
     </div>
-}
+})
 
