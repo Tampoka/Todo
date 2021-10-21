@@ -74,45 +74,37 @@ function AppWithReducers() {
     })
 
     function removeTask(id: string, todolistId: string) {
-      const action=removeTaskAC(id,todolistId)
-        dispatchToTasks(action)
+        dispatchToTasks(removeTaskAC(id,todolistId))
     }
 
     function addTask(title: string, todolistId: string) {
-        const action=addTaskAC(title,todolistId)
-        dispatchToTasks(action)
+        dispatchToTasks(addTaskAC(title,todolistId))
     }
 
     function changeStatus(taskId: string, isDone: boolean, todolistId: string) {
-        const action=changeTaskStatusAC(taskId,todolistId,isDone)
-        dispatchToTasks(action)
+        dispatchToTasks(changeTaskStatusAC(taskId,isDone,todolistId))
     }
 
     function changeTaskTitle(taskId: string, newTitle: string, todolistId: string) {
-        const action=changeTaskTitleAC(taskId,todolistId,newTitle)
-        dispatchToTasks(action)
+        dispatchToTasks(changeTaskTitleAC(taskId,newTitle,todolistId))
     }
 
     function changeTodolistTitle(newTitle: string, todolistId: string) {
-        const action = changeTodolistTitleAC(todolistId, newTitle)
-        dispatchToTodolists(action)
+        dispatchToTodolists(changeTodolistTitleAC(newTitle,todolistId))
     }
 
     function changeFilter(value: FilterValuesType, todolistId: string) {
-        const action = changeTodolistFilterAC(todolistId, value)
-        dispatchToTodolists(action)
+        dispatchToTodolists(changeTodolistFilterAC(value,todolistId))
     }
 
     function removeTodolist(id: string) {
-        const action = removeTodolistAC(id)
-        dispatchToTasks(action)
-        dispatchToTodolists(action)
+        dispatchToTasks(removeTodolistAC(id))
+        dispatchToTodolists(removeTodolistAC(id))
     }
 
     function addTodolist(title: string) {
-        const action = addTodolistAC(title)
-        dispatchToTasks(action)
-        dispatchToTodolists(action)
+        dispatchToTasks(addTodolistAC(title))
+        dispatchToTodolists(addTodolistAC(title))
     }
 
     return (

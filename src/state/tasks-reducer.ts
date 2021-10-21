@@ -89,18 +89,18 @@ export const addTaskAC = (title: string, todolistId: string): AddTaskActionType 
     todolistId: todolistId
 })
 
-export const changeTaskStatusAC = (id: string, todolistId: string, isDone: boolean): ChangeTaskStatusActionType => ({
+export const changeTaskStatusAC = (id: string, isDone: boolean, todolistId: string): ChangeTaskStatusActionType => ({
     type: 'CHANGE-TASK-STATUS',
     todolistId: todolistId,
     id: id,
     isDone: isDone
 })
 
-export const changeTaskTitleAC = (id: string, todolistId: string, newTitle: string): ChangeTaskTitleActionType => ({
+export const changeTaskTitleAC = (id: string, newTitle: string,todolistId: string ): ChangeTaskTitleActionType => ({
     type: 'CHANGE-TASK-TITLE',
     id: id,
-    todolistId: todolistId,
-    title: newTitle
+    title: newTitle,
+    todolistId: todolistId
 })
 
 

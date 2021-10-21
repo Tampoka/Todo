@@ -67,13 +67,13 @@ export const addTodolistAC = (title:string): AddTodolistActionType => ({
     todolistId:v1()
 })
 
-export const changeTodolistTitleAC = (todolistId: string, newTitle:string): ChangeTodolistTitleActionType => ({
+export const changeTodolistTitleAC = (newTitle:string,todolistId: string ): ChangeTodolistTitleActionType => ({
     type: 'CHANGE-TODOLIST-TITLE',
     id: todolistId,
     title: newTitle
 })
 
-export const changeTodolistFilterAC = (todolistId: string, todolistFilter:FilterValuesType): ChangeTodolistFilterActionType => ({
+export const changeTodolistFilterAC = (todolistFilter:FilterValuesType,todolistId: string ): ChangeTodolistFilterActionType => ({
     type: 'CHANGE-TODOLIST-FILTER',
     id: todolistId,
     filter: todolistFilter
