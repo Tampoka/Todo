@@ -36,7 +36,7 @@ function AppWithRedux() {
     },[])
 
     const changeStatus=useCallback((taskId: string, isDone: boolean, todolistId: string)=> {
-        const action = changeTaskStatusAC(taskId, todolistId, isDone)
+        const action = changeTaskStatusAC(taskId, isDone, todolistId)
         dispatch(action)
     },[])
 
@@ -51,7 +51,7 @@ function AppWithRedux() {
     },[])
 
     const changeFilter=useCallback((value: FilterValuesType, todolistId: string) =>{
-        const action = changeTodolistFilterAC(todolistId, value)
+        const action = changeTodolistFilterAC(value, todolistId)
         dispatch(action)
     },[])
 
