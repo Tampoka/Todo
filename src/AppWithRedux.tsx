@@ -1,6 +1,6 @@
 import React, {useCallback} from 'react';
 import './App.css';
-import {TaskPropsType, Todolist} from "./Todolist";
+import {TaskType, Todolist} from "./Todolist";
 import {AddItemForm} from "./AddItemForm";
 import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@material-ui/core";
 import {Menu} from "@material-ui/icons";
@@ -10,7 +10,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./state/store";
 
 export type TasksStateType = {
-    [key: string]: Array<TaskPropsType>
+    [key: string]: Array<TaskType>
 }
 export type FilterValuesType = "all" | "active" | "completed"
 export type TodolistType = {
@@ -64,6 +64,9 @@ function AppWithRedux() {
         const action = addTodolistAC(title)
         dispatch(action)
     },[])
+    console.log(todolists)
+    console.log(tasks)
+
     return (
         <div className="App">
             <AppBar position={"static"}>
@@ -85,12 +88,7 @@ function AppWithRedux() {
                     {
                         todolists.map(tl => {
                             let tasksForTodolist = tasks[tl.id]
-                            if (tl.filter === "active") {
-                                tasksForTodolist = tasksForTodolist.filter(t => !t.isDone)
-                            }
-                            if (tl.filter === "completed") {
-                                tasksForTodolist = tasksForTodolist.filter(t => t.isDone)
-                            }
+
                             return <Grid item>
                                 <Paper elevation={12} style={{padding: "10px"}}>
                                     <Todolist

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import './App.css';
-import {TaskPropsType, Todolist} from "./Todolist";
+import {TaskType, Todolist} from "./Todolist";
 import {v1} from "uuid";
 import {AddItemForm} from "./AddItemForm";
 import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@material-ui/core";
@@ -25,7 +25,7 @@ export function Counter() {
 }
 
 export type TasksStateType = {
-    [key: string]: Array<TaskPropsType>
+    [key: string]: Array<TaskType>
 }
 export type FilterValuesType = "all" | "active" | "completed"
 export type TodolistType = {
