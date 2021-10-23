@@ -11,6 +11,9 @@ export const AddItemForm=React.memo(function(props: addItemFormPropsType) {
     const [error, setError] = useState<string | null>(null)
 
     const onNewTitleChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        if(error!==null){
+            setError(null)
+        }
         setNewTaskTitle((e.currentTarget.value))
     }
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
