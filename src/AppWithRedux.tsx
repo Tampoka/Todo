@@ -64,8 +64,9 @@ function AppWithRedux() {
         const action = addTodolistAC(title)
         dispatch(action)
     },[])
-    console.log(todolists)
-    console.log(tasks)
+
+/*    console.log(todolists)
+    console.log(tasks)*/
 
     return (
         <div className="App">
