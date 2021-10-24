@@ -28,42 +28,42 @@ function AppWithRedux() {
     const removeTask=useCallback((id: string, todolistId: string)=> {
         const action = removeTaskAC(id, todolistId)
         dispatch(action)
-    },[])
+    },[dispatch])
 
     const addTask=useCallback((title: string, todolistId: string) =>{
         const action = addTaskAC(title, todolistId)
         dispatch(action)
-    },[])
+    },[dispatch])
 
     const changeStatus=useCallback((taskId: string, isDone: boolean, todolistId: string)=> {
         const action = changeTaskStatusAC(taskId, isDone, todolistId)
         dispatch(action)
-    },[])
+    },[dispatch])
 
     const changeTaskTitle=useCallback((taskId: string, newTitle: string, todolistId: string)=> {
         const action = changeTaskTitleAC(taskId, newTitle, todolistId)
         dispatch(action)
-    },[])
+    },[dispatch])
 
     const changeTodolistTitle=useCallback((newTitle: string, todolistId: string)=> {
         const action = changeTodolistTitleAC(newTitle, todolistId)
         dispatch(action)
-    },[])
+    },[dispatch])
 
     const changeFilter=useCallback((value: FilterValuesType, todolistId: string) =>{
         const action = changeTodolistFilterAC(value, todolistId)
         dispatch(action)
-    },[])
+    },[dispatch])
 
     const removeTodolist=useCallback((id: string)=> {
         const action = removeTodolistAC(id)
         dispatch(action)
-    },[])
+    },[dispatch])
 
     const  addTodolist=useCallback((title: string) =>{
         const action = addTodolistAC(title)
         dispatch(action)
-    },[])
+    },[dispatch])
 
 /*    console.log(todolists)
     console.log(tasks)*/
@@ -90,10 +90,9 @@ function AppWithRedux() {
                         todolists.map(tl => {
                             let tasksForTodolist = tasks[tl.id]
 
-                            return <Grid item>
+                            return <Grid item key={tl.id}>
                                 <Paper elevation={12} style={{padding: "10px"}}>
                                     <Todolist
-                                        key={tl.id}
                                         id={tl.id}
                                         title={tl.title}
                                         tasks={tasksForTodolist}
