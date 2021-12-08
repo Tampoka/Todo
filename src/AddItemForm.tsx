@@ -1,7 +1,6 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
-import {IconButton, TextField} from "@material-ui/core";
-import {AddBox} from "@material-ui/icons";
-
+import {AddBox} from "@mui/icons-material";
+import {IconButton, TextField} from "@mui/material";
 type addItemFormPropsType = {
     addItem: (title: string) => void
 }
@@ -40,6 +39,7 @@ export const AddItemForm=React.memo(function(props: addItemFormPropsType) {
             setError("Title is required")
         }
     }
+
     return <div>
         <TextField value={newTaskTitle}
                    variant={"outlined"}

@@ -2,10 +2,10 @@ import React, {useCallback} from "react";
 import {FilterValuesType} from "./App";
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
-import {Button, IconButton} from "@material-ui/core";
-import {Delete} from "@material-ui/icons";
 import {Task} from "./Task";
 import {TaskType} from "./state/tasks-reducer";
+import {Delete} from "@mui/icons-material";
+import {Button, IconButton} from "@mui/material";
 
 
 type TodolistPropsType = {
@@ -47,7 +47,7 @@ export const Todolist = React.memo(function (props: TodolistPropsType) {
 
     return <div>
         <h3><EditableSpan onChange={onchangeTodolistTitleHandler} title={props.title}/>
-            <IconButton onClick={onRemoveTodolistHandler} aria-label="delete">
+            <IconButton onClick={onRemoveTodolistHandler} aria-label="delete" color="error">
                 <Delete/>
             </IconButton>
         </h3>

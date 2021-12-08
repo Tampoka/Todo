@@ -1,8 +1,8 @@
 import React, {ChangeEvent, useCallback} from "react";
-import {Checkbox, IconButton} from "@material-ui/core";
-import {Delete} from "@material-ui/icons";
 import {EditableSpan} from "./EditableSpan";
-import {TaskType} from "./Todolist";
+import {TaskType} from "./state/tasks-reducer";
+import {Delete} from "@mui/icons-material";
+import {Checkbox, IconButton} from "@mui/material";
 
 export type TaskPropsType = {
     todolistId:string
@@ -27,7 +27,7 @@ export const Task = React.memo(function (props: TaskPropsType) {
 
     return (
         <div key={props.task.id} className={props.task.isDone?"is-done":""}>
-            <IconButton onClick={onRemoveHandler} aria-label="delete">
+            <IconButton onClick={onRemoveHandler} aria-label="delete" color="error">
                 <Delete/>
             </IconButton>
             <Checkbox checked={props.task.isDone}

@@ -1,8 +1,6 @@
 import React, {useCallback} from 'react';
 import './App.css';
 import {AddItemForm} from "./AddItemForm";
-import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@material-ui/core";
-import {Menu} from "@material-ui/icons";
 import {
     addTodolistAC,
     changeTodolistFilterAC,
@@ -14,6 +12,9 @@ import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, TasksSta
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./state/store";
 import {Todolist} from "./Todolist";
+import Box from '@mui/material/Box';
+import {Menu} from "@mui/icons-material";
+import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@mui/material";
 
 
 export type TodolistType = {
@@ -73,23 +74,25 @@ function AppWithRedux() {
 
     return (
         <div className="App">
-            <AppBar position={"static"}>
+            <Box sx={{flexGrow: 1}}>
+                {/* eslint-disable-next-line react/jsx-no-undef */}
+                <AppBar position={"static"}>
                 <Toolbar>
-                    <IconButton edge={"start"} color={"inherit"} aria-label="menu">
+                    <IconButton edge={"start"} color={"inherit"} aria-label="menu" size="large" sx={{mr: 2}}>
                         <Menu/>
                     </IconButton>
-                    <Typography variant="h6">
+                    <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
                         News
                     </Typography>
                     <Button color={"inherit"}>Login</Button>
                 </Toolbar>
             </AppBar>
+            </Box>
             <Container fixed>
                 <Grid container style={{padding: "20px"}}>
                     <AddItemForm addItem={addTodolist}/>
                 </Grid>
-                <Grid container spacing={10}>
-                    {
+                <Grid container spacing={10}>{
                         todolists.map(tl => {
                             let tasksForTodolist = tasks[tl.id]
 
