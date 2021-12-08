@@ -1,6 +1,5 @@
 import React, {useReducer} from 'react';
 import './App.css';
-import {TaskType, Todolist} from "./Todolist";
 import {v1} from "uuid";
 import {AddItemForm} from "./AddItemForm";
 import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@material-ui/core";
@@ -8,41 +7,16 @@ import {Menu} from "@material-ui/icons";
 import {
     addTodolistAC,
     changeTodolistFilterAC,
-    changeTodolistTitleAC,
+    changeTodolistTitleAC, FilterValuesType,
     removeTodolistAC,
     todolistReducer
 } from "./state/todolist-reducer";
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, taskReducer} from "./state/tasks-reducer";
+import {Todolist} from "./Todolist";
 
 
-/*export function Counter() {
-    let arr = useState(5)
-    let data = arr[0]
-    let setData = arr[1]
-    return <div>
-        <button onClick={() => {
-            setData(data + 1)
-        }}>+
-        </button>
-        {data}
-        <button onClick={() => {
-            setData(data - 1)
-        }}>-
-        </button>
-    </div>
-}*/
 
-export type TasksStateType = {
-    [key: string]: Array<TaskType>
-}
-export type FilterValuesType = "all" | "active" | "completed"
-export type TodolistType = {
-    id: string
-    title: string
-    filter: FilterValuesType
-}
-
-function AppWithReducers() {
+const  AppWithReducers:React.FC=() =>{
 
     const todolistId1 = v1()
     const todolistId2 = v1()

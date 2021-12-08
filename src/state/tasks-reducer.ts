@@ -1,4 +1,3 @@
-import {TasksStateType} from "../App";
 import {v1} from "uuid";
 import {
     AddTodolistActionType,
@@ -7,6 +6,15 @@ import {
     todolistId2,
     todolistId3
 } from "./todolist-reducer";
+
+export type TaskType = {
+    id: string
+    title: string
+    isDone: boolean
+}
+export type TasksStateType = {
+    [key: string]: Array<TaskType>
+}
 
 const initialState: TasksStateType = {
     [todolistId1]: [
@@ -75,6 +83,7 @@ export const taskReducer = (state: TasksStateType = initialState, action: Action
                 ...state,
                 [action.todolistId]: [newTask, ...state[action.todolistId]]
             }
+
         case 'CHANGE-TASK-STATUS':
             let todolistTasks = state[action.todolistId]
             let newTasksArray= todolistTasks.map(t => t.id === action.id?{...t,isDone:action.isDone}:t)
@@ -90,11 +99,13 @@ export const taskReducer = (state: TasksStateType = initialState, action: Action
             }
             state[action.todolistId] = [...todolistsTasks]
             return {...state}
+
         case 'ADD-TODOLIST':
             return {
                 ...state,
                 [action.todolistId]: []
             }
+
         case 'REMOVE-TODOLIST':
             delete (state[action.id])
             return {...state}
