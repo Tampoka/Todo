@@ -1,59 +1,46 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
 import {AddBox} from "@mui/icons-material";
 import {IconButton, TextField} from "@mui/material";
+
 type addItemFormPropsType = {
     addItem: (title: string) => void
 }
 
-export const AddItemForm=React.memo(function(props: addItemFormPropsType) {
-    const [newTaskTitle, setNewTaskTitle] = useState("")
-    const [error, setError] = useState<string | null>(null)
+export const AddItemForm = React.memo(function (props: addItemFormPropsType) {
+        const [newTaskTitle, setNewTaskTitle] = useState("")
+        const [error, setError] = useState<boolean>(false)
 
-    const onNewTitleChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        if(error!==null){
-            setError(null)
+        const onNewTitleChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+            error && setError(false)
+            setNewTaskTitle((e.currentTarget.value))
         }
-        setNewTaskTitle((e.currentTarget.value))
-    }
-    const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        if(error!==null){
-            setError(null)
-        }
-        if (e.key === "Enter") {
-            if (newTaskTitle.trim() !== ""
-                && newTaskTitle !== "hell") {
-                props.addItem(newTaskTitle)
-                setNewTaskTitle("")
+        const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+            error && setError(false)
+            if (e.key === "Enter") {
+                addTask()
             }
         }
-        else {
-            setError("Title is required")
+        const addTask = () => {
+            if (newTaskTitle.trim() !== ""
+                && newTaskTitle !== "go to hell") {
+                props.addItem(newTaskTitle)
+                setNewTaskTitle("")
+            } else {
+                setError(true)
+            }
         }
-    }
-    const addTask = () => {
-        if (newTaskTitle.trim() !== ""
-            && newTaskTitle !== "hell") {
-            props.addItem(newTaskTitle)
-            setNewTaskTitle("")
-        } else {
-            setError("Title is required")
-        }
-    }
 
-    return <div>
-        <TextField value={newTaskTitle}
-                   variant={"outlined"}
-                   label={"Type value"}
-                   onChange={onNewTitleChangeHandler}
-                   onKeyPress={onKeyPressHandler}
-            // className={error ? "error" : ""}
-                   error={!!error}
-                   helperText={error}
-                   size="small"
-        />
-        <IconButton onClick={addTask}  color={'primary'}>
-            <AddBox/>
-        </IconButton>
-    </div>
-}
+        return <div>
+            <TextField value={newTaskTitle}
+                       variant={"outlined"}
+                       label={error ? "Title is required" : "Enter title"}
+                       onChange={onNewTitleChangeHandler}
+                       onKeyPress={onKeyPressHandler}
+                       error={error}
+                       size="small"/>
+            <IconButton onClick={addTask} color={'primary'}>
+                <AddBox/>
+            </IconButton>
+        </div>
+    }
 )
