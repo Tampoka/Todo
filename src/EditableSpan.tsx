@@ -37,6 +37,7 @@ export const EditableSpan = React.memo(function (props: EditableSpanPropsType) {
                      onKeyPress={onKeyPressHandler}
                      onChange={onChangeTitleHandler}
                      autoFocus
-                     size="small"/>
+                     size="small"
+                     variant="standard"/>
         : <span onDoubleClick={activateEditMode}>{props.title}</span>
 })

@@ -5,7 +5,7 @@ import {EditableSpan} from "./EditableSpan";
 import {Task} from "./Task";
 import {TaskType} from "./state/tasks-reducer";
 import {Delete} from "@mui/icons-material";
-import {Button, IconButton} from "@mui/material";
+import {Button, IconButton, List, ListItem} from "@mui/material";
 
 
 type TodolistPropsType = {
@@ -53,22 +53,26 @@ export const Todolist = React.memo(function (props: TodolistPropsType) {
         </h3>
         <AddItemForm addItem={addTask}/>
         <div>
-            {
-                tasksForTodolist.map(t => <Task
-                    todolistId={props.id}
-                    key={t.id}
-                    task={t}
-                    removeTask={props.removeTask}
-                    changeTaskStatus={props.changeTaskStatus}
-                    changeTaskTitle={props.changeTaskTitle}/>)
-            }
+            <List sx={{bgcolor:"background.paper"}}>
+                {
+                tasksForTodolist.map(t =>
+                    <ListItem>
+                        <Task
+                        todolistId={props.id}
+                        key={t.id}
+                        task={t}
+                        removeTask={props.removeTask}
+                        changeTaskStatus={props.changeTaskStatus}
+                        changeTaskTitle={props.changeTaskTitle}/>
+                    </ListItem>)
+            }</List>
         </div>
         <div style={{padding: "10px"}}>
-            <Button variant={props.filter === "all" ? "contained" : "text"} onClick={onAllClickHandler}>All</Button>
-            <Button color={"primary"} variant={props.filter === "active" ? "contained" : "text"}
+            <Button variant={props.filter === "all" ? "contained" : undefined} onClick={onAllClickHandler} color="inherit">All</Button>
+            <Button color="primary"  variant={props.filter === "active" ? "contained" : undefined}
                     onClick={onActiveClickHandler}>Active
             </Button>
-            <Button color={"secondary"} variant={props.filter === "completed" ? "contained" : "text"}
+            <Button color="secondary" variant={props.filter === "completed" ? "contained" : undefined}
                     onClick={onCompletedClickHandler}>Completed
             </Button>
         </div>

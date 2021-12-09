@@ -49,6 +49,7 @@ export const AddItemForm=React.memo(function(props: addItemFormPropsType) {
             // className={error ? "error" : ""}
                    error={!!error}
                    helperText={error}
+                   size="small"
         />
         <IconButton onClick={addTask}  color={'primary'}>
             <AddBox/>

@@ -14,7 +14,8 @@ import {AppRootStateType} from "./state/store";
 import {Todolist} from "./Todolist";
 import Box from '@mui/material/Box';
 import {Menu} from "@mui/icons-material";
-import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@mui/material";
+import {AppBar, Button, Container, Grid, IconButton, Paper, ThemeProvider, Toolbar, Typography} from "@mui/material";
+import themeOptions from "./common/color-sheme";
 
 
 export type TodolistType = {
@@ -73,26 +74,27 @@ function AppWithRedux() {
     console.log(tasks)*/
 
     return (
-        <div className="App">
-            <Box sx={{flexGrow: 1}}>
-                {/* eslint-disable-next-line react/jsx-no-undef */}
-                <AppBar position={"static"}>
-                <Toolbar>
-                    <IconButton edge={"start"} color={"inherit"} aria-label="menu" size="large" sx={{mr: 2}}>
-                        <Menu/>
-                    </IconButton>
-                    <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
-                        News
-                    </Typography>
-                    <Button color={"inherit"}>Login</Button>
-                </Toolbar>
-            </AppBar>
-            </Box>
-            <Container fixed>
-                <Grid container style={{padding: "20px"}}>
-                    <AddItemForm addItem={addTodolist}/>
-                </Grid>
-                <Grid container spacing={10}>{
+        <ThemeProvider theme={themeOptions}>
+            <div className="App">
+                <Box sx={{flexGrow: 1}}>
+                    {/* eslint-disable-next-line react/jsx-no-undef */}
+                    <AppBar position={"static"}>
+                        <Toolbar>
+                            <IconButton edge={"start"} color={"inherit"} aria-label="menu" size="large" sx={{mr: 2}}>
+                                <Menu/>
+                            </IconButton>
+                            <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
+                                News
+                            </Typography>
+                            <Button color={"inherit"}>Login</Button>
+                        </Toolbar>
+                    </AppBar>
+                </Box>
+                <Container fixed>
+                    <Grid container style={{padding: "20px"}}>
+                        <AddItemForm addItem={addTodolist}/>
+                    </Grid>
+                    <Grid container spacing={10}>{
                         todolists.map(tl => {
                             let tasksForTodolist = tasks[tl.id]
 
@@ -115,9 +117,10 @@ function AppWithRedux() {
                             </Grid>
                         })
                     }
-                </Grid>
-            </Container>
-        </div>
+                    </Grid>
+                </Container>
+            </div>
+            </ThemeProvider>
     );
 }
 

@@ -31,7 +31,8 @@ export const Task = React.memo(function (props: TaskPropsType) {
                 <Delete/>
             </IconButton>
             <Checkbox checked={props.task.isDone}
-                      onChange={onChangeStatusHandler}/>
+                      onChange={onChangeStatusHandler}
+            color="primary"/>
             <EditableSpan title={props.task.title} onChange={onChangeTitleHandler}/>
         </div>
     )
