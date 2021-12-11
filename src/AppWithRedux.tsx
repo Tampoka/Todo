@@ -90,11 +90,11 @@ function AppWithRedux() {
                         </Toolbar>
                     </AppBar>
                 </Box>
-                <Container fixed>
-                    <Grid container style={{padding: "20px"}}>
+                <Container fixed >
+                    <Grid container style={{padding: "20px"}} >
                         <AddItemForm addItem={addTodolist}/>
                     </Grid>
-                    <Grid container spacing={10}>{
+                    <Grid container spacing={10} justifyContent="center">{
                         todolists.map(tl => {
                             let tasksForTodolist = tasks[tl.id]
 
