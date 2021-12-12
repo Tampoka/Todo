@@ -6,9 +6,6 @@ import {action} from "@storybook/addon-actions";
 export default {
     title: 'Todolist/Task',
     component: Task,
-    argTypes: {
-        onclick: { description: 'Button inside form clicked' },
-    },
 } as ComponentMeta<typeof Task>;
 
 const changeTaskStatusCallback=action('Status changed inside Task')
