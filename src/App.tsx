@@ -231,20 +231,19 @@ function App() {
                 <Grid container spacing={10}>
                     {
                         todolists.map(tl => {
-                            let tasksForTodolist = tasksObj[tl.id]
-                            if (tl.filter === "active") {
-                                tasksForTodolist = tasksForTodolist.filter(t => t.status === TaskStatuses.New)
-                            }
-                            if (tl.filter === "completed") {
-                                tasksForTodolist = tasksForTodolist.filter(t => t.status === TaskStatuses.Completed)
-                            }
+                            // if (tl.filter === "active") {
+                            //     tasksForTodolist = tasksForTodolist.filter(t => t.status === TaskStatuses.New)
+                            // }
+                            // if (tl.filter === "completed") {
+                            //     tasksForTodolist = tasksForTodolist.filter(t => t.status === TaskStatuses.Completed)
+                            // }
                             return <Grid item>
                                 <Paper elevation={12} style={{padding: "10px"}}>
                                     <Todolist
                                         key={tl.id}
                                         id={tl.id}
                                         title={tl.title}
-                                        tasks={tasksForTodolist}
+                                        tasks={tasksObj[tl.id]}
                                         removeTask={removeTask}
                                         removeTodolist={removeTodolist}
                                         changeFilter={changeFilter}
