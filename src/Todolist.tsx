@@ -39,10 +39,10 @@ export const Todolist = React.memo(function (props: TodolistPropsType) {
     let tasksForTodolist = props.tasks
 
     if (props.filter === "active") {
-        tasksForTodolist = props.tasks.filter(t => t.status===TaskStatuses.New)
+        tasksForTodolist = props.tasks.filter(t => t.status === TaskStatuses.New)
     }
     if (props.filter === "completed") {
-        tasksForTodolist = props.tasks.filter(t => t.status===TaskStatuses.Completed)
+        tasksForTodolist = props.tasks.filter(t => t.status === TaskStatuses.Completed)
     }
 
     return <div>
@@ -54,12 +54,10 @@ export const Todolist = React.memo(function (props: TodolistPropsType) {
         <AddItemForm addItem={addTask}/>
         <div>
             <List sx={{bgcolor: "background.paper"}}>
-                {
-                    tasksForTodolist.map(t =>
-                        <ListItem>
+                {tasksForTodolist.map(t =>
+                        <ListItem key={t.id}>
                             <Task
                                 todolistId={props.id}
-                                key={t.id}
                                 task={t}
                                 removeTask={props.removeTask}
                                 changeTaskStatus={props.changeTaskStatus}

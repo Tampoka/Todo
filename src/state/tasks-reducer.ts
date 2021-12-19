@@ -13,7 +13,6 @@ export const taskReducer = (state: TasksStateType = initialState, action: Action
     switch (action.type) {
         case 'REMOVE-TASK':
             let newState = state[action.todolistId].filter(t => t.id !== action.id)
-            debugger
             return {
                 ...state,
                 [action.todolistId]: newState

@@ -231,16 +231,9 @@ function App() {
                 <Grid container spacing={10}>
                     {
                         todolists.map(tl => {
-                            // if (tl.filter === "active") {
-                            //     tasksForTodolist = tasksForTodolist.filter(t => t.status === TaskStatuses.New)
-                            // }
-                            // if (tl.filter === "completed") {
-                            //     tasksForTodolist = tasksForTodolist.filter(t => t.status === TaskStatuses.Completed)
-                            // }
-                            return <Grid item>
+                            return <Grid item key={tl.id}>
                                 <Paper elevation={12} style={{padding: "10px"}}>
                                     <Todolist
-                                        key={tl.id}
                                         id={tl.id}
                                         title={tl.title}
                                         tasks={tasksObj[tl.id]}

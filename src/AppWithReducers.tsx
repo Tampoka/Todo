@@ -17,7 +17,6 @@ import {AppBar, Box, Button, Container, Grid, IconButton, Paper, Toolbar, Typogr
 import {Menu} from "@mui/icons-material";
 import {TaskStatuses} from "./api/todolist-api";
 
-
 const AppWithReducers: React.FC = () => {
 
     const todolistId1 = v1()
@@ -171,13 +170,15 @@ const AppWithReducers: React.FC = () => {
     }
 
     function removeTodolist(id: string) {
-        dispatchToTasks(removeTodolistAC(id))
-        dispatchToTodolists(removeTodolistAC(id))
+        const action = removeTodolistAC(id)
+        dispatchToTasks(action)
+        dispatchToTodolists(action)
     }
 
     function addTodolist(title: string) {
-        dispatchToTasks(addTodolistAC(title))
-        dispatchToTodolists(addTodolistAC(title))
+        const action = addTodolistAC(title)
+        dispatchToTasks(action)
+        dispatchToTodolists(action)
     }
 
     return (
