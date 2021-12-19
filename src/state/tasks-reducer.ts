@@ -22,12 +22,12 @@ export const taskReducer = (state: TasksStateType = initialState, action: Action
             let newTask = {
                 id: v1(),
                 title: action.title,
-                // isDone: false,
+                // status: TaskStatuses.New,
                 description: 'new task',
                 status: TaskStatuses.New,
                 priority: 0,
                 startDate: '',
-                deadline: 'string',
+                deadline: '',
                 todoListId: action.todolistId,
                 order: 0,
                 addedDate: ''
