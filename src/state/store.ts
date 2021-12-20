@@ -1,7 +1,8 @@
-import {combineReducers, createStore} from "redux";
+import {applyMiddleware, combineReducers, createStore} from "redux";
 import {taskReducer} from "./tasks-reducer";
 import {todolistsReducer} from "./todolists-reducer";
 import {composeWithDevTools} from "redux-devtools-extension";
+import thunkMiddleware from "redux-thunk";
 
 
 const rootReducer = combineReducers({
@@ -9,12 +10,13 @@ const rootReducer = combineReducers({
     todolists: todolistsReducer
 })
 
-const composeEnhancers = composeWithDevTools
+const middlewareEnhancer = applyMiddleware(thunkMiddleware)
+const composeEnhancers = composeWithDevTools(middlewareEnhancer)
 
-export const store=createStore(rootReducer,composeEnhancers())
+export const store = createStore(rootReducer, composeEnhancers)
 
-export type AppRootStateType=ReturnType<typeof rootReducer>
+export type AppRootStateType = ReturnType<typeof rootReducer>
 
 
 // @ts-ignore
-window.store=store
+window.store = store
