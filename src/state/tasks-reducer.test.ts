@@ -204,6 +204,9 @@ test('empty arrays should be added when set todolists', () => {
     const keys = Object.keys(endState)
 
     expect(keys.length).toBe(2)
-    expect(endState["1"]).toBeDefined()
-    expect(endState["2"]).toBeDefined()
+    // expect(endState["1"]).toBeDefined()
+    // expect(endState["2"]).toBeDefined()
+
+    expect(endState["1"]).toStrictEqual([])
+    expect(endState["2"]).toStrictEqual([])
 })

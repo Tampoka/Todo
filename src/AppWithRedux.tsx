@@ -25,6 +25,14 @@ function AppWithRedux() {
     const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
     const dispatch = useDispatch()
 
+    // useEffect(()=>{
+    //     todolistApi.getTodos()
+    //         .then(res=>{
+    //             const action=setTodolistsAC(res.data)
+    //             dispatch(action)
+    //         })
+    // },[dispatch])
+
     const removeTask = useCallback((id: string, todolistId: string) => {
         const action = removeTaskAC(id, todolistId)
         dispatch(action)

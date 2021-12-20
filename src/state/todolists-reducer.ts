@@ -1,5 +1,6 @@
 import {v1} from "uuid";
-import {TodoListType} from "../api/todolist-api";
+import {todolistApi, TodoListType} from "../api/todolist-api";
+import {Dispatch} from "redux";
 
 export type FilterValuesType = "all" | "active" | "completed"
 export type TodolistDomainType = TodoListType & { filter: FilterValuesType }
@@ -61,6 +62,14 @@ export const setTodolistsAC = (todolists: Array<TodoListType>): SetTodolistsActi
     type: 'SET-TODOLISTS',
     todolists
 })
+
+//Thunks
+export const fetchTodolistsThunk = (dispatch: Dispatch) => {
+    todolistApi.getTodos()
+        .then(res => {
+            dispatch(setTodolistsAC(res.data))
+        })
+}
 
 //Action types
 export type SetTodolistsActionType = {
