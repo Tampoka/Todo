@@ -2,12 +2,12 @@ import React, {useCallback, useEffect} from 'react';
 import './App.css';
 import {AddItemForm} from "./AddItemForm";
 import {
-    addTodolistAC,
+    addTodolistTC,
     changeTodolistFilterAC,
     changeTodolistTitleAC,
     fetchTodolistsTC,
     FilterValuesType,
-    removeTodolistAC,
+    removeTodolistTC,
     TodolistDomainType
 } from "./state/todolists-reducer";
 import {addTaskTC, changeTaskStatusAC, changeTaskTitleAC, removeTaskTC, TasksStateType} from "./state/tasks-reducer";
@@ -53,12 +53,10 @@ function AppWithRedux() {
         dispatch(action)
     }, [dispatch])
     const removeTodolist = useCallback((id: string) => {
-        const action = removeTodolistAC(id)
-        dispatch(action)
+       dispatch(removeTodolistTC(id))
     }, [dispatch])
     const addTodolist = useCallback((title: string) => {
-        const action = addTodolistAC(title)
-        dispatch(action)
+       dispatch(addTodolistTC(title))
     }, [dispatch])
 
     return (
