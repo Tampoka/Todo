@@ -7,8 +7,8 @@ import {
     changeTodolistFilterAC,
     changeTodolistTitleAC, FilterValuesType,
     removeTodolistAC,
-    todolistReducer
-} from "./state/todolist-reducer";
+    todolistsReducer
+} from "./state/todolists-reducer";
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, taskReducer} from "./state/tasks-reducer";
 import {Todolist} from "./Todolist";
 import {ThemeProvider} from "@emotion/react";
@@ -23,7 +23,7 @@ const AppWithReducers: React.FC = () => {
     const todolistId2 = v1()
     const todolistId3 = v1()
 
-    const [todolists, dispatchToTodolists] = useReducer(todolistReducer, [
+    const [todolists, dispatchToTodolists] = useReducer(todolistsReducer, [
         {
             id: todolistId1, title: "What to learn", filter: "active", addedDate: '',
             order: 0

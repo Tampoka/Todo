@@ -5,7 +5,7 @@ import {v1} from "uuid";
 import {AddItemForm} from "./AddItemForm";
 import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@mui/material";
 import {Menu} from "@mui/icons-material";
-import {FilterValuesType, TodolistDomainType} from "./state/todolist-reducer";
+import {FilterValuesType, TodolistDomainType} from "./state/todolists-reducer";
 import {TasksStateType} from "./state/tasks-reducer";
 import {TaskStatuses} from "./api/todolist-api";
 

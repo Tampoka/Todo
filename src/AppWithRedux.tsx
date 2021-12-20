@@ -8,7 +8,7 @@ import {
     FilterValuesType,
     removeTodolistAC,
     TodolistDomainType
-} from "./state/todolist-reducer";
+} from "./state/todolists-reducer";
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, TasksStateType} from "./state/tasks-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./state/store";

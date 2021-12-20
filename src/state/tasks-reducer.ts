@@ -2,7 +2,7 @@ import {v1} from "uuid";
 import {
     AddTodolistActionType,
     RemoveTodolistActionType,
-} from "./todolist-reducer";
+} from "./todolists-reducer";
 import {TaskStatuses, TaskType} from "../api/todolist-api";
 
 export type TasksStateType = { [key: string]: Array<TaskType> }

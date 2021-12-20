@@ -5,7 +5,7 @@ import {Task} from "./Task";
 import {Delete} from "@mui/icons-material";
 import {Button, IconButton, List, ListItem} from "@mui/material";
 import {TaskStatuses, TaskType} from "./api/todolist-api";
-import {FilterValuesType} from "./state/todolist-reducer";
+import {FilterValuesType} from "./state/todolists-reducer";
 
 
 type TodolistPropsType = {
