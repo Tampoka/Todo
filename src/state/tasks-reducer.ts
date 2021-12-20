@@ -110,13 +110,20 @@ export const fetchTasksTC = (todolistId: string) =>
                 dispatch(setTasksAC(res.data.items, todolistId))
             })
 
-export const removeTaskTC = (taskId:string,todolistId:string) =>
+export const removeTaskTC = (taskId: string, todolistId: string) =>
     (dispatch: Dispatch) =>
-        todolistApi.deleteTask(todolistId,taskId)
+        todolistApi.deleteTask(todolistId, taskId)
             .then(res => {
-                dispatch(removeTaskAC(taskId,todolistId))
+                dispatch(removeTaskAC(taskId, todolistId))
             })
 
+export const addTaskTC = (title: string, todolistId: string) =>
+    (dispatch: Dispatch) =>
+        todolistApi.createTask(todolistId, title)
+            .then(res => {
+                const action = addTaskAC(title, todolistId)
+                dispatch(action)
+            })
 //Action Types
 type ActionsType =
     ReturnType<typeof removeTaskAC>
