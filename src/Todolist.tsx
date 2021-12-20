@@ -1,4 +1,4 @@
-import React, {useCallback} from "react";
+import React, {useCallback, useEffect} from "react";
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
 import {Task} from "./Task";
@@ -6,6 +6,8 @@ import {Delete} from "@mui/icons-material";
 import {Button, IconButton, List, ListItem} from "@mui/material";
 import {TaskStatuses, TaskType} from "./api/todolist-api";
 import {FilterValuesType} from "./state/todolists-reducer";
+import {useDispatch} from "react-redux";
+import {fetchTasksTC} from "./state/tasks-reducer";
 
 
 type TodolistPropsType = {
@@ -27,6 +29,12 @@ export const Todolist = React.memo(function (props: TodolistPropsType) {
         id, title, tasks, removeTask, removeTodolist, changeFilter, addTask, changeTaskStatus,
         changeTaskTitle, changeTodolistTitle, filter
     } = props
+
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(fetchTasksTC(id))
+    }, [dispatch,id])
 
     console.log("todolist is rendering")
     const onAllClickHandler = useCallback(() => changeFilter("all", id), [changeFilter, id])
