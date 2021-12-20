@@ -95,7 +95,7 @@ export type UpdateTaskModelType = {
     deadline: string
 }
 
-type GetTasksResponseType<T = {}> = {
+type GetTasksResponseType = {
     error: null | string
     items: TaskType[]
     totalCount: number
