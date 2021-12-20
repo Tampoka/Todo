@@ -187,8 +187,12 @@ const AppWithReducers: React.FC = () => {
     }
 
     function addTodolist(title: string) {
-        const todolistId=v1()
-        const action = addTodolistAC(title,todolistId)
+        const action = addTodolistAC({
+            title:title,
+            id:v1(),
+            addedDate:'',
+            order:0
+        })
         dispatchToTasks(action)
         dispatchToTodolists(action)
     }
