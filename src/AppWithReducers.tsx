@@ -150,7 +150,18 @@ const AppWithReducers: React.FC = () => {
     }
 
     function addTask(title: string, todolistId: string) {
-        dispatchToTasks(addTaskAC(title, todolistId))
+        dispatchToTasks(addTaskAC({
+            todoListId: todolistId,
+            title: title,
+            status: TaskStatuses.New,
+            addedDate: "",
+            deadline: "",
+            description: "",
+            order: 0,
+            priority: 0,
+            startDate: "",
+            id: "id exists",
+        }))
     }
 
     function changeStatus(taskId: string, status: TaskStatuses, todolistId: string) {
