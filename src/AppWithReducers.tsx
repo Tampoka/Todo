@@ -5,11 +5,12 @@ import {AddItemForm} from "./AddItemForm";
 import {
     addTodolistAC,
     changeTodolistFilterAC,
-    changeTodolistTitleAC, FilterValuesType,
+    changeTodolistTitleAC,
+    FilterValuesType,
     removeTodolistAC,
     todolistsReducer
 } from "./state/todolists-reducer";
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, taskReducer} from "./state/tasks-reducer";
+import {addTaskAC, removeTaskAC, taskReducer, updateTaskAC} from "./state/tasks-reducer";
 import {Todolist} from "./Todolist";
 import {ThemeProvider} from "@emotion/react";
 import themeOptions from './common/color-sheme';
@@ -165,11 +166,11 @@ const AppWithReducers: React.FC = () => {
     }
 
     function changeStatus(taskId: string, status: TaskStatuses, todolistId: string) {
-        dispatchToTasks(changeTaskStatusAC(taskId, status, todolistId))
+        dispatchToTasks(updateTaskAC(taskId, {status}, todolistId))
     }
 
     function changeTaskTitle(taskId: string, newTitle: string, todolistId: string) {
-        dispatchToTasks(changeTaskTitleAC(taskId, newTitle, todolistId))
+        dispatchToTasks(updateTaskAC(taskId, {title:newTitle}, todolistId))
     }
 
     function changeTodolistTitle(newTitle: string, todolistId: string) {
