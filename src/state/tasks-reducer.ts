@@ -27,13 +27,6 @@ export const taskReducer = (state: TasksStateType = initialState, action: Action
                     ? {...t, ...action.model}
                     : t)
             }
-        // case 'CHANGE-TASK-TITLE':
-        //     return {
-        //         ...state,
-        //         [action.todolistId]: state[action.todolistId].map(t => t.id === action.id
-        //             ? {...t, title: action.title}
-        //             : t)
-        //     }
         case 'ADD-TODOLIST':
             return {
                 ...state,
@@ -74,12 +67,7 @@ export const updateTaskAC = (id: string, model: UpdateDomainTaskModelType, todol
     id,
     model
 } as const)
-// export const changeTaskTitleAC = (id: string, newTitle: string, todolistId: string) => ({
-//     type: 'CHANGE-TASK-TITLE',
-//     id: id,
-//     title: newTitle,
-//     todolistId: todolistId
-// } as const)
+
 export const setTasksAC = (tasks: Array<TaskType>, todolistId: string) => ({
     type: 'SET-TASKS',
     tasks,
