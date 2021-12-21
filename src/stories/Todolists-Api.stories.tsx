@@ -76,15 +76,31 @@ export const DeleteTodolist = () => {
 }
 export const UpdateTodolistTitle = () => {
     const [state, setState] = useState<any>(null)
-    useEffect(() => {
-        todolistApi.updateTodoTitle("4c04532f-6f63-4661-b846-2e72fbecaf0a", "hhhhhh")
+    const [todolistId, setTodolistId] = useState<string>('')
+    const [title, setTitle] = useState<string>('')
+
+   const  updateTodolistTitle=()=> {
+        todolistApi.updateTodoTitle(todolistId, title)
             .then((res) => {
                 setState(res.data.data)
             });
-
-    }, [])
-
-    return <div> {JSON.stringify(state)}</div>
+    }
+    return <div> {JSON.stringify(state)}
+        <div>
+            <TextField type="text"
+                       placeholder="todolistId"
+                       size="small"
+                       onChange={(e) => setTodolistId(e.currentTarget.value)}/>
+            <TextField type="text"
+                       placeholder="todolist title"
+                       size="small"
+                       onChange={(e) => setTitle(e.currentTarget.value)}/>
+            <Button onClick={updateTodolistTitle}
+                    variant="contained">
+                Update todo title
+            </Button>
+        </div>
+    </div>
 }
 export const GetTasks = () => {
     const [state, setState] = useState<any>(null)
