@@ -1,21 +1,30 @@
-import React, {useState} from 'react';
-import './App.css';
-import {Todolist} from "./Todolist";
+import React, {useReducer} from 'react';
+import '../app/App.css';
 import {v1} from "uuid";
-import {AddItemForm} from "./AddItemForm";
-import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@mui/material";
+import {AddItemForm} from "../components/AddItemForm/AddItemForm";
+import {
+    addTodolistAC,
+    changeTodolistFilterAC,
+    changeTodolistTitleAC,
+    FilterValuesType,
+    removeTodolistAC,
+    todolistsReducer
+} from "../state/todolists-reducer";
+import {addTaskAC, removeTaskAC, taskReducer, updateTaskAC} from "../state/tasks-reducer";
+import {Todolist} from "../Todolist";
+import {ThemeProvider} from "@emotion/react";
+import themeOptions from '../common/color-sheme';
+import {AppBar, Box, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@mui/material";
 import {Menu} from "@mui/icons-material";
-import {FilterValuesType, TodolistDomainType} from "./state/todolists-reducer";
-import {TasksStateType} from "./state/tasks-reducer";
-import {TaskStatuses} from "./api/todolist-api";
+import {TaskStatuses} from "../api/todolist-api";
 
-function App() {
+const AppWithReducers: React.FC = () => {
 
     const todolistId1 = v1()
     const todolistId2 = v1()
     const todolistId3 = v1()
 
-    const [todolists, setTodolists] = useState<Array<TodolistDomainType>>([
+    const [todolists, dispatchToTodolists] = useReducer(todolistsReducer, [
         {
             id: todolistId1, title: "What to learn", filter: "active", addedDate: '',
             order: 0
@@ -29,7 +38,7 @@ function App() {
             order: 0
         }
     ])
-    const [tasksObj, setTasks] = useState<TasksStateType>({
+    const [tasksObj, dispatchToTasks] = useReducer(taskReducer, {
         [todolistId1]: [
             {
                 id: v1(), title: "CSS", status: TaskStatuses.Completed, description: 'new task',
@@ -138,102 +147,90 @@ function App() {
     })
 
     function removeTask(id: string, todolistId: string) {
-        let todolistTasks = tasksObj[todolistId]
-        tasksObj[todolistId] = todolistTasks.filter(t => t.id !== id)
-        setTasks({...tasksObj})
+        dispatchToTasks(removeTaskAC(id, todolistId))
     }
 
     function addTask(title: string, todolistId: string) {
-        let newTask = {
-            id: v1(), title: title, status: TaskStatuses.New, description: 'new task',
-            priority: 0,
-            startDate: '',
-            deadline: '',
+        dispatchToTasks(addTaskAC({
             todoListId: todolistId,
+            title: title,
+            status: TaskStatuses.New,
+            addedDate: "",
+            deadline: "",
+            description: "",
             order: 0,
-            addedDate: ''
-        }
-        tasksObj[todolistId] = [newTask, ...tasksObj[todolistId]]
-        setTasks({...tasksObj})
+            priority: 0,
+            startDate: "",
+            id: "id exists",
+        }))
     }
 
     function changeStatus(taskId: string, status: TaskStatuses, todolistId: string) {
-        let task = tasksObj[todolistId].find(t => t.id === taskId)
-        if (task) {
-            task.status = status
-        }
-        setTasks({...tasksObj})
+        dispatchToTasks(updateTaskAC(taskId, {status}, todolistId))
     }
 
     function changeTaskTitle(taskId: string, newTitle: string, todolistId: string) {
-        let task = tasksObj[todolistId].find(t => t.id === taskId)
-        if (task) {
-            task.title = newTitle
-            setTasks({...tasksObj})
-        }
-
+        dispatchToTasks(updateTaskAC(taskId, {title:newTitle}, todolistId))
     }
 
     function changeTodolistTitle(newTitle: string, todolistId: string) {
-        let todolist = todolists.find(tl => tl.id === todolistId)
-        if (todolist) {
-            todolist.title = newTitle
-            setTodolists([...todolists])
-        }
+        dispatchToTodolists(changeTodolistTitleAC(newTitle, todolistId))
     }
 
     function changeFilter(value: FilterValuesType, todolistId: string) {
-        let todolist = todolists.find(tl => tl.id === todolistId)
-        if (todolist) {
-            todolist.filter = value
-            setTodolists([...todolists])
-        }
+        dispatchToTodolists(changeTodolistFilterAC(value, todolistId))
     }
 
     function removeTodolist(id: string) {
-        setTodolists(todolists.filter(tl => tl.id !== id))
-        delete tasksObj[id]
-        setTasks({...tasksObj})
+        const action = removeTodolistAC(id)
+        dispatchToTasks(action)
+        dispatchToTodolists(action)
     }
 
     function addTodolist(title: string) {
-        let todolist: TodolistDomainType = {
-            id: v1(),
-            filter: "all",
-            title: title,
-            addedDate: '',
-            order: 0
-        }
-        setTodolists([todolist, ...todolists])
-        setTasks({
-            ...tasksObj,
-            [todolist.id]: []
+        const action = addTodolistAC({
+            title:title,
+            id:v1(),
+            addedDate:'',
+            order:0
         })
+        dispatchToTasks(action)
+        dispatchToTodolists(action)
     }
 
     return (
-        <div className="App">
-            <AppBar position={"static"}>
-                <Toolbar>
-                    <IconButton edge={"start"} color={"inherit"} aria-label="menu">
-                        <Menu/>
-                    </IconButton>
-                    <Typography variant="h6">
-                        News
-                    </Typography>
-                    <Button color={"inherit"}>Login</Button>
-                </Toolbar>
-            </AppBar>
-            <Container fixed>
-                <Grid container style={{padding: "20px"}}>
-                    <AddItemForm addItem={addTodolist}/>
-                </Grid>
-                <Grid container spacing={10}>
-                    {
+        <ThemeProvider theme={themeOptions}>
+            <div className="App">
+                <Box sx={{flexGrow: 1}}>
+                    <AppBar position={"static"}>
+                        <Toolbar>
+                            <IconButton edge={"start"} color={"inherit"} aria-label="menu" size="large" sx={{mr: 2}}>
+                                <Menu/>
+                            </IconButton>
+                            <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
+                                News
+                            </Typography>
+                            <Button color={"inherit"}>Login</Button>
+                        </Toolbar>
+                    </AppBar>
+                </Box>
+                <Container fixed>
+                    <Grid container style={{padding: "20px"}}>
+                        <AddItemForm addItem={addTodolist}/>
+                    </Grid>
+                    <Grid container spacing={10}>{
                         todolists.map(tl => {
+                            // let tasksForTodolist = tasksObj[tl.id]
+                            // if (tl.filter === "active") {
+                            //     tasksForTodolist = tasksForTodolist.filter(t => !t.isDone)
+                            // }
+                            // if (tl.filter === "completed") {
+                            //     tasksForTodolist = tasksForTodolist.filter(t => t.isDone)
+                            // }
                             return <Grid item key={tl.id}>
                                 <Paper elevation={12} style={{padding: "10px"}}>
                                     <Todolist
+                                        key={tl.id}
                                         id={tl.id}
                                         title={tl.title}
                                         tasks={tasksObj[tl.id]}
@@ -250,10 +247,11 @@ function App() {
                             </Grid>
                         })
                     }
-                </Grid>
-            </Container>
-        </div>
+                    </Grid>
+                </Container>
+            </div>
+        </ThemeProvider>
     );
 }
 
-export default App;
+export default AppWithReducers;

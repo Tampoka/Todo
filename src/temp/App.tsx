@@ -1,30 +1,21 @@
-import React, {useReducer} from 'react';
-import './App.css';
+import React, {useState} from 'react';
+import '../app/App.css';
+import {Todolist} from "../Todolist";
 import {v1} from "uuid";
-import {AddItemForm} from "./AddItemForm";
-import {
-    addTodolistAC,
-    changeTodolistFilterAC,
-    changeTodolistTitleAC,
-    FilterValuesType,
-    removeTodolistAC,
-    todolistsReducer
-} from "./state/todolists-reducer";
-import {addTaskAC, removeTaskAC, taskReducer, updateTaskAC} from "./state/tasks-reducer";
-import {Todolist} from "./Todolist";
-import {ThemeProvider} from "@emotion/react";
-import themeOptions from './common/color-sheme';
-import {AppBar, Box, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@mui/material";
+import {AddItemForm} from "../components/AddItemForm/AddItemForm";
+import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@mui/material";
 import {Menu} from "@mui/icons-material";
-import {TaskStatuses} from "./api/todolist-api";
+import {FilterValuesType, TodolistDomainType} from "../state/todolists-reducer";
+import {TasksStateType} from "../state/tasks-reducer";
+import {TaskStatuses} from "../api/todolist-api";
 
-const AppWithReducers: React.FC = () => {
+function App() {
 
     const todolistId1 = v1()
     const todolistId2 = v1()
     const todolistId3 = v1()
 
-    const [todolists, dispatchToTodolists] = useReducer(todolistsReducer, [
+    const [todolists, setTodolists] = useState<Array<TodolistDomainType>>([
         {
             id: todolistId1, title: "What to learn", filter: "active", addedDate: '',
             order: 0
@@ -38,7 +29,7 @@ const AppWithReducers: React.FC = () => {
             order: 0
         }
     ])
-    const [tasksObj, dispatchToTasks] = useReducer(taskReducer, {
+    const [tasksObj, setTasks] = useState<TasksStateType>({
         [todolistId1]: [
             {
                 id: v1(), title: "CSS", status: TaskStatuses.Completed, description: 'new task',
@@ -147,90 +138,102 @@ const AppWithReducers: React.FC = () => {
     })
 
     function removeTask(id: string, todolistId: string) {
-        dispatchToTasks(removeTaskAC(id, todolistId))
+        let todolistTasks = tasksObj[todolistId]
+        tasksObj[todolistId] = todolistTasks.filter(t => t.id !== id)
+        setTasks({...tasksObj})
     }
 
     function addTask(title: string, todolistId: string) {
-        dispatchToTasks(addTaskAC({
-            todoListId: todolistId,
-            title: title,
-            status: TaskStatuses.New,
-            addedDate: "",
-            deadline: "",
-            description: "",
-            order: 0,
+        let newTask = {
+            id: v1(), title: title, status: TaskStatuses.New, description: 'new task',
             priority: 0,
-            startDate: "",
-            id: "id exists",
-        }))
+            startDate: '',
+            deadline: '',
+            todoListId: todolistId,
+            order: 0,
+            addedDate: ''
+        }
+        tasksObj[todolistId] = [newTask, ...tasksObj[todolistId]]
+        setTasks({...tasksObj})
     }
 
     function changeStatus(taskId: string, status: TaskStatuses, todolistId: string) {
-        dispatchToTasks(updateTaskAC(taskId, {status}, todolistId))
+        let task = tasksObj[todolistId].find(t => t.id === taskId)
+        if (task) {
+            task.status = status
+        }
+        setTasks({...tasksObj})
     }
 
     function changeTaskTitle(taskId: string, newTitle: string, todolistId: string) {
-        dispatchToTasks(updateTaskAC(taskId, {title:newTitle}, todolistId))
+        let task = tasksObj[todolistId].find(t => t.id === taskId)
+        if (task) {
+            task.title = newTitle
+            setTasks({...tasksObj})
+        }
+
     }
 
     function changeTodolistTitle(newTitle: string, todolistId: string) {
-        dispatchToTodolists(changeTodolistTitleAC(newTitle, todolistId))
+        let todolist = todolists.find(tl => tl.id === todolistId)
+        if (todolist) {
+            todolist.title = newTitle
+            setTodolists([...todolists])
+        }
     }
 
     function changeFilter(value: FilterValuesType, todolistId: string) {
-        dispatchToTodolists(changeTodolistFilterAC(value, todolistId))
+        let todolist = todolists.find(tl => tl.id === todolistId)
+        if (todolist) {
+            todolist.filter = value
+            setTodolists([...todolists])
+        }
     }
 
     function removeTodolist(id: string) {
-        const action = removeTodolistAC(id)
-        dispatchToTasks(action)
-        dispatchToTodolists(action)
+        setTodolists(todolists.filter(tl => tl.id !== id))
+        delete tasksObj[id]
+        setTasks({...tasksObj})
     }
 
     function addTodolist(title: string) {
-        const action = addTodolistAC({
-            title:title,
-            id:v1(),
-            addedDate:'',
-            order:0
+        let todolist: TodolistDomainType = {
+            id: v1(),
+            filter: "all",
+            title: title,
+            addedDate: '',
+            order: 0
+        }
+        setTodolists([todolist, ...todolists])
+        setTasks({
+            ...tasksObj,
+            [todolist.id]: []
         })
-        dispatchToTasks(action)
-        dispatchToTodolists(action)
     }
 
     return (
-        <ThemeProvider theme={themeOptions}>
-            <div className="App">
-                <Box sx={{flexGrow: 1}}>
-                    <AppBar position={"static"}>
-                        <Toolbar>
-                            <IconButton edge={"start"} color={"inherit"} aria-label="menu" size="large" sx={{mr: 2}}>
-                                <Menu/>
-                            </IconButton>
-                            <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
-                                News
-                            </Typography>
-                            <Button color={"inherit"}>Login</Button>
-                        </Toolbar>
-                    </AppBar>
-                </Box>
-                <Container fixed>
-                    <Grid container style={{padding: "20px"}}>
-                        <AddItemForm addItem={addTodolist}/>
-                    </Grid>
-                    <Grid container spacing={10}>{
+        <div className="App">
+            <AppBar position={"static"}>
+                <Toolbar>
+                    <IconButton edge={"start"} color={"inherit"} aria-label="menu">
+                        <Menu/>
+                    </IconButton>
+                    <Typography variant="h6">
+                        News
+                    </Typography>
+                    <Button color={"inherit"}>Login</Button>
+                </Toolbar>
+            </AppBar>
+            <Container fixed>
+                <Grid container style={{padding: "20px"}}>
+                    <AddItemForm addItem={addTodolist}/>
+                </Grid>
+                <Grid container spacing={10}>
+                    {
                         todolists.map(tl => {
-                            // let tasksForTodolist = tasksObj[tl.id]
-                            // if (tl.filter === "active") {
-                            //     tasksForTodolist = tasksForTodolist.filter(t => !t.isDone)
-                            // }
-                            // if (tl.filter === "completed") {
-                            //     tasksForTodolist = tasksForTodolist.filter(t => t.isDone)
-                            // }
                             return <Grid item key={tl.id}>
                                 <Paper elevation={12} style={{padding: "10px"}}>
                                     <Todolist
-                                        key={tl.id}
                                         id={tl.id}
                                         title={tl.title}
                                         tasks={tasksObj[tl.id]}
@@ -247,11 +250,10 @@ const AppWithReducers: React.FC = () => {
                             </Grid>
                         })
                     }
-                    </Grid>
-                </Container>
-            </div>
-        </ThemeProvider>
+                </Grid>
+            </Container>
+        </div>
     );
 }
 
-export default AppWithReducers;
+export default App;
