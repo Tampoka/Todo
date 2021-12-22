@@ -10,7 +10,7 @@ const initialState: TasksStateType = {}
 export const taskReducer = (state: TasksStateType = initialState, action: ActionsType): TasksStateType => {
     switch (action.type) {
         case 'REMOVE-TASK':
-            let newState = state[action.todolistId].filter(t => t.id !== action.id)
+            let newState = state[action.todolistId].filter(t => t.id !== action.taskId)
             return {
                 ...state,
                 [action.todolistId]: newState
@@ -33,7 +33,7 @@ export const taskReducer = (state: TasksStateType = initialState, action: Action
                 [action.todolist.id]: []
             }
         case 'REMOVE-TODOLIST':
-            delete (state[action.id])
+            delete (state[action.todolistId])
             return {...state}
         case 'SET-TODOLISTS':
             const copyState = {...state}
@@ -54,8 +54,8 @@ export const taskReducer = (state: TasksStateType = initialState, action: Action
 //Action Creators
 export const removeTaskAC = (taskId: string, todolistId: string) => ({
     type: 'REMOVE-TASK',
-    id: taskId,
-    todolistId: todolistId
+    taskId,
+    todolistId
 } as const)
 export const addTaskAC = (task: TaskType) => ({
     type: 'ADD-TASK',
