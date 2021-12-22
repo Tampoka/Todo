@@ -135,16 +135,11 @@ export const updateTaskTC = (taskId: string, domainModel: UpdateDomainTaskModelT
 
 //Action Types
 type ActionsType =
-    ReturnType<typeof removeTaskAC>
+    | ReturnType<typeof removeTaskAC>
     | ReturnType<typeof addTaskAC>
     | ReturnType<typeof updateTaskAC>
     | AddTodolistActionType
     | RemoveTodolistActionType
     | SetTodolistsActionType
-    | SetTasksActionType
+    | ReturnType<typeof setTasksAC>
 
-export type SetTasksActionType = {
-    type: 'SET-TASKS',
-    tasks: Array<TaskType>,
-    todolistId: string
-}

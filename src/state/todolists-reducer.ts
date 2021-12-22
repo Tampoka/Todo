@@ -50,10 +50,10 @@ export const changeTodolistFilterAC = (todolistFilter: FilterValuesType, todolis
     id: todolistId,
     filter: todolistFilter
 } as const)
-export const setTodolistsAC = (todolists: Array<TodoListType>): SetTodolistsActionType => ({
+export const setTodolistsAC = (todolists: Array<TodoListType>) => ({
     type: 'SET-TODOLISTS',
     todolists
-})
+} as const)
 
 //Thunks
 /*export const fetchTodolistsThunk = (dispatch: Dispatch) => {
@@ -87,20 +87,17 @@ export const addTodolistTC = (title: string) =>
             })
     }
 
-export const changeTodolistTitleTC = (title: string, todolistId:string) =>
+export const changeTodolistTitleTC = (title: string, todolistId: string) =>
     (dispatch: Dispatch) => {
-        todolistApi.updateTodoTitle(todolistId,title)
+        todolistApi.updateTodoTitle(todolistId, title)
             .then(res => {
-                dispatch(changeTodolistTitleAC(title,todolistId))
+                dispatch(changeTodolistTitleAC(title, todolistId))
             })
     }
 
 
 //Action types
-export type SetTodolistsActionType = {
-    type: 'SET-TODOLISTS',
-    todolists: Array<TodoListType>
-}
+export type SetTodolistsActionType = ReturnType<typeof setTodolistsAC>
 export type RemoveTodolistActionType = ReturnType<typeof removeTodolistAC>
 export type AddTodolistActionType = ReturnType<typeof addTodolistAC>
 export type ActionsType =
