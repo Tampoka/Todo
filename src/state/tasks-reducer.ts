@@ -50,18 +50,18 @@ export const setTasksAC = (tasks: Array<TaskType>, todolistId: string) => ({
     type: 'SET-TASKS', tasks, todolistId
 } as const)
 
-//Thunks
-export const fetchTasksTC = (todolistId: string) => (dispatch: Dispatch) =>
+//Thunks Creators
+export const fetchTasksTC = (todolistId: string) => (dispatch: Dispatch<ActionsType>) =>
     todolistApi.getTasks(todolistId)
         .then(res => {
             dispatch(setTasksAC(res.data.items, todolistId))
         })
-export const removeTaskTC = (taskId: string, todolistId: string) => (dispatch: Dispatch) =>
+export const removeTaskTC = (taskId: string, todolistId: string) => (dispatch: Dispatch<ActionsType>) =>
     todolistApi.deleteTask(todolistId, taskId)
         .then(res => {
             dispatch(removeTaskAC(taskId, todolistId))
         })
-export const addTaskTC = (title: string, todolistId: string) => (dispatch: Dispatch) =>
+export const addTaskTC = (title: string, todolistId: string) => (dispatch: Dispatch<ActionsType>) =>
     todolistApi.createTask(todolistId, title)
         .then(res => {
             const action = addTaskAC(res.data.data.item)
@@ -69,7 +69,7 @@ export const addTaskTC = (title: string, todolistId: string) => (dispatch: Dispa
         })
 
 export const updateTaskTC = (taskId: string, domainModel: UpdateDomainTaskModelType, todolistId: string) =>
-    (dispatch: Dispatch, getState: () => AppRootStateType) => {
+    (dispatch: Dispatch<ActionsType>, getState: () => AppRootStateType) => {
         const state = getState()
         const task = state.tasks[todolistId].find(t => t.id === taskId)
 

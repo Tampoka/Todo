@@ -1,9 +1,6 @@
 import {todolistApi, TodoListType} from "../api/todolist-api";
 import {Dispatch} from "redux";
 
-export type FilterValuesType = "all" | "active" | "completed"
-export type TodolistDomainType = TodoListType & { filter: FilterValuesType }
-
 const initialState: Array<TodolistDomainType> = []
 
 export const todolistsReducer = (state: Array<TodolistDomainType> = initialState, action: ActionsType): Array<TodolistDomainType> => {
@@ -46,7 +43,7 @@ export const setTodolistsAC = (todolists: Array<TodoListType>) => ({
     todolists
 } as const)
 
-//Thunks
+//Thunks Creators
 /*export const fetchTodolistsThunk = (dispatch: Dispatch) => {
     todolistApi.getTodos()
         .then(res => {
@@ -55,7 +52,7 @@ export const setTodolistsAC = (todolists: Array<TodoListType>) => ({
 }*/
 
 export const fetchTodolistsTC = () => {
-    return (dispatch: Dispatch) => {
+    return (dispatch: Dispatch<ActionsType>) => {
         todolistApi.getTodos()
             .then(res => {
                 dispatch(setTodolistsAC(res.data))
@@ -63,7 +60,7 @@ export const fetchTodolistsTC = () => {
     }
 }
 export const removeTodolistTC = (todolistId: string) =>
-    (dispatch: Dispatch) => {
+    (dispatch: Dispatch<ActionsType>) => {
         todolistApi.deleteTodo(todolistId)
             .then(res => {
                 dispatch(removeTodolistAC(todolistId))
@@ -71,7 +68,7 @@ export const removeTodolistTC = (todolistId: string) =>
     }
 
 export const addTodolistTC = (title: string) =>
-    (dispatch: Dispatch) => {
+    (dispatch: Dispatch<ActionsType>) => {
         todolistApi.createTodo(title)
             .then(res => {
                 dispatch(addTodolistAC(res.data.data.item))
@@ -79,7 +76,7 @@ export const addTodolistTC = (title: string) =>
     }
 
 export const changeTodolistTitleTC = (title: string, todolistId: string) =>
-    (dispatch: Dispatch) => {
+    (dispatch: Dispatch<ActionsType>) => {
         todolistApi.updateTodoTitle(todolistId, title)
             .then(res => {
                 dispatch(changeTodolistTitleAC(title, todolistId))
@@ -97,6 +94,9 @@ export type ActionsType =
     | ReturnType<typeof changeTodolistTitleAC>
     | ReturnType<typeof changeTodolistFilterAC>
     | SetTodolistsActionType
+
+export type FilterValuesType = "all" | "active" | "completed"
+export type TodolistDomainType = TodoListType & { filter: FilterValuesType }
 
 
 
