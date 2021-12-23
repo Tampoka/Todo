@@ -3,12 +3,13 @@ import {taskReducer} from "./tasks-reducer";
 import {todolistsReducer} from "./todolists-reducer";
 import {composeWithDevTools} from "redux-devtools-extension";
 import thunkMiddleware from "redux-thunk";
+import {appReducer} from "./app-reducer";
 
 
 const rootReducer = combineReducers({
     tasks: taskReducer,
     todolists: todolistsReducer,
-
+    app:appReducer,
 })
 
 const middlewareEnhancer = applyMiddleware(thunkMiddleware)
