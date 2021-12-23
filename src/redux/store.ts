@@ -7,7 +7,8 @@ import thunkMiddleware from "redux-thunk";
 
 const rootReducer = combineReducers({
     tasks: taskReducer,
-    todolists: todolistsReducer
+    todolists: todolistsReducer,
+
 })
 
 const middlewareEnhancer = applyMiddleware(thunkMiddleware)
