@@ -6,7 +6,7 @@ import {AppBar, Button, Container, IconButton, ThemeProvider, Toolbar, Typograph
 import themeOptions from "../common/color-sheme";
 import {TodolistsList} from "../features/TodolistsList/TodolistsList";
 
-function AppWithRedux() {
+function App() {
 
     return (
         <ThemeProvider theme={themeOptions}>
@@ -33,4 +33,4 @@ function AppWithRedux() {
     );
 }
 
-export default AppWithRedux;
+export default App;

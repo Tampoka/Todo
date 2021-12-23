@@ -9,9 +9,9 @@ import {
     FilterValuesType,
     removeTodolistAC,
     todolistsReducer
-} from "../state/todolists-reducer";
-import {addTaskAC, removeTaskAC, taskReducer, updateTaskAC} from "../state/tasks-reducer";
-import {Todolist} from "../Todolist";
+} from "../redux/todolists-reducer";
+import {addTaskAC, removeTaskAC, taskReducer, updateTaskAC} from "../redux/tasks-reducer";
+import {Todolist} from "../features/TodolistsList/Todolist/Todolist";
 import {ThemeProvider} from "@emotion/react";
 import themeOptions from '../common/color-sheme';
 import {AppBar, Box, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@mui/material";

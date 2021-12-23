@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType} from "../../state/store";
+import {AppRootStateType} from "../../redux/store";
 import {
     addTodolistTC,
     changeTodolistFilterAC,
@@ -9,12 +9,12 @@ import {
     FilterValuesType,
     removeTodolistTC,
     TodolistDomainType
-} from "../../state/todolists-reducer";
-import {addTaskTC, removeTaskTC, TasksStateType, updateTaskTC} from "../../state/tasks-reducer";
+} from "../../redux/todolists-reducer";
+import {addTaskTC, removeTaskTC, TasksStateType, updateTaskTC} from "../../redux/tasks-reducer";
 import {TaskStatuses} from "../../api/todolist-api";
 import {Grid, Paper} from "@mui/material";
 import {AddItemForm} from "../../components/AddItemForm/AddItemForm";
-import {Todolist} from "../../Todolist";
+import {Todolist} from "./Todolist/Todolist";
 
 export const TodolistsList: React.FC = () => {
 
