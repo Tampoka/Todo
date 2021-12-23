@@ -2,9 +2,10 @@ import React from 'react';
 import './App.css';
 import Box from '@mui/material/Box';
 import {Menu} from "@mui/icons-material";
-import {AppBar, Button, Container, IconButton, ThemeProvider, Toolbar, Typography} from "@mui/material";
+import {AppBar, Button, Container, IconButton, LinearProgress, ThemeProvider, Toolbar, Typography} from "@mui/material";
 import themeOptions from "../common/color-sheme";
 import {TodolistsList} from "../features/TodolistsList/TodolistsList";
+import CustomizedSnackbars from "../components/ErrorSnackBar/ErrorSnackBar";
 
 function App() {
 
@@ -23,7 +24,9 @@ function App() {
                             </Typography>
                             <Button color={"inherit"}>Login</Button>
                         </Toolbar>
+                        <LinearProgress/>
                     </AppBar>
+                    <CustomizedSnackbars/>
                 </Box>
                 <Container fixed>
                     <TodolistsList/>
