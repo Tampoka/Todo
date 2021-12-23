@@ -5,7 +5,7 @@ import {Menu} from "@mui/icons-material";
 import {AppBar, Button, Container, IconButton, LinearProgress, ThemeProvider, Toolbar, Typography} from "@mui/material";
 import themeOptions from "../common/color-sheme";
 import {TodolistsList} from "../features/TodolistsList/TodolistsList";
-import CustomizedSnackbars from "../components/ErrorSnackBar/ErrorSnackBar";
+import {ErrorSnackBar} from "../components/ErrorSnackBar/ErrorSnackBar";
 
 function App() {
 
@@ -26,7 +26,7 @@ function App() {
                         </Toolbar>
                         <LinearProgress/>
                     </AppBar>
-                    <CustomizedSnackbars/>
+                    <ErrorSnackBar/>
                 </Box>
                 <Container fixed>
                     <TodolistsList/>
