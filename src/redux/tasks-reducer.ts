@@ -2,6 +2,7 @@ import {AddTodolistActionType, RemoveTodolistActionType, SetTodolistsActionType,
 import {TaskPriorities, TaskStatuses, TaskType, todolistApi, UpdateTaskModelType} from "../api/todolist-api";
 import {Dispatch} from "redux";
 import {AppRootStateType} from "./store";
+import {setErrorAC, SetErrorActionType} from "./app-reducer";
 
 export type TasksStateType = { [key: string]: Array<TaskType> }
 const initialState: TasksStateType = {}
@@ -13,13 +14,16 @@ export const taskReducer = (state: TasksStateType = initialState, action: Action
         case 'ADD-TASK':
             return {...state, [action.task.todoListId]: [action.task, ...state[action.task.todoListId]]}
         case 'UPDATE-TASK':
-            return {...state, [action.todolistId]: state[action.todolistId]
-                    .map(t => t.id === action.id ? {...t, ...action.model} : t)}
+            return {
+                ...state, [action.todolistId]: state[action.todolistId]
+                    .map(t => t.id === action.id ? {...t, ...action.model} : t)
+            }
         case 'ADD-TODOLIST':
             return {
-                ...state, [action.todolist.id]: []}
+                ...state, [action.todolist.id]: []
+            }
         case 'REMOVE-TODOLIST':
-            const copyState={...state}
+            const copyState = {...state}
             delete copyState[action.todolistId]
             return copyState
         case 'SET-TODOLISTS': {
@@ -64,8 +68,14 @@ export const removeTaskTC = (taskId: string, todolistId: string) => (dispatch: D
 export const addTaskTC = (title: string, todolistId: string) => (dispatch: Dispatch<ActionsType>) =>
     todolistApi.createTask(todolistId, title)
         .then(res => {
-            const action = addTaskAC(res.data.data.item)
-            dispatch(action)
+            if (res.data.resultCode === 0) {
+                const action = addTaskAC(res.data.data.item)
+                dispatch(action)
+            } else {
+                if (res.data.messages.length) {
+                    dispatch(setErrorAC(res.data.messages[0]))
+                }
+            }
         })
 
 export const updateTaskTC = (taskId: string, domainModel: UpdateDomainTaskModelType, todolistId: string) =>
@@ -113,4 +123,5 @@ type ActionsType =
     | RemoveTodolistActionType
     | SetTodolistsActionType
     | ReturnType<typeof setTasksAC>
+    | SetErrorActionType
 
