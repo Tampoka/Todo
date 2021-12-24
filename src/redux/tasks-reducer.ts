@@ -2,7 +2,7 @@ import {AddTodolistActionType, RemoveTodolistActionType, SetTodolistsActionType,
 import {TaskPriorities, TaskStatuses, TaskType, todolistApi, UpdateTaskModelType} from "../api/todolist-api";
 import {Dispatch} from "redux";
 import {AppRootStateType} from "./store";
-import {setErrorAC, SetErrorActionType} from "./app-reducer";
+import {setErrorAC, SetErrorActionType, setStatusAC, SetStatusActionType} from "./app-reducer";
 
 export type TasksStateType = { [key: string]: Array<TaskType> }
 const initialState: TasksStateType = {}
@@ -55,17 +55,20 @@ export const setTasksAC = (tasks: Array<TaskType>, todolistId: string) => ({
 } as const)
 
 //Thunks Creators
-export const fetchTasksTC = (todolistId: string) => (dispatch: Dispatch<ActionsType>) =>
+export const fetchTasksTC = (todolistId: string) => (dispatch: Dispatch<ActionsType | SetStatusActionType>) => {
+    dispatch(setStatusAC('loading'));
     todolistApi.getTasks(todolistId)
         .then(res => {
             dispatch(setTasksAC(res.data.items, todolistId))
+            dispatch(setStatusAC('succeeded'))
         })
+}
 export const removeTaskTC = (taskId: string, todolistId: string) => (dispatch: Dispatch<ActionsType>) =>
     todolistApi.deleteTask(todolistId, taskId)
         .then(res => {
             dispatch(removeTaskAC(taskId, todolistId))
         })
-export const addTaskTC = (title: string, todolistId: string) => (dispatch: Dispatch<ActionsType|SetErrorActionType>) =>
+export const addTaskTC = (title: string, todolistId: string) => (dispatch: Dispatch<ActionsType | SetErrorActionType>) =>
     todolistApi.createTask(todolistId, title)
         .then(res => {
             if (res.data.resultCode === 0) {
@@ -74,7 +77,7 @@ export const addTaskTC = (title: string, todolistId: string) => (dispatch: Dispa
             } else {
                 if (res.data.messages.length) {
                     dispatch(setErrorAC(res.data.messages[0]))
-                }else {
+                } else {
                     dispatch(setErrorAC('Some error occurred.'))
                 }
             }

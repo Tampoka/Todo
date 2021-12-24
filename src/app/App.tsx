@@ -6,9 +6,12 @@ import {AppBar, Button, Container, IconButton, LinearProgress, ThemeProvider, To
 import themeOptions from "../common/color-sheme";
 import {TodolistsList} from "../features/TodolistsList/TodolistsList";
 import {ErrorSnackBar} from "../components/ErrorSnackBar/ErrorSnackBar";
+import {useSelector} from "react-redux";
+import {AppRootStateType} from "../redux/store";
+import {RequestStatusType} from "../redux/app-reducer";
 
 function App() {
-
+const status=useSelector<AppRootStateType,RequestStatusType>(state=>state.app.status)
     return (
         <ThemeProvider theme={themeOptions}>
             <div className="App">
@@ -24,7 +27,7 @@ function App() {
                             </Typography>
                             <Button color={"inherit"}>Login</Button>
                         </Toolbar>
-                        {/*<LinearProgress/>*/}
+                        {status==='loading'&& <LinearProgress color='secondary'/>}
                     </AppBar>
                     <ErrorSnackBar/>
                 </Box>
