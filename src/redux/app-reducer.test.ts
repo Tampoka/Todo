@@ -1,4 +1,4 @@
-import {appReducer, InitialStateType, setErrorAC} from "./app-reducer";
+import {appReducer, InitialStateType, setErrorAC, setStatusAC} from "./app-reducer";
 
 let startState: InitialStateType
 
@@ -11,4 +11,12 @@ beforeEach(() => {
         expect(endState.status).toBe('idle')
         expect(endState.error).toBe('some error')
     })
+
+test('correct status should be set', () => {
+    const endState = appReducer(startState, setStatusAC('succeeded'))
+
+    expect(endState.status).toBe('succeeded')
+    expect(endState.error).toBe(null)
+})
+
 
