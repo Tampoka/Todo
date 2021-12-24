@@ -65,7 +65,7 @@ export const removeTaskTC = (taskId: string, todolistId: string) => (dispatch: D
         .then(res => {
             dispatch(removeTaskAC(taskId, todolistId))
         })
-export const addTaskTC = (title: string, todolistId: string) => (dispatch: Dispatch<ActionsType>) =>
+export const addTaskTC = (title: string, todolistId: string) => (dispatch: Dispatch<ActionsType|SetErrorActionType>) =>
     todolistApi.createTask(todolistId, title)
         .then(res => {
             if (res.data.resultCode === 0) {
@@ -74,6 +74,8 @@ export const addTaskTC = (title: string, todolistId: string) => (dispatch: Dispa
             } else {
                 if (res.data.messages.length) {
                     dispatch(setErrorAC(res.data.messages[0]))
+                }else {
+                    dispatch(setErrorAC('Some error occurred.'))
                 }
             }
         })
@@ -123,5 +125,4 @@ type ActionsType =
     | RemoveTodolistActionType
     | SetTodolistsActionType
     | ReturnType<typeof setTasksAC>
-    | SetErrorActionType
 
