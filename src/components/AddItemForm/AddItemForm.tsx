@@ -4,9 +4,10 @@ import {IconButton, TextField} from "@mui/material";
 
 type addItemFormPropsType = {
     addItem: (title: string) => void
+    disabled?:boolean
 }
 
-export const AddItemForm = React.memo(function (props: addItemFormPropsType) {
+export const AddItemForm = React.memo(function ({addItem,disabled=false}: addItemFormPropsType) {
         const [newTaskTitle, setNewTaskTitle] = useState("")
         const [error, setError] = useState<boolean>(false)
 
@@ -17,13 +18,13 @@ export const AddItemForm = React.memo(function (props: addItemFormPropsType) {
         const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
             error && setError(false)
             if (e.key === "Enter") {
-                addTask()
+                addItemHandler()
             }
         }
-        const addTask = () => {
+        const addItemHandler = () => {
             if (newTaskTitle.trim() !== ""
                 && newTaskTitle !== "go to hell") {
-                props.addItem(newTaskTitle)
+                addItem(newTaskTitle)
                 setNewTaskTitle("")
             } else {
                 setError(true)
@@ -32,13 +33,14 @@ export const AddItemForm = React.memo(function (props: addItemFormPropsType) {
 
         return <div>
             <TextField value={newTaskTitle}
+                       disabled={disabled}
                        variant={"outlined"}
                        label={error ? "Title is required" : "Enter title"}
                        onChange={onNewTitleChangeHandler}
                        onKeyPress={onKeyPressHandler}
                        error={error}
                        size="small"/>
-            <IconButton onClick={addTask} color={'primary'}>
+            <IconButton onClick={addItemHandler} color={'primary'} disabled={disabled}>
                 <AddBox/>
             </IconButton>
         </div>

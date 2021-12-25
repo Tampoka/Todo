@@ -61,7 +61,7 @@ export const Todolist = React.memo(function (props: TodolistPropsType) {
         </IconButton>
             <EditableSpan onChange={onchangeTodolistTitleHandler} title={todolist.title}/>
         </h3>
-        <AddItemForm addItem={onAddTask}/>
+        <AddItemForm addItem={onAddTask} disabled={todolist.entityStatus==='loading'}/>
         <div>
             <List sx={{bgcolor: "background.paper"}}>
                 {tasksForTodolist.map(t =>
