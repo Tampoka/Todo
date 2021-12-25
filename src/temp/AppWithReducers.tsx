@@ -27,15 +27,15 @@ const AppWithReducers: React.FC = () => {
     const [todolists, dispatchToTodolists] = useReducer(todolistsReducer, [
         {
             id: todolistId1, title: "What to learn", filter: "active", addedDate: '',
-            order: 0
+            order: 0,entityStatus:'idle'
         },
         {
             id: todolistId2, title: "What to buy", filter: "completed", addedDate: '',
-            order: 0
+            order: 0,entityStatus:'idle'
         },
         {
             id: todolistId3, title: "What to watch", filter: "all", addedDate: '',
-            order: 0
+            order: 0,entityStatus:'idle'
         }
     ])
     const [tasksObj, dispatchToTasks] = useReducer(taskReducer, {

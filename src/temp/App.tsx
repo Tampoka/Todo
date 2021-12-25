@@ -18,15 +18,15 @@ function App() {
     const [todolists, setTodolists] = useState<Array<TodolistDomainType>>([
         {
             id: todolistId1, title: "What to learn", filter: "active", addedDate: '',
-            order: 0
+            order: 0,entityStatus:'idle',
         },
         {
             id: todolistId2, title: "What to buy", filter: "completed", addedDate: '',
-            order: 0
+            order: 0,entityStatus:'idle',
         },
         {
             id: todolistId3, title: "What to watch", filter: "all", addedDate: '',
-            order: 0
+            order: 0,entityStatus:'idle',
         }
     ])
     const [tasksObj, setTasks] = useState<TasksStateType>({
@@ -202,7 +202,8 @@ function App() {
             filter: "all",
             title: title,
             addedDate: '',
-            order: 0
+            order: 0,
+            entityStatus:'idle',
         }
         setTodolists([todolist, ...todolists])
         setTasks({

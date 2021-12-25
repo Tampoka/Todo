@@ -22,19 +22,22 @@ type TodolistPropsType = {
     changeTaskTitle: (taskId: string, newValue: string, todolistId: string) => void
     changeTodolistTitle: (newTitle: string, todolistId: string) => void
     filter: FilterValuesType
+    demo?: boolean
 }
 
 export const Todolist = React.memo(function (props: TodolistPropsType) {
     const {
         id, title, tasks, removeTask, removeTodolist, changeFilter, addTask, changeTaskStatus,
-        changeTaskTitle, changeTodolistTitle, filter
+        changeTaskTitle, changeTodolistTitle, filter, demo = false
     } = props
+
 
     const dispatch = useDispatch()
 
     useEffect(() => {
+        if (demo) return
         dispatch(fetchTasksTC(id))
-    }, [dispatch,id])
+    }, [dispatch, id,demo])
 
     console.log("todolist is rendering")
     const onAllClickHandler = useCallback(() => changeFilter("all", id), [changeFilter, id])
