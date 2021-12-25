@@ -11,6 +11,6 @@ export default {
 } as ComponentMeta<typeof App>;
 
 
-const Template: ComponentStory<typeof App> = (args) => <App/>;
+const Template: ComponentStory<typeof App> = (args) => <App {...args}/>;
 export const AppWithReduxExample = Template.bind({})
-AppWithReduxExample.args = {}
+AppWithReduxExample.args = {demo:true}

@@ -10,7 +10,10 @@ import {useSelector} from "react-redux";
 import {AppRootStateType} from "../redux/store";
 import {RequestStatusType} from "../redux/app-reducer";
 
-function App() {
+type PropsType = {
+    demo?: boolean
+}
+function App({demo=false}:PropsType) {
 const status=useSelector<AppRootStateType,RequestStatusType>(state=>state.app.status)
     return (
         <ThemeProvider theme={themeOptions}>
@@ -32,7 +35,7 @@ const status=useSelector<AppRootStateType,RequestStatusType>(state=>state.app.st
                     <ErrorSnackBar/>
                 </Box>
                 <Container fixed>
-                    <TodolistsList/>
+                    <TodolistsList demo={demo}/>
                 </Container>
             </div>
         </ThemeProvider>
