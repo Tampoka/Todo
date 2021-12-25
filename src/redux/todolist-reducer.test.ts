@@ -1,11 +1,12 @@
 import {v1} from "uuid";
 import {
-    addTodolistAC,
+    addTodolistAC, changeTodolistEntityStatusAC,
     changeTodolistFilterAC,
     changeTodolistTitleAC, FilterValuesType,
     removeTodolistAC, setTodolistsAC, TodolistDomainType,
     todolistsReducer
 } from "./todolists-reducer";
+import {RequestStatusType} from "./app-reducer";
 
 let todolistId1: string
 let todolistId2: string
@@ -68,6 +69,15 @@ test('correct filter of todolist should be changed', () => {
 
     expect(endState[0].filter).toBe("active")
     expect(endState[1].filter).toBe(newFilter)
+})
+
+test('correct entity status should be set', () => {
+    let newStatus: RequestStatusType = "loading"
+
+    const endState = todolistsReducer(startState, changeTodolistEntityStatusAC(todolistId2,newStatus))
+
+    expect(endState[0].entityStatus).toBe("idle")
+    expect(endState[1].entityStatus).toBe(newStatus)
 })
 
 test('todolists should be set to the redux', () => {
