@@ -61,10 +61,13 @@ export const fetchTodolistsTC = () =>
             })
     }
 export const removeTodolistTC = (todolistId: string) =>
-    (dispatch: Dispatch<ActionsType>) => {
+    (dispatch: ThunkDispatch) => {
+        dispatch(setAppStatusAC('loading'))
+        dispatch(changeTodolistEntityStatusAC(todolistId, 'loading'))
         todolistApi.deleteTodo(todolistId)
             .then(res => {
                 dispatch(removeTodolistAC(todolistId))
+                dispatch(setAppStatusAC('succeeded'))
             })
     }
 
@@ -78,10 +81,14 @@ export const addTodolistTC = (title: string) => (dispatch: ThunkDispatch) => {
 }
 
 export const changeTodolistTitleTC = (title: string, todolistId: string) =>
-    (dispatch: Dispatch<ActionsType>) => {
+    (dispatch: ThunkDispatch) => {
+        dispatch(setAppStatusAC('loading'))
+        dispatch(changeTodolistEntityStatusAC(todolistId, 'loading'))
         todolistApi.updateTodoTitle(todolistId, title)
             .then(res => {
                 dispatch(changeTodolistTitleAC(title, todolistId))
+                dispatch(setAppStatusAC('succeeded'))
+                dispatch(changeTodolistEntityStatusAC(todolistId, 'succeeded'))
             })
     }
 
