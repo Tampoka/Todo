@@ -18,15 +18,15 @@ function App() {
     const [todolists, setTodolists] = useState<Array<TodolistDomainType>>([
         {
             id: todolistId1, title: "What to learn", filter: "active", addedDate: '',
-            order: 0,entityStatus:'idle',
+            order: 0, entityStatus: 'idle',
         },
         {
             id: todolistId2, title: "What to buy", filter: "completed", addedDate: '',
-            order: 0,entityStatus:'idle',
+            order: 0, entityStatus: 'idle',
         },
         {
             id: todolistId3, title: "What to watch", filter: "all", addedDate: '',
-            order: 0,entityStatus:'idle',
+            order: 0, entityStatus: 'idle',
         }
     ])
     const [tasksObj, setTasks] = useState<TasksStateType>({
@@ -203,7 +203,7 @@ function App() {
             title: title,
             addedDate: '',
             order: 0,
-            entityStatus:'idle',
+            entityStatus: 'idle',
         }
         setTodolists([todolist, ...todolists])
         setTasks({
@@ -235,8 +235,7 @@ function App() {
                             return <Grid item key={tl.id}>
                                 <Paper elevation={12} style={{padding: "10px"}}>
                                     <Todolist
-                                        id={tl.id}
-                                        title={tl.title}
+                                        todolist={tl}
                                         tasks={tasksObj[tl.id]}
                                         removeTask={removeTask}
                                         removeTodolist={removeTodolist}
@@ -245,7 +244,6 @@ function App() {
                                         changeTaskStatus={changeStatus}
                                         changeTaskTitle={changeTaskTitle}
                                         changeTodolistTitle={changeTodolistTitle}
-                                        filter={tl.filter}
                                     />
                                 </Paper>
                             </Grid>

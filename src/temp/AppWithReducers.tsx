@@ -27,15 +27,15 @@ const AppWithReducers: React.FC = () => {
     const [todolists, dispatchToTodolists] = useReducer(todolistsReducer, [
         {
             id: todolistId1, title: "What to learn", filter: "active", addedDate: '',
-            order: 0,entityStatus:'idle'
+            order: 0, entityStatus: 'idle'
         },
         {
             id: todolistId2, title: "What to buy", filter: "completed", addedDate: '',
-            order: 0,entityStatus:'idle'
+            order: 0, entityStatus: 'idle'
         },
         {
             id: todolistId3, title: "What to watch", filter: "all", addedDate: '',
-            order: 0,entityStatus:'idle'
+            order: 0, entityStatus: 'idle'
         }
     ])
     const [tasksObj, dispatchToTasks] = useReducer(taskReducer, {
@@ -170,7 +170,7 @@ const AppWithReducers: React.FC = () => {
     }
 
     function changeTaskTitle(taskId: string, newTitle: string, todolistId: string) {
-        dispatchToTasks(updateTaskAC(taskId, {title:newTitle}, todolistId))
+        dispatchToTasks(updateTaskAC(taskId, {title: newTitle}, todolistId))
     }
 
     function changeTodolistTitle(newTitle: string, todolistId: string) {
@@ -189,10 +189,10 @@ const AppWithReducers: React.FC = () => {
 
     function addTodolist(title: string) {
         const action = addTodolistAC({
-            title:title,
-            id:v1(),
-            addedDate:'',
-            order:0
+            title: title,
+            id: v1(),
+            addedDate: '',
+            order: 0
         })
         dispatchToTasks(action)
         dispatchToTodolists(action)
@@ -231,8 +231,7 @@ const AppWithReducers: React.FC = () => {
                                 <Paper elevation={12} style={{padding: "10px"}}>
                                     <Todolist
                                         key={tl.id}
-                                        id={tl.id}
-                                        title={tl.title}
+                                        todolist={tl}
                                         tasks={tasksObj[tl.id]}
                                         removeTask={removeTask}
                                         removeTodolist={removeTodolist}
@@ -241,7 +240,6 @@ const AppWithReducers: React.FC = () => {
                                         changeTaskStatus={changeStatus}
                                         changeTaskTitle={changeTaskTitle}
                                         changeTodolistTitle={changeTodolistTitle}
-                                        filter={tl.filter}
                                     />
                                 </Paper>
                             </Grid>
