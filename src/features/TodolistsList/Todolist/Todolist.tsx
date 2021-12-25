@@ -55,7 +55,8 @@ export const Todolist = React.memo(function (props: TodolistPropsType) {
     }
 
     return <div>
-        <h3><IconButton onClick={onRemoveTodolistHandler} aria-label="delete" color="error">
+        <h3><IconButton onClick={onRemoveTodolistHandler} aria-label="delete" color="error"
+        disabled={todolist.entityStatus==='loading'}>
             <Delete/>
         </IconButton>
             <EditableSpan onChange={onchangeTodolistTitleHandler} title={todolist.title}/>
