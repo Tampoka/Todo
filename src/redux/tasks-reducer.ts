@@ -9,6 +9,7 @@ import {TaskPriorities, TaskStatuses, TaskType, todolistApi, UpdateTaskModelType
 import {Dispatch} from "redux";
 import {AppRootStateType} from "./store";
 import {setAppErrorAC, SetAppErrorActionType, setAppStatusAC, SetAppStatusActionType} from "./app-reducer";
+import {handleServerAppError, handleServerNetworkAError} from "../utils/error-utils";
 
 export type TasksStateType = { [key: string]: Array<TaskType> }
 const initialState: TasksStateType = {}
@@ -66,17 +67,36 @@ export const fetchTasksTC = (todolistId: string) => (dispatch: ThunkDispatch) =>
     dispatch(changeTodolistEntityStatusAC(todolistId,'loading'))
     todolistApi.getTasks(todolistId)
         .then(res => {
-            dispatch(setTasksAC(res.data.items, todolistId))
-            dispatch(setAppStatusAC('succeeded'))
-            dispatch(changeTodolistEntityStatusAC(todolistId,'succeeded'))
+            if(!res.data.error){
+                dispatch(setTasksAC(res.data.items, todolistId))
+                dispatch(setAppStatusAC('succeeded'))
+                dispatch(changeTodolistEntityStatusAC(todolistId,'succeeded'))
+            }  else {
+                if (res.data.error) {
+                    dispatch(setAppErrorAC(res.data.error))
+                } else {
+                    dispatch(setAppErrorAC('Some error occurred.'))
+                }
+                dispatch(setAppStatusAC('failed'))
+            }
+        })
+        .catch((error)=>{
+            handleServerNetworkAError(error,dispatch)
         })
 }
 export const removeTaskTC = (taskId: string, todolistId: string) => (dispatch: ThunkDispatch) => {
     dispatch(changeTodolistEntityStatusAC(todolistId,'loading'))
     todolistApi.deleteTask(todolistId, taskId)
         .then(res => {
-            dispatch(removeTaskAC(taskId, todolistId))
-            dispatch(changeTodolistEntityStatusAC(todolistId,'succeeded'))
+            if(res.data.resultCode===0){
+                dispatch(removeTaskAC(taskId, todolistId))
+                dispatch(changeTodolistEntityStatusAC(todolistId,'succeeded'))
+            } else {
+                handleServerAppError(res.data,dispatch)
+            }
+        })
+        .catch((error)=>{
+            handleServerNetworkAError(error,dispatch)
         })
 }
 export const addTaskTC = (title: string, todolistId: string) => (dispatch: ThunkDispatch) => {
@@ -90,17 +110,11 @@ export const addTaskTC = (title: string, todolistId: string) => (dispatch: Thunk
                 dispatch(setAppStatusAC('succeeded'))
                 dispatch(changeTodolistEntityStatusAC(todolistId,'succeeded'))
             } else {
-                if (res.data.messages.length) {
-                    dispatch(setAppErrorAC(res.data.messages[0]))
-                } else {
-                    dispatch(setAppErrorAC('Some error occurred.'))
-                }
-                dispatch(setAppStatusAC('failed'))
+                handleServerAppError(res.data,dispatch)
             }
         })
         .catch((error)=>{
-            dispatch(setAppErrorAC(error.message))
-            dispatch(setAppStatusAC('failed'))
+           handleServerNetworkAError(error,dispatch)
         })
 }
 
@@ -132,17 +146,11 @@ export const updateTaskTC = (taskId: string, domainModel: UpdateDomainTaskModelT
                     dispatch(action)
                     dispatch(changeTodolistEntityStatusAC(todolistId,'succeeded'))
                 } else {
-                    if (res.data.messages.length) {
-                        dispatch(setAppErrorAC(res.data.messages[0]))
-                    } else {
-                        dispatch(setAppErrorAC('Some error occurred.'))
-                    }
-                    dispatch(setAppStatusAC('failed'))
+                    handleServerAppError(res.data,dispatch)
                 }
             })
             .catch((error)=>{
-                dispatch(setAppErrorAC(error.message))
-                dispatch(setAppStatusAC('failed'))
+                handleServerNetworkAError(error,dispatch)
             })
     }
 
