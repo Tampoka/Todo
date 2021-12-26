@@ -79,12 +79,12 @@ export const Todolist = React.memo(function (props: TodolistPropsType) {
         </div>
         <div style={{padding: "10px"}}>
             <Button variant={todolist.filter === "all" ? "contained" : undefined} onClick={onAllClickHandler}
-                    color="inherit">All</Button>
+                    color="inherit" disabled={todolist.entityStatus==='loading'}>All</Button>
             <Button color="primary" variant={todolist.filter === "active" ? "contained" : undefined}
-                    onClick={onActiveClickHandler}>Active
+                    onClick={onActiveClickHandler} disabled={todolist.entityStatus==='loading'}>Active
             </Button>
             <Button color="secondary" variant={todolist.filter === "completed" ? "contained" : undefined}
-                    onClick={onCompletedClickHandler}>Completed
+                    onClick={onCompletedClickHandler} disabled={todolist.entityStatus==='loading'}>Completed
             </Button>
         </div>
     </div>
