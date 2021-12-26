@@ -9,7 +9,7 @@ import {TaskPriorities, TaskStatuses, TaskType, todolistApi, UpdateTaskModelType
 import {Dispatch} from "redux";
 import {AppRootStateType} from "./store";
 import {setAppErrorAC, SetAppErrorActionType, setAppStatusAC, SetAppStatusActionType} from "./app-reducer";
-import {handleServerAppError, handleServerNetworkAError} from "../utils/error-utils";
+import {handleFetchServerAppError, handleServerAppError, handleServerNetworkAError} from "../utils/error-utils";
 
 export type TasksStateType = { [key: string]: Array<TaskType> }
 const initialState: TasksStateType = {}
@@ -72,12 +72,7 @@ export const fetchTasksTC = (todolistId: string) => (dispatch: ThunkDispatch) =>
                 dispatch(setAppStatusAC('succeeded'))
                 dispatch(changeTodolistEntityStatusAC(todolistId,'succeeded'))
             }  else {
-                if (res.data.error) {
-                    dispatch(setAppErrorAC(res.data.error))
-                } else {
-                    dispatch(setAppErrorAC('Some error occurred.'))
-                }
-                dispatch(setAppStatusAC('failed'))
+                handleFetchServerAppError(res.data,dispatch)
             }
         })
         .catch((error)=>{
