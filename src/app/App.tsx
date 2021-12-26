@@ -9,36 +9,46 @@ import {ErrorSnackBar} from "../components/ErrorSnackBar/ErrorSnackBar";
 import {useSelector} from "react-redux";
 import {AppRootStateType} from "../redux/store";
 import {RequestStatusType} from "../redux/app-reducer";
+import {BrowserRouter, Route,Routes} from "react-router-dom";
+import Login from "../features/Login/Login";
 
 type PropsType = {
     demo?: boolean
 }
-function App({demo=false}:PropsType) {
-const status=useSelector<AppRootStateType,RequestStatusType>(state=>state.app.status)
+
+function App({demo = false}: PropsType) {
+    const status = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
     return (
-        <ThemeProvider theme={themeOptions}>
-            <div className="App">
-                <Box sx={{flexGrow: 1}}>
-                    {/* eslint-disable-next-line react/jsx-no-undef */}
-                    <AppBar position={"static"}>
-                        <Toolbar>
-                            <IconButton edge={"start"} color={"inherit"} aria-label="menu" size="large" sx={{mr: 2}}>
-                                <Menu/>
-                            </IconButton>
-                            <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
-                                News
-                            </Typography>
-                            <Button color={"inherit"}>Login</Button>
-                        </Toolbar>
-                        {status==='loading'&& <LinearProgress color='secondary'/>}
-                    </AppBar>
-                    <ErrorSnackBar/>
-                </Box>
-                <Container fixed>
-                    <TodolistsList demo={demo}/>
-                </Container>
-            </div>
-        </ThemeProvider>
+        <BrowserRouter>
+            <ThemeProvider theme={themeOptions}>
+                <div className="App">
+                    <Box sx={{flexGrow: 1}}>
+                        {/* eslint-disable-next-line react/jsx-no-undef */}
+                        <AppBar position={"static"}>
+                            <Toolbar>
+                                <IconButton edge={"start"} color={"inherit"} aria-label="menu" size="large"
+                                            sx={{mr: 2}}>
+                                    <Menu/>
+                                </IconButton>
+                                <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
+                                    News
+                                </Typography>
+                                <Button color={"inherit"}>Login</Button>
+                            </Toolbar>
+                            {status === 'loading' && <LinearProgress color='secondary'/>}
+                        </AppBar>
+                        <ErrorSnackBar/>
+                    </Box>
+                    <Container fixed>
+                        <Routes>
+                            <Route path="*" element={<TodolistsList demo={demo}/>}/>
+                            <Route path="/login" element={<Login/>}/>
+                        </Routes>
+
+                    </Container>
+                </div>
+            </ThemeProvider>
+        </BrowserRouter>
     );
 }
 
