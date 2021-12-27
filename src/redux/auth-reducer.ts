@@ -39,6 +39,21 @@ export const loginTC = (data: LoginParamsType) => (dispatch: ThunkDispatch) => {
         })
 }
 
+export const logoutTC = () => (dispatch: ThunkDispatch) => {
+    dispatch(setAppStatusAC('loading'));
+    authApi.logout()
+        .then(res => {
+            if (res.data.resultCode === 0) {
+                dispatch(setIsLoggedInAC(false))
+                dispatch(setAppStatusAC('succeeded'));
+            } else {
+                handleServerAppError(res.data, dispatch)
+            }
+        })
+        .catch((error) => {
+            handleServerNetworkAError(error, dispatch)
+        })
+}
 // Types
 export type InitialStateType = {
     isLoggedIn: boolean
