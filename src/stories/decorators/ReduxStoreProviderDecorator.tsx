@@ -108,6 +108,9 @@ const initialGlobalState = {
         status:'idle',
        error:null,
    },
+    auth:{
+        isLoggedIn: false
+    }
 };
 
 export const storyBookStore = createStore(rootReducer, initialGlobalState as AppRootStateType,applyMiddleware(thunk));
