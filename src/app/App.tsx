@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import './App.css';
 import Box from '@mui/material/Box';
 import {Menu} from "@mui/icons-material";
@@ -21,6 +21,7 @@ import {AppRootStateType} from "../redux/store";
 import {initializeAppTC, RequestStatusType} from "../redux/app-reducer";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Login from "../features/Login/Login";
+import {logoutTC} from "../redux/auth-reducer";
 
 type PropsType = {
     demo?: boolean
@@ -29,11 +30,16 @@ type PropsType = {
 function App({demo = false}: PropsType) {
     const status = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
     const isInitialized = useSelector<AppRootStateType, boolean>(state => state.app.isInitialized)
+    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
     const dispatch = useDispatch()
+
+    const logoutHandler = useCallback(() => {
+        dispatch(logoutTC())
+    }, [dispatch])
 
     useEffect(() => {
         dispatch(initializeAppTC())
-    },[dispatch])
+    }, [dispatch])
 
     if (!isInitialized) {
         return <CircularProgress size={40}
@@ -46,6 +52,7 @@ function App({demo = false}: PropsType) {
                                      marginLeft: '-20px',
                                  }}/>
     }
+
 
     return (
         <BrowserRouter>
@@ -62,9 +69,7 @@ function App({demo = false}: PropsType) {
                                 <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
                                     News
                                 </Typography>
-                                <Button color={"inherit"}>Login
-                                    {/*<Link to="/login">{isLoggedIn ? 'Log out' : 'Login'}</Link>*/}
-                                </Button>
+                                {isLoggedIn && <Button color={"inherit"} onClick={logoutHandler}>Log out</Button>}
                             </Toolbar>
                             {status === 'loading' && <LinearProgress color='secondary'/>}
                         </AppBar>
