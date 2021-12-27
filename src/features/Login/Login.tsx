@@ -1,25 +1,28 @@
 import React from 'react';
 import {Button, Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel, Grid, TextField} from "@mui/material";
 import {useFormik} from "formik";
-import {useDispatch} from "react-redux";
-import {loginTC} from "../../redux/login-reducer";
+import {useDispatch, useSelector} from "react-redux";
+import {loginTC} from "../../redux/auth-reducer";
+import {AppRootStateType} from "../../redux/store";
+import {Navigate} from 'react-router-dom';
 
 export const Login = () => {
-const dispatch=useDispatch()
+    const dispatch = useDispatch()
+    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
 
     const formik = useFormik({
-        validate:(values) =>{
-            if(!values.email){
+        validate: (values) => {
+            if (!values.email) {
                 return {
-                    email:'Email is required'
+                    email: 'Email is required'
                 }
             }
-            if(!values.password){
+            if (!values.password) {
                 return {
-                    password:'Password is required'
+                    password: 'Password is required'
                 }
             }
-        } ,
+        },
         initialValues: {
             email: '',
             password: '',
@@ -29,7 +32,9 @@ const dispatch=useDispatch()
             dispatch(loginTC(values))
         }
     })
-
+    if (isLoggedIn) {
+        return <Navigate to="/"/>
+    }
     return <Grid container justifyContent={'center'}>
         <Grid item justifyContent={'center'}>
             <form onSubmit={formik.handleSubmit}>
@@ -37,7 +42,8 @@ const dispatch=useDispatch()
                     <FormLabel>
                         <p>To log in get registered
                             <a href={'https://social-network.samuraijs.com/'}
-                               target={'_blank'}> here
+                               target={'_blank'}
+                               rel="noopener noreferrer nofollow"> here
                             </a>
                         </p>
                         <p>or use common test account credentials:</p>
@@ -46,10 +52,10 @@ const dispatch=useDispatch()
                     </FormLabel>
                     <FormGroup>
                         <TextField label="Email" margin="normal" {...formik.getFieldProps('email')}/>
-                        {formik.errors.email?<div>{formik.errors.email}</div>:null}
+                        {formik.errors.email ? <div>{formik.errors.email}</div> : null}
                         <TextField type="password" label="Password"
                                    margin="normal" {...formik.getFieldProps('password')}/>
-                        {formik.errors.password?<div>{formik.errors.password}</div>:null}
+                        {formik.errors.password ? <div>{formik.errors.password}</div> : null}
                         <FormControlLabel label={'Remember me'}
                                           control={<Checkbox
                                               name="rememberMe"/>} {...formik.getFieldProps('rememberMe')}

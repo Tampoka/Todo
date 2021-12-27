@@ -7,7 +7,7 @@ const initialState: InitialStateType = {
     isLoggedIn: false
 }
 
-export const authReducer = (state: any = initialState, action: ActionsType): any => {
+export const authReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
     switch (action.type) {
         case "login/SET-IS-LOGGED-IN":
             return {...state, isLoggedIn:action.value}
@@ -28,7 +28,7 @@ export const loginTC = (data: LoginParamsType) => (dispatch: ThunkDispatch) => {
     authApi.login(data)
         .then(res => {
             if (res.data.resultCode === 0) {
-                alert('Hooray')
+              dispatch(setIsLoggedInAC(true))
                 dispatch(setAppStatusAC('succeeded'));
             } else {
                 handleServerAppError(res.data, dispatch)
