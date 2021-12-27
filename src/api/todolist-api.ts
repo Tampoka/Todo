@@ -37,14 +37,17 @@ export const todolistApi = {
     },
     deleteTask(todolistId: string, taskId: string) {
         return instance.delete<CommonResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`)
-    }
+    },
 }
 
 //Auth API
 export const authApi = {
     login(data: LoginParamsType) {
         return instance.post<LoginParamsType, AxiosResponse<CommonResponseType<{ userId?: number }>>>('auth/login', data)
-    }
+    },
+    me(){
+        return instance.get<CommonResponseType<AuthMeType>>('auth/me')
+    },
 }
 //Types
 export type TodoListType = {
@@ -105,4 +108,9 @@ export type LoginParamsType = {
     password: string
     rememberMe: boolean
     captcha?: string
+}
+export type AuthMeType ={
+    id:number
+    email:string
+    login:string
 }
