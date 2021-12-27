@@ -45,8 +45,11 @@ export const authApi = {
     login(data: LoginParamsType) {
         return instance.post<LoginParamsType, AxiosResponse<CommonResponseType<{ userId?: number }>>>('auth/login', data)
     },
-    me(){
+    me() {
         return instance.get<CommonResponseType<AuthMeType>>('auth/me')
+    },
+    logout() {
+        return instance.delete<CommonResponseType>('auth/me')
     },
 }
 //Types
@@ -109,8 +112,8 @@ export type LoginParamsType = {
     rememberMe: boolean
     captcha?: string
 }
-export type AuthMeType ={
-    id:number
-    email:string
-    login:string
+export type AuthMeType = {
+    id: number
+    email: string
+    login: string
 }
