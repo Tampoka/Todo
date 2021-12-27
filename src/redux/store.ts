@@ -4,12 +4,14 @@ import {todolistsReducer} from "./todolists-reducer";
 import {composeWithDevTools} from "redux-devtools-extension";
 import thunkMiddleware from "redux-thunk";
 import {appReducer} from "./app-reducer";
+import {authReducer} from "./auth-reducer";
 
 
 const rootReducer = combineReducers({
     tasks: taskReducer,
     todolists: todolistsReducer,
     app:appReducer,
+    auth:authReducer
 })
 
 const middlewareEnhancer = applyMiddleware(thunkMiddleware)
