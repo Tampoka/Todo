@@ -1,8 +1,11 @@
 import React from 'react';
 import {Button, Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel, Grid, TextField} from "@mui/material";
 import {useFormik} from "formik";
+import {useDispatch} from "react-redux";
+import {loginTC} from "../../redux/login-reducer";
 
 export const Login = () => {
+const dispatch=useDispatch()
 
     const formik = useFormik({
         validate:(values) =>{
@@ -23,9 +26,10 @@ export const Login = () => {
             rememberMe: false,
         },
         onSubmit: values => {
-            alert(JSON.stringify(values))
+            dispatch(loginTC(values))
         }
     })
+
     return <Grid container justifyContent={'center'}>
         <Grid item justifyContent={'center'}>
             <form onSubmit={formik.handleSubmit}>
