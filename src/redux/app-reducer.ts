@@ -1,5 +1,5 @@
 import {Dispatch} from "redux";
-import {authApi} from "../api/todolist-api";
+import {authApi, ResultCodes} from "../api/todolist-api";
 import {setIsLoggedInAC, SetIsLoggedInActionType} from "./auth-reducer";
 
 const initialState = {
@@ -31,7 +31,7 @@ export const setAppInitializedAC = (value: boolean) => ({type: 'APP/SET-IS-INITI
 export const initializeAppTC = () => (dispatch: Dispatch<ActionsType | SetIsLoggedInActionType>) => {
     authApi.me()
         .then(res => {
-            if (res.data.resultCode === 0) {
+            if (res.data.resultCode === ResultCodes.success) {
                 dispatch(setIsLoggedInAC(true))
             } else {
 

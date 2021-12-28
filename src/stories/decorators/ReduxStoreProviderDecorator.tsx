@@ -7,11 +7,13 @@ import {todolistsReducer} from "../../redux/todolists-reducer";
 import {TaskStatuses} from "../../api/todolist-api";
 import thunk from "redux-thunk";
 import {appReducer} from "../../redux/app-reducer";
+import {authReducer} from "../../redux/auth-reducer";
 
 const rootReducer = combineReducers({
     tasks: taskReducer,
     todolists: todolistsReducer,
-    app: appReducer
+    app: appReducer,
+    auth:authReducer,
 })
 
 const initialGlobalState = {

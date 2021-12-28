@@ -1,6 +1,6 @@
 import {Dispatch} from "redux";
 import {SetAppErrorActionType, setAppStatusAC, SetAppStatusActionType} from "./app-reducer";
-import {authApi, LoginParamsType} from "../api/todolist-api";
+import {authApi, LoginParamsType, ResultCodes} from "../api/todolist-api";
 import {handleServerAppError, handleServerNetworkAError} from "../utils/error-utils";
 
 const initialState: InitialStateType = {
@@ -27,7 +27,7 @@ export const loginTC = (data: LoginParamsType) => (dispatch: ThunkDispatch) => {
     dispatch(setAppStatusAC('loading'));
     authApi.login(data)
         .then(res => {
-            if (res.data.resultCode === 0) {
+            if (res.data.resultCode === ResultCodes.success) {
                 dispatch(setIsLoggedInAC(true))
                 dispatch(setAppStatusAC('succeeded'));
             } else {
@@ -43,7 +43,7 @@ export const logoutTC = () => (dispatch: ThunkDispatch) => {
     dispatch(setAppStatusAC('loading'));
     authApi.logout()
         .then(res => {
-            if (res.data.resultCode === 0) {
+            if (res.data.resultCode === ResultCodes.success) {
                 dispatch(setIsLoggedInAC(false))
                 dispatch(setAppStatusAC('succeeded'));
             } else {
