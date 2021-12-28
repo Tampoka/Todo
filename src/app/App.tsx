@@ -2,17 +2,6 @@ import React, {useCallback, useEffect} from 'react';
 import './App.css';
 import Box from '@mui/material/Box';
 import {Menu} from "@mui/icons-material";
-import {
-    AppBar,
-    Button,
-    CircularProgress,
-    Container,
-    IconButton,
-    LinearProgress,
-    ThemeProvider,
-    Toolbar,
-    Typography
-} from "@mui/material";
 import themeOptions from "../common/color-sheme";
 import {TodolistsList} from "../features/TodolistsList/TodolistsList";
 import {ErrorSnackBar} from "../components/ErrorSnackBar/ErrorSnackBar";
@@ -22,6 +11,15 @@ import {initializeAppTC, RequestStatusType} from "../redux/app-reducer";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Login from "../features/Login/Login";
 import {logoutTC} from "../redux/auth-reducer";
+import CircularProgress from "@mui/material/CircularProgress";
+import ThemeProvider from '@mui/material/styles/ThemeProvider';
+import AppBar from '@mui/material/AppBar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import Toolbar from '@mui/material/Toolbar';
+import Button from '@mui/material/Button';
+import LinearProgress from '@mui/material/LinearProgress';
+import Container from '@mui/material/Container';
 
 type PropsType = {
     demo?: boolean
