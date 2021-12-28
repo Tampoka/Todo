@@ -2,9 +2,9 @@ import {Dispatch} from "redux";
 import {authApi} from "../api/todolist-api";
 import {setIsLoggedInAC, SetIsLoggedInActionType} from "./auth-reducer";
 
-const initialState: InitialStateType = {
-    status: 'idle',
-    error: null,
+const initialState = {
+    status: 'idle' as RequestStatusType,
+    error: null as null|string,
     //true if app already/successfully initialized (user authentication, settings etc.)
     isInitialized: false,
 }
@@ -43,11 +43,7 @@ export const initializeAppTC = () => (dispatch: Dispatch<ActionsType | SetIsLogg
 //Types
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 
-export type InitialStateType = {
-    status: RequestStatusType
-    error: string | null
-    isInitialized: boolean
-}
+export type InitialStateType = typeof initialState
 
 export type SetAppErrorActionType = ReturnType<typeof setAppErrorAC>
 export type SetAppStatusActionType = ReturnType<typeof setAppStatusAC>
