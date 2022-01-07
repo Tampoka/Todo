@@ -47,7 +47,7 @@
     "test:integration": "start-server-and-test storybook http-get://localhost:9009 jest:integration",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
-    "chromatic": "npx chromatic --project-token=de368097cb91"
+    "chromatic": "npx chromatic --project-token=CHROMATIC_PROJECT_TOKEN"
   },
   "eslintConfig": {
     "extends": [
