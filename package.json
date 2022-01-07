@@ -46,7 +46,8 @@
     "jest:integration": "jest -c integration/jest.config.js",
     "test:integration": "start-server-and-test storybook http-get://localhost:9009 jest:integration",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "chromatic": "npx chromatic --project-token=de368097cb91"
   },
   "eslintConfig": {
     "extends": [
@@ -83,6 +84,7 @@
     "@storybook/node-logger": "^6.3.12",
     "@storybook/preset-create-react-app": "^3.2.0",
     "@storybook/react": "^6.3.12",
+    "chromatic": "^6.3.3",
     "jest-image-snapshot": "^4.5.1",
     "jest-puppeteer": "^6.0.2",
     "puppeteer": "^13.0.0",
