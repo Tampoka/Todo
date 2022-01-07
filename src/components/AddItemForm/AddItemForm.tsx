@@ -34,7 +34,7 @@ export const AddItemForm = React.memo(function ({addItem,disabled=false}: addIte
         return <div>
             <TextField value={newTaskTitle}
                        disabled={disabled}
-                       variant={"filled"}
+                       variant={"outlined"}
                        label={error ? "Title is required" : "Enter title"}
                        onChange={onNewTitleChangeHandler}
                        onKeyPress={onKeyPressHandler}
