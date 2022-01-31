@@ -51,10 +51,10 @@ export const Login = () => {
                         <p>Password: free</p>
                     </FormLabel>
                     <FormGroup>
-                        <TextField label="Email" margin="normal" {...formik.getFieldProps('email')} value="free@samuraijs.com" autoComplete="user-email"/>
+                        <TextField label="Email" margin="normal" {...formik.getFieldProps('email')}  autoComplete="user-email"/>
                         {formik.errors.email ? <div>{formik.errors.email}</div> : null}
                         <TextField type="password" label="Password"
-                                   margin="normal" {...formik.getFieldProps('password')} value="free" autoComplete="current-password"/>
+                                   margin="normal" {...formik.getFieldProps('password')}  autoComplete="current-password"/>
                         {formik.errors.password ? <div>{formik.errors.password}</div> : null}
                         <FormControlLabel label={'Remember me'}
                                           control={<Checkbox
