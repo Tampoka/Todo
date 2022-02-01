@@ -1,16 +1,15 @@
-import {applyMiddleware, combineReducers} from "redux";
-import {taskReducer} from "./tasks-reducer";
+import {combineReducers} from "redux";
 import {todolistsReducer} from "./todolists-reducer";
-import {composeWithDevTools} from "redux-devtools-extension";
 import thunkMiddleware from "redux-thunk";
 import {appReducer} from "./app-reducer";
 import {authReducer} from "./auth-reducer";
 import {configureStore} from "@reduxjs/toolkit";
 import {logger} from "redux-logger";
+import { tasksReducer } from "./tasks-reducer";
 
 
 const rootReducer = combineReducers({
-    tasks: taskReducer,
+    tasks: tasksReducer,
     todolists: todolistsReducer,
     app: appReducer,
     auth: authReducer
