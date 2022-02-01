@@ -1,29 +1,30 @@
 import {Dispatch} from "redux";
-import {SetAppErrorActionType, setAppStatusAC, SetAppStatusActionType} from "./app-reducer";
+import {setAppStatusAC} from "./app-reducer";
 import {authApi, LoginParamsType, ResultCodes} from "../api/todolist-api";
 import {handleServerAppError, handleServerNetworkAError} from "../utils/error-utils";
+import {createSlice} from "@reduxjs/toolkit";
 
-const initialState: InitialStateType = {
+const initialState = {
     isLoggedIn: false
 }
 
-export const authReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
-    switch (action.type) {
-        case "login/SET-IS-LOGGED-IN":
-            return {...state, isLoggedIn: action.value}
-        default:
-            return state
+const slice = createSlice({
+    name: 'auth',
+    initialState: initialState,
+    reducers: {
+        setIsLoggedInAC(state, action: any) {
+            state.isLoggedIn = action.value
+        }
     }
-}
+})
+export const authReducer = slice.reducer
 
-//Action Creators
-export const setIsLoggedInAC = (value: boolean) => ({
-    type: 'login/SET-IS-LOGGED-IN', value
-} as const)
+// const setIsLoggedInAC=slice.actions.setIsLoggedInAC
+export const {setIsLoggedInAC} = slice.actions
 
 
 //Thunks Creators
-export const loginTC = (data: LoginParamsType) => (dispatch: ThunkDispatch) => {
+export const loginTC = (data: LoginParamsType) => (dispatch: Dispatch) => {
     dispatch(setAppStatusAC('loading'));
     authApi.login(data)
         .then(res => {
@@ -39,7 +40,7 @@ export const loginTC = (data: LoginParamsType) => (dispatch: ThunkDispatch) => {
         })
 }
 
-export const logoutTC = () => (dispatch: ThunkDispatch) => {
+export const logoutTC = () => (dispatch: Dispatch) => {
     dispatch(setAppStatusAC('loading'));
     authApi.logout()
         .then(res => {
@@ -54,13 +55,7 @@ export const logoutTC = () => (dispatch: ThunkDispatch) => {
             handleServerNetworkAError(error, dispatch)
         })
 }
-// Types
-export type InitialStateType = {
-    isLoggedIn: boolean
-}
-export type SetIsLoggedInActionType = ReturnType<typeof setIsLoggedInAC>
-type ActionsType = |SetIsLoggedInActionType
 
-type ThunkDispatch = Dispatch<ActionsType | SetAppStatusActionType | SetAppErrorActionType>
+
 
 
