@@ -2,7 +2,7 @@ import {Dispatch} from "redux";
 import {setAppStatusAC} from "./app-reducer";
 import {authApi, LoginParamsType, ResultCodes} from "../api/todolist-api";
 import {handleServerAppError, handleServerNetworkAError} from "../utils/error-utils";
-import {createSlice} from "@reduxjs/toolkit";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 const initialState = {
     isLoggedIn: false
@@ -12,8 +12,8 @@ const slice = createSlice({
     name: 'auth',
     initialState: initialState,
     reducers: {
-        setIsLoggedInAC(state, action: any) {
-            state.isLoggedIn = action.value
+        setIsLoggedInAC(state, action: PayloadAction<{ value: boolean }>) {
+            state.isLoggedIn = action.payload.value
         }
     }
 })
@@ -25,12 +25,12 @@ export const {setIsLoggedInAC} = slice.actions
 
 //Thunks Creators
 export const loginTC = (data: LoginParamsType) => (dispatch: Dispatch) => {
-    dispatch(setAppStatusAC('loading'));
+    dispatch(setAppStatusAC({status: 'loading'}));
     authApi.login(data)
         .then(res => {
             if (res.data.resultCode === ResultCodes.success) {
-                dispatch(setIsLoggedInAC(true))
-                dispatch(setAppStatusAC('succeeded'));
+                dispatch(setIsLoggedInAC({value: true}))
+                dispatch(setAppStatusAC({status: 'succeeded'}));
             } else {
                 handleServerAppError(res.data, dispatch)
             }
@@ -41,12 +41,12 @@ export const loginTC = (data: LoginParamsType) => (dispatch: Dispatch) => {
 }
 
 export const logoutTC = () => (dispatch: Dispatch) => {
-    dispatch(setAppStatusAC('loading'));
+    dispatch(setAppStatusAC({status: 'loading'}));
     authApi.logout()
         .then(res => {
             if (res.data.resultCode === ResultCodes.success) {
-                dispatch(setIsLoggedInAC(false))
-                dispatch(setAppStatusAC('succeeded'));
+                dispatch(setIsLoggedInAC({value: false}))
+                dispatch(setAppStatusAC({status: 'succeeded'}));
             } else {
                 handleServerAppError(res.data, dispatch)
             }
