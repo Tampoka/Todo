@@ -5,28 +5,24 @@ import {composeWithDevTools} from "redux-devtools-extension";
 import thunkMiddleware from "redux-thunk";
 import {appReducer} from "./app-reducer";
 import {authReducer} from "./auth-reducer";
-import { configureStore } from "@reduxjs/toolkit";
-import { logger } from "redux-logger";
+import {configureStore} from "@reduxjs/toolkit";
+import {logger} from "redux-logger";
 
 
 const rootReducer = combineReducers({
     tasks: taskReducer,
     todolists: todolistsReducer,
-    app:appReducer,
-    auth:authReducer
+    app: appReducer,
+    auth: authReducer
 })
 
-const middlewareEnhancer = applyMiddleware(thunkMiddleware)
-const composeEnhancers = composeWithDevTools(middlewareEnhancer)
-
+// const middlewareEnhancer = applyMiddleware(thunkMiddleware)
+// const composeEnhancers = composeWithDevTools(middlewareEnhancer)
 // export const store = createStore(rootReducer, composeEnhancers)
-export const store=configureStore({
-    reducer:rootReducer,
-    middleware: getDefaultMiddleware =>
-        getDefaultMiddleware()
-            .prepend(
-                thunkMiddleware)
-            // prepend and concat calls can be chained
+
+export const store = configureStore({
+    reducer: rootReducer,
+    middleware: getDefaultMiddleware => getDefaultMiddleware().prepend(thunkMiddleware)
             .concat(logger)
 })
 export type AppRootStateType = ReturnType<typeof rootReducer>
