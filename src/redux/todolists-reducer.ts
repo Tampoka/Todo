@@ -11,24 +11,24 @@ const slice = createSlice({
     initialState: initialState,
     reducers: {
         removeTodolistAC(state, action: PayloadAction<{ todolistId: string }>) {
-            const index=state.findIndex(tl => tl.id === action.payload.todolistId)
-            if(index>-1){
-                state.splice(index,1)
+            const index = state.findIndex(tl => tl.id === action.payload.todolistId)
+            if (index > -1) {
+                state.splice(index, 1)
             }
         },
-        addTodolistAC(state, action: PayloadAction<{ todolist: TodoListType}>) {
-            state.push({...action.payload.todolist,filter: 'all', entityStatus: 'idle'})
+        addTodolistAC(state, action: PayloadAction<{ todolist: TodoListType }>) {
+            state.push({...action.payload.todolist, filter: 'all', entityStatus: 'idle'})
         },
         changeTodolistTitleAC(state, action: PayloadAction<{ title: string, todolistId: string }>) {
-            const index=state.findIndex(tl => tl.id === action.payload.todolistId)
-            if(index>-1){
-                state[index].title=action.payload.title
+            const index = state.findIndex(tl => tl.id === action.payload.todolistId)
+            if (index > -1) {
+                state[index].title = action.payload.title
             }
         },
         changeTodolistFilterAC(state, action: PayloadAction<{ filter: FilterValuesType, todolistId: string }>) {
-            const index=state.findIndex(tl => tl.id === action.payload.todolistId)
-            if(index>-1){
-                state[index].filter=action.payload.filter
+            const index = state.findIndex(tl => tl.id === action.payload.todolistId)
+            if (index > -1) {
+                state[index].filter = action.payload.filter
             }
         },
         setTodolistsAC(state, action: PayloadAction<{ todolists: Array<TodoListType> }>) {
@@ -36,9 +36,9 @@ const slice = createSlice({
 
         },
         changeTodolistEntityStatusAC(state, action: PayloadAction<{ todolistId: string, status: RequestStatusType }>) {
-            const index=state.findIndex(tl => tl.id === action.payload.todolistId)
-            if(index>-1){
-                state[index].entityStatus=action.payload.status
+            const index = state.findIndex(tl => tl.id === action.payload.todolistId)
+            if (index > -1) {
+                state[index].entityStatus = action.payload.status
             }
         },
     }
@@ -55,7 +55,7 @@ export const fetchTodolistsTC = () =>
         dispatch(setAppStatusAC({status: 'loading'}));
         todolistApi.getTodos()
             .then(res => {
-                dispatch(setTodolistsAC({todolists:res.data}))
+                dispatch(setTodolistsAC({todolists: res.data}))
                 dispatch(setAppStatusAC({status: 'succeeded'}));
             })
             .catch(error => {
@@ -65,7 +65,7 @@ export const fetchTodolistsTC = () =>
 export const removeTodolistTC = (todolistId: string) =>
     (dispatch: Dispatch) => {
         dispatch(setAppStatusAC({status: 'loading'}))
-        dispatch(changeTodolistEntityStatusAC({todolistId, status:'loading'}))
+        dispatch(changeTodolistEntityStatusAC({todolistId, status: 'loading'}))
         todolistApi.deleteTodo(todolistId)
             .then(res => {
                 dispatch(removeTodolistAC({todolistId}))
@@ -77,7 +77,7 @@ export const addTodolistTC = (title: string) => (dispatch: Dispatch) => {
     dispatch(setAppStatusAC({status: 'loading'}))
     todolistApi.createTodo(title)
         .then(res => {
-            dispatch(addTodolistAC({todolist:res.data.data.item}))
+            dispatch(addTodolistAC({todolist: res.data.data.item}))
             dispatch(setAppStatusAC({status: 'succeeded'}))
         })
 }
@@ -85,12 +85,12 @@ export const addTodolistTC = (title: string) => (dispatch: Dispatch) => {
 export const changeTodolistTitleTC = (title: string, todolistId: string) =>
     (dispatch: Dispatch) => {
         dispatch(setAppStatusAC({status: 'loading'}))
-        dispatch(changeTodolistEntityStatusAC({todolistId,status: 'loading'}))
+        dispatch(changeTodolistEntityStatusAC({todolistId, status: 'loading'}))
         todolistApi.updateTodoTitle(todolistId, title)
             .then(res => {
                 dispatch(changeTodolistTitleAC({title, todolistId}))
                 dispatch(setAppStatusAC({status: 'succeeded'}))
-                dispatch(changeTodolistEntityStatusAC({todolistId, status:'succeeded'}))
+                dispatch(changeTodolistEntityStatusAC({todolistId, status: 'succeeded'}))
             })
     }
 
