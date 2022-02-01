@@ -5,15 +5,15 @@ import {setIsLoggedInAC} from "./auth-reducer";
 
 const initialState = {
     status: 'idle' as RequestStatusType,
-    error: null as null | string,
+    error: null as string | null,
     //true if app already/successfully initialized (user authentication, settings etc.)
     isInitialized: false,
 }
 const slice = createSlice({
     name: 'app',
-    initialState: initialState,
+    initialState,
     reducers: {
-        setAppErrorAC(state, action: PayloadAction<{ error: null | string }>) {
+        setAppErrorAC(state, action: PayloadAction<{ error: string | null }>) {
             state.error = action.payload.error
         },
         setAppStatusAC(state, action: PayloadAction<{ status: RequestStatusType }>) {
@@ -26,9 +26,7 @@ const slice = createSlice({
 })
 export const appReducer = slice.reducer
 
-export const {setAppErrorAC} = slice.actions
-export const {setAppStatusAC} = slice.actions
-export const {setAppInitializedAC} = slice.actions
+export const {setAppErrorAC,setAppStatusAC,setAppInitializedAC}=slice.actions
 
 //Thunk Creators
 export const initializeAppTC = () => (dispatch: Dispatch) => {

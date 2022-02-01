@@ -8,7 +8,7 @@ const initialState: Array<TodolistDomainType> = []
 
 const slice = createSlice({
     name: 'todolists',
-    initialState: initialState,
+    initialState,
     reducers: {
         removeTodolistAC(state, action: PayloadAction<{ todolistId: string }>) {
             const index = state.findIndex(tl => tl.id === action.payload.todolistId)
@@ -17,7 +17,7 @@ const slice = createSlice({
             }
         },
         addTodolistAC(state, action: PayloadAction<{ todolist: TodoListType }>) {
-            state.push({...action.payload.todolist, filter: 'all', entityStatus: 'idle'})
+            state.unshift({...action.payload.todolist, filter: 'all', entityStatus: 'idle'})
         },
         changeTodolistTitleAC(state, action: PayloadAction<{ title: string, todolistId: string }>) {
             const index = state.findIndex(tl => tl.id === action.payload.todolistId)
@@ -43,7 +43,7 @@ const slice = createSlice({
         },
     }
 })
-const todolistsReducer = slice.reducer
+export const todolistsReducer = slice.reducer
 export const {
     removeTodolistAC, addTodolistAC, changeTodolistTitleAC, changeTodolistFilterAC,
     setTodolistsAC, changeTodolistEntityStatusAC
