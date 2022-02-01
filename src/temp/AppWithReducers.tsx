@@ -10,7 +10,7 @@ import {
     removeTodolistAC,
     todolistsReducer
 } from "../redux/todolists-reducer";
-import {addTaskAC, removeTaskAC, taskReducer, updateTaskAC} from "../redux/tasks-reducer";
+import {addTaskAC, removeTaskAC, tasksReducer, updateTaskAC} from "../redux/tasks-reducer";
 import {Todolist} from "../features/TodolistsList/Todolist/Todolist";
 import {ThemeProvider} from "@emotion/react";
 import themeOptions from '../common/color-sheme';
@@ -38,7 +38,7 @@ const AppWithReducers: React.FC = () => {
             order: 0, entityStatus: 'idle'
         }
     ])
-    const [tasksObj, dispatchToTasks] = useReducer(taskReducer, {
+    const [tasksObj, dispatchToTasks] = useReducer(tasksReducer, {
         [todolistId1]: [
             {
                 id: v1(), title: "CSS", status: TaskStatuses.Completed, description: 'new task',
@@ -147,52 +147,57 @@ const AppWithReducers: React.FC = () => {
     })
 
     function removeTask(id: string, todolistId: string) {
-        dispatchToTasks(removeTaskAC(id, todolistId))
+        dispatchToTasks(removeTaskAC({taskId: id, todolistId}))
     }
 
     function addTask(title: string, todolistId: string) {
         dispatchToTasks(addTaskAC({
-            todoListId: todolistId,
-            title: title,
-            status: TaskStatuses.New,
-            addedDate: "",
-            deadline: "",
-            description: "",
-            order: 0,
-            priority: 0,
-            startDate: "",
-            id: "id exists",
+            task: {
+                todoListId: todolistId,
+                title: title,
+                status: TaskStatuses.New,
+                addedDate: "",
+                deadline: "",
+                description: "",
+                order: 0,
+                priority: 0,
+                startDate: "",
+                id: "id exists",
+            }
         }))
     }
 
     function changeStatus(taskId: string, status: TaskStatuses, todolistId: string) {
-        dispatchToTasks(updateTaskAC(taskId, {status}, todolistId))
+        dispatchToTasks(updateTaskAC({id: taskId, model: {status}, todolistId}))
     }
 
     function changeTaskTitle(taskId: string, newTitle: string, todolistId: string) {
-        dispatchToTasks(updateTaskAC(taskId, {title: newTitle}, todolistId))
+        dispatchToTasks(updateTaskAC({id: taskId, model: {title: newTitle}, todolistId}))
     }
 
     function changeTodolistTitle(newTitle: string, todolistId: string) {
-        dispatchToTodolists(changeTodolistTitleAC(newTitle, todolistId))
+        dispatchToTodolists(changeTodolistTitleAC({title: newTitle, todolistId}))
     }
 
     function changeFilter(value: FilterValuesType, todolistId: string) {
-        dispatchToTodolists(changeTodolistFilterAC(value, todolistId))
+        dispatchToTodolists(changeTodolistFilterAC({filter: value, todolistId}))
     }
 
     function removeTodolist(id: string) {
-        const action = removeTodolistAC(id)
+        const action = removeTodolistAC({todolistId: id})
         dispatchToTasks(action)
         dispatchToTodolists(action)
     }
 
     function addTodolist(title: string) {
         const action = addTodolistAC({
-            title: title,
-            id: v1(),
-            addedDate: '',
-            order: 0
+            todolist:
+                {
+                    title: title,
+                    id: v1(),
+                    addedDate: '',
+                    order: 0
+                }
         })
         dispatchToTasks(action)
         dispatchToTodolists(action)
