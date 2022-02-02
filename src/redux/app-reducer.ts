@@ -3,7 +3,7 @@ import {Dispatch} from "redux";
 import {authApi, ResultCodes} from "../api/todolist-api";
 import {setIsLoggedInAC} from "./auth-reducer";
 
-const initialState = {
+export const initialState = {
     status: 'idle' as RequestStatusType,
     error: null as string | null,
     //true if app already/successfully initialized (user authentication, settings etc.)

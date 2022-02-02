@@ -6,6 +6,7 @@ import {authReducer} from "./auth-reducer";
 import {configureStore} from "@reduxjs/toolkit";
 import {logger} from "redux-logger";
 import { tasksReducer } from "./tasks-reducer";
+import {TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 
 
 const rootReducer = combineReducers({
@@ -26,8 +27,8 @@ export const store = configureStore({
 })
 export type AppRootStateType = ReturnType<typeof rootReducer>
 
-//export const useAppDispatch = () => useDispatch<AppDispatch>()
-// export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
+// export const useAppDispatch = () => useDispatch<AppDispatch>()
+export const useAppSelector: TypedUseSelectorHook<AppRootStateType> = useSelector
 
 // @ts-ignore
 window.store = store
