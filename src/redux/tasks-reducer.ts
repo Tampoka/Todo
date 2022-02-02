@@ -8,13 +8,30 @@ import {
     UpdateTaskModelType
 } from "../api/todolist-api";
 import {Dispatch} from "redux";
-import {AppRootStateType} from "./store";
 import {setAppStatusAC} from "./app-reducer";
 import {handleFetchServerAppError, handleServerAppError, handleServerNetworkAError} from "../utils/error-utils";
-import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 export type TasksStateType = { [key: string]: Array<TaskType> }
 const initialState: TasksStateType = {}
+
+export const fetchTasks = createAsyncThunk('tasks/fetchTasks', (todolistId: string, thunkApi) => {
+    thunkApi.dispatch(setAppStatusAC({status: 'loading'}))
+    thunkApi.dispatch(changeTodolistEntityStatusAC({todolistId: todolistId, status: 'loading'}))
+    todolistApi.getTasks(todolistId)
+        .then(res => {
+            if (!res.data.error) {
+                thunkApi.dispatch(setTasksAC({tasks: res.data.items, todolistId}))
+                thunkApi.dispatch(setAppStatusAC({status: 'succeeded'}))
+                thunkApi.dispatch(changeTodolistEntityStatusAC({todolistId: todolistId, status: 'succeeded'}))
+            } else {
+                handleFetchServerAppError(res.data, thunkApi.dispatch)
+            }
+        })
+        .catch((error) => {
+            handleServerNetworkAError(error, thunkApi.dispatch)
+        })
+})
 
 const slice = createSlice({
     name: 'tasks',
@@ -113,7 +130,7 @@ export const addTaskTC = (title: string, todolistId: string) => (dispatch: Dispa
 export const updateTaskTC = (taskId: string, domainModel: UpdateDomainTaskModelType, todolistId: string) =>
     (dispatch: Dispatch, getState: () => any) => {
         const state = getState()
-        const task = state.tasks[todolistId].find((t:any) => t.id === taskId)
+        const task = state.tasks[todolistId].find((t: any) => t.id === taskId)
 
         if (!task) {
             // throw new Error("Task not found in the redux")
