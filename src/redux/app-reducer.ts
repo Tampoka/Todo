@@ -6,7 +6,7 @@ import {setIsLoggedInAC} from "./auth-reducer";
 export const initialState = {
     status: 'idle' as RequestStatusType,
     error: null as string | null,
-    //true if app already/successfully initialized (user authentication, settings etc.)
+    //true if app already/successfully iniialized (user authentication, settings etc.)
     isInitialized: false,
 }
 const slice = createSlice({

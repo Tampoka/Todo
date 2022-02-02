@@ -26,5 +26,6 @@ yarn-error.log*
 /.idea
 
 !.storybook
-
+storybook-static
+build-storybook.log
 .env
