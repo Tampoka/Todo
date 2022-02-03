@@ -62,7 +62,7 @@ export type TodoListType = {
 export type CommonResponseType<D = {}> = {
     resultCode: number
     messages: Array<string>
-    fieldsError: Array<string>
+    fieldsError?: Array<{ field:string;error:string }>
     data: D
 }
 
