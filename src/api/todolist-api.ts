@@ -64,7 +64,7 @@ export type FieldErrorType = { field: string; error: string };
 export type CommonResponseType<D = {}> = {
     resultCode: number
     messages: Array<string>
-    fieldsError?: Array<FieldErrorType>
+    fieldsErrors?: Array<FieldErrorType>
     data: D
 }
 

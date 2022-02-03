@@ -17,7 +17,7 @@ export const loginTC = createAsyncThunk<{isLoggedIn:boolean},LoginParamsType,{re
             return {isLoggedIn: true}
         } else {
             handleServerAppError(res.data, thunkAPI.dispatch)
-            return thunkAPI.rejectWithValue({errors: res.data.messages, fieldsErrors: res.data.fieldsError})
+            return thunkAPI.rejectWithValue({errors: res.data.messages, fieldsErrors: res.data.fieldsErrors})
         }
     } catch (err) {
         const error: AxiosError = err
@@ -26,21 +26,6 @@ export const loginTC = createAsyncThunk<{isLoggedIn:boolean},LoginParamsType,{re
     }
 })
 
-export const _loginTC = (data: LoginParamsType) => (dispatch: Dispatch) => {
-    dispatch(setAppStatusAC({status: 'loading'}));
-    authApi.login(data)
-        .then(res => {
-            if (res.data.resultCode === ResultCodes.success) {
-                dispatch(setIsLoggedInAC({value: true}))
-                dispatch(setAppStatusAC({status: 'succeeded'}));
-            } else {
-                handleServerAppError(res.data, dispatch)
-            }
-        })
-        .catch((error) => {
-            handleServerNetworkAError(error, dispatch)
-        })
-}
 const slice = createSlice({
     name: 'auth',
     initialState,
