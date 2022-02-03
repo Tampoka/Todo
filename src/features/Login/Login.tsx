@@ -1,11 +1,15 @@
-import React from 'react';
 import {Button, Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel, Grid, TextField} from "@mui/material";
-import {useFormik} from "formik";
+import {FormikHelpers, useFormik} from "formik";
 import {useDispatch, useSelector} from "react-redux";
 import {loginTC} from "../../redux/auth-reducer";
 import {AppRootStateType} from "../../redux/store";
 import {Navigate} from 'react-router-dom';
 
+type FormValuesType={
+    email:string
+    password:string
+    rememberMe:boolean
+}
 export const Login = () => {
     const dispatch = useDispatch()
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
@@ -28,8 +32,8 @@ export const Login = () => {
             password: '',
             rememberMe: false,
         },
-        onSubmit: values => {
-            dispatch(loginTC(values))
+        onSubmit: async(values,formikHelpers:FormikHelpers<FormValuesType>) => {
+            const res=await dispatch(loginTC(values))
         }
     })
     if (isLoggedIn) {
