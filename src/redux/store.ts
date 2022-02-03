@@ -5,8 +5,8 @@ import {appReducer} from "./app-reducer";
 import {authReducer} from "./auth-reducer";
 import {configureStore} from "@reduxjs/toolkit";
 import {logger} from "redux-logger";
-import { tasksReducer } from "./tasks-reducer";
-import {TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
+import {tasksReducer} from "./tasks-reducer";
+import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
 
 
 const rootReducer = combineReducers({
@@ -23,11 +23,12 @@ const rootReducer = combineReducers({
 export const store = configureStore({
     reducer: rootReducer,
     middleware: getDefaultMiddleware => getDefaultMiddleware().prepend(thunkMiddleware)
-            .concat(logger)
+        .concat(logger)
 })
 export type AppRootStateType = ReturnType<typeof rootReducer>
 
-// export const useAppDispatch = () => useDispatch<AppDispatch>()
+type AppDispatchType = typeof store.dispatch
+export const useAppDispatch = () => useDispatch<AppDispatchType>()
 export const useAppSelector: TypedUseSelectorHook<AppRootStateType> = useSelector
 
 // @ts-ignore
