@@ -32,11 +32,11 @@ export const TodolistsList: React.FC<PropsType> = ({demo = false, ...props}) => 
         dispatch(fetchTodolistsTC())
     }, [dispatch, demo, isLoggedIn])
 
-    const removeTask = useCallback((id: string, todolistId: string) => {
-        dispatch(removeTaskTC(id, todolistId))
+    const removeTask = useCallback((taskId: string, todolistId: string) => {
+        dispatch(removeTaskTC({taskId, todolistId}))
     }, [dispatch])
     const addTask = useCallback((title: string, todolistId: string) => {
-        dispatch(addTaskTC(title, todolistId))
+        dispatch(addTaskTC({title, todolistId}))
     }, [dispatch])
     const changeStatus = useCallback((taskId: string, status: TaskStatuses, todolistId: string) => {
         dispatch(updateTaskTC(taskId, {status}, todolistId))

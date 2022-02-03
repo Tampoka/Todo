@@ -5,14 +5,12 @@ import {setIsLoggedInAC} from "./auth-reducer";
 export const initializeAppTC = createAsyncThunk('app/initializeApp', async (param, {dispatch, rejectWithValue}) => {
     try {
         const res = await authApi.me()
-            .then(res => {
                 if (res.data.resultCode === ResultCodes.success) {
                     dispatch(setIsLoggedInAC({value: true}))
                 } else {
                     // handleServerAppError(res.data, dispatch)
                     // return rejectWithValue({})
                 }
-            })
     } catch (error) {
         // handleServerNetworkAError(error, dispatch)
         // return rejectWithValue({})
