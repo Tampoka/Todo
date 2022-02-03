@@ -41,8 +41,6 @@ export const Login = () => {
                     formikHelpers.setFieldError(error.field, error.error)
                 }
             }
-            debugger
-
         }
     })
     if (isLoggedIn) {
