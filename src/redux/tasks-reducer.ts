@@ -1,4 +1,4 @@
-import {addTodolistAC, changeTodolistEntityStatusAC, removeTodolistAC, setTodolistsAC} from "./todolists-reducer";
+import {addTodolistAC, changeTodolistEntityStatusAC, fetchTodolistsTC, removeTodolistTC} from "./todolists-reducer";
 import {
     ResultCodes,
     TaskPriorities,
@@ -108,6 +108,7 @@ export const updateTaskTC = createAsyncThunk('tasks/updateTasks', async (param: 
         if (res.data.resultCode === ResultCodes.success) {
             // const action = updateTaskAC({id: taskId, model: domainModel, todolistId})
             // dispatch(action)
+            dispatch(setAppStatusAC({status: 'succeeded'}))
             dispatch(changeTodolistEntityStatusAC({todolistId: param.todolistId, status: 'succeeded'}))
             return param
         } else {
@@ -129,10 +130,10 @@ const slice = createSlice({
         builder.addCase(addTodolistAC, (state, action) => {
             state[action.payload.todolist.id] = []
         });
-        builder.addCase(removeTodolistAC, (state, action) => {
+        builder.addCase(removeTodolistTC.fulfilled, (state, action) => {
             delete state[action.payload.todolistId]
         });
-        builder.addCase(setTodolistsAC, (state, action) => {
+        builder.addCase(fetchTodolistsTC.fulfilled, (state, action) => {
             action.payload.todolists.forEach(tl => {
                 state[tl.id] = []
             });

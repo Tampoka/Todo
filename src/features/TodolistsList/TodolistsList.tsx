@@ -52,7 +52,7 @@ export const TodolistsList: React.FC<PropsType> = ({demo = false, ...props}) => 
         dispatch(action)
     }, [dispatch])
     const removeTodolist = useCallback((id: string) => {
-        dispatch(removeTodolistTC(id))
+        dispatch(removeTodolistTC({todolistId:id}))
     }, [dispatch])
     const addTodolist = useCallback((title: string) => {
         dispatch(addTodolistTC(title))
