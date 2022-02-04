@@ -1,19 +1,21 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {authApi, ResultCodes} from "../api/todolist-api";
+import {handleServerAppError, handleServerNetworkAError} from "../utils/error-utils";
 import {setIsLoggedInAC} from "./auth-reducer";
 
 export const initializeAppTC = createAsyncThunk('app/initializeApp', async (param, {dispatch, rejectWithValue}) => {
+    dispatch(setAppStatusAC({status: 'loading'}));
     try {
         const res = await authApi.me()
-                if (res.data.resultCode === ResultCodes.success) {
-                    dispatch(setIsLoggedInAC({value: true}))
-                } else {
-                    // handleServerAppError(res.data, dispatch)
-                    // return rejectWithValue({})
-                }
+        if (res.data.resultCode === ResultCodes.success) {
+            dispatch(setIsLoggedInAC({value: true}))
+        } else {
+            handleServerAppError(res.data, dispatch)
+            return rejectWithValue({})
+        }
     } catch (error) {
-        // handleServerNetworkAError(error, dispatch)
-        // return rejectWithValue({})
+        handleServerNetworkAError(error, dispatch)
+        return rejectWithValue({})
     }
 })
 

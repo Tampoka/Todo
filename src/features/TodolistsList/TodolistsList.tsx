@@ -22,12 +22,13 @@ type PropsType = {
 export const TodolistsList: React.FC<PropsType> = ({demo = false, ...props}) => {
 
     const todolists = useAppSelector(state => state.todolists)
-    const tasks = useAppSelector (state=>state.tasks)
+    const tasks = useAppSelector(state=>state.tasks)
     const isLoggedIn =useAppSelector(state => state.auth.isLoggedIn)
     const dispatch = useDispatch()
 
     useEffect(() => {
         if (demo || !isLoggedIn) return
+        console.log('todolists')
         dispatch(fetchTodolistsTC())
     }, [dispatch, demo, isLoggedIn])
 
@@ -60,7 +61,7 @@ export const TodolistsList: React.FC<PropsType> = ({demo = false, ...props}) => 
     if (!isLoggedIn) {
         return <Navigate to="/login"/>
     }
-
+    console.log('todolists', todolists)
     return <>
         <Grid container style={{padding: "20px"}}>
             <AddItemForm addItem={addTodolist}/>

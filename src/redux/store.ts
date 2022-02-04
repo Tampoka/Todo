@@ -23,7 +23,7 @@ const rootReducer = combineReducers({
 export const store = configureStore({
     reducer: rootReducer,
     middleware: getDefaultMiddleware => getDefaultMiddleware().prepend(thunkMiddleware)
-        .concat(logger)
+        // .concat(logger)
 })
 export type AppRootStateType = ReturnType<typeof rootReducer>
 

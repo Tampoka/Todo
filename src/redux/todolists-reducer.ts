@@ -2,6 +2,7 @@ import {todolistApi, TodoListType} from "../api/todolist-api";
 import {RequestStatusType, setAppStatusAC} from "./app-reducer";
 import {handleServerNetworkAError} from "../utils/error-utils";
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
+import { logoutTC } from "./auth-reducer";
 
 export const fetchTodolistsTC = createAsyncThunk('todolists/fetchTodolists', async (param, {
     dispatch,
@@ -108,6 +109,9 @@ const slice = createSlice({
                 if (index > -1) {
                     state[index].title = action.payload.title
                 }
+        })
+        builder.addCase(logoutTC.fulfilled, (state, action) => {
+             return state=[]
         })
     }
 })
