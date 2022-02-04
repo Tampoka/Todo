@@ -1,6 +1,5 @@
-
 import {todolistApi, UpdateTaskModelType} from "../api/todolist-api";
-import {ChangeEvent, useEffect, useState} from "react";
+import {ChangeEvent, useState} from "react";
 import {Button, TextField} from "@mui/material";
 
 export default {

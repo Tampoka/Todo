@@ -34,7 +34,6 @@ export const Todolist = React.memo(function (props: TodolistPropsType) {
 
     useEffect(() => {
         if (demo) return
-        console.log('tasks')
         dispatch(fetchTasksTC(todolist.id))
     }, [dispatch, todolist.id, demo])
 

@@ -57,7 +57,6 @@ function App({demo = false}: PropsType) {
             <ThemeProvider theme={themeOptions}>
                 <div className="App">
                     <Box sx={{flexGrow: 1}}>
-                        {/* eslint-disable-next-line react/jsx-no-undef */}
                         <AppBar position={"static"}>
                             <Toolbar>
                                 <IconButton edge={"start"} color={"inherit"} aria-label="menu" size="large"
