@@ -1,4 +1,4 @@
-import {addTodolistAC, changeTodolistEntityStatusAC, fetchTodolistsTC, removeTodolistTC} from "./todolists-reducer";
+import {addTodolistTC, changeTodolistEntityStatusAC, fetchTodolistsTC, removeTodolistTC} from "./todolists-reducer";
 import {
     ResultCodes,
     TaskPriorities,
@@ -127,7 +127,7 @@ const slice = createSlice({
     initialState,
     reducers: {},
     extraReducers: (builder) => {
-        builder.addCase(addTodolistAC, (state, action) => {
+        builder.addCase(addTodolistTC.fulfilled, (state, action) => {
             state[action.payload.todolist.id] = []
         });
         builder.addCase(removeTodolistTC.fulfilled, (state, action) => {
