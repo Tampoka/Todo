@@ -1,9 +1,13 @@
 import {v1} from "uuid";
 import {
-    addTodolistAC, changeTodolistEntityStatusAC,
+    addTodolistAC,
+    changeTodolistEntityStatusAC,
     changeTodolistFilterAC,
-    changeTodolistTitleAC, FilterValuesType,
-    removeTodolistAC, setTodolistsAC, TodolistDomainType,
+    changeTodolistTitleAC,
+    fetchTodolistsTC,
+    FilterValuesType,
+    removeTodolistTC,
+    TodolistDomainType,
     todolistsReducer
 } from "./todolists-reducer";
 import {RequestStatusType} from "./app-reducer";
@@ -34,7 +38,8 @@ beforeEach(() => {
 })
 
 test('correct todolist should be removed', () => {
-    const endState = todolistsReducer(startState, removeTodolistAC({todolistId:todolistId1}))
+    let payload = {todolistId:todolistId1};
+    const endState = todolistsReducer(startState, removeTodolistTC.fulfilled(payload,'requestId',payload))
 
     expect(endState.length).toBe(2)
     expect(endState[0].id).toBe(todolistId2)
@@ -80,9 +85,10 @@ test('correct entity status should be set', () => {
     expect(endState[1].entityStatus).toBe(newStatus)
 })
 
-test('todolists should be set to the redux', () => {
+test('todolists should be added', () => {
 
-    const action=setTodolistsAC({todolists:startState})
+    let payload = {todolists:startState};
+    const action=fetchTodolistsTC.fulfilled(payload,'requestId')
     const endState = todolistsReducer([],action)
 
     expect(endState.length).toBe(3)
