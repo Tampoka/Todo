@@ -2,8 +2,8 @@ import * as React from 'react';
 import {useState} from 'react';
 import Snackbar, {SnackbarOrigin} from '@mui/material/Snackbar';
 import MuiAlert, {AlertProps} from '@mui/material/Alert';
-import {useDispatch, useSelector} from 'react-redux';
-import {AppRootStateType} from '../../redux/store';
+import {useDispatch} from 'react-redux';
+import {useAppSelector} from '../../redux/store';
 import {setAppErrorAC} from '../../redux/app-reducer';
 import s from './ErrorSnackBar.module.css'
 
@@ -15,7 +15,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 });
 
 export function ErrorSnackBar() {
-    const error = useSelector<AppRootStateType, string | null>(state => state.app.error)
+    const error = useAppSelector(state => state.app.error)
     const dispatch = useDispatch()
 
     const [state, setState] = useState<SnackbarOrigin>({

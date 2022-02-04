@@ -6,7 +6,7 @@ import themeOptions from "../common/color-sheme";
 import {TodolistsList} from "../features/TodolistsList/TodolistsList";
 import {ErrorSnackBar} from "../components/ErrorSnackBar/ErrorSnackBar";
 import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType} from "../redux/store";
+import {AppRootStateType, useAppSelector} from "../redux/store";
 import {initializeAppTC, RequestStatusType} from "../redux/app-reducer";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Login from "../features/Login/Login";
@@ -26,9 +26,9 @@ type PropsType = {
 }
 
 function App({demo = false}: PropsType) {
-    const status = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
-    const isInitialized = useSelector<AppRootStateType, boolean>(state => state.app.isInitialized)
-    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
+    const status = useAppSelector(state => state.app.status)
+    const isInitialized = useAppSelector(state => state.app.isInitialized)
+    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
     const dispatch = useDispatch()
 
     const logoutHandler = useCallback(() => {

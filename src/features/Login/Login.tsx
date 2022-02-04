@@ -1,7 +1,6 @@
 import {Button, Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel, Grid, TextField} from "@mui/material";
 import {FormikHelpers, useFormik} from "formik";
-import {useSelector} from "react-redux";
-import {AppRootStateType, useAppDispatch} from "../../redux/store";
+import {useAppDispatch, useAppSelector} from "../../redux/store";
 import {Navigate} from 'react-router-dom';
 import {loginTC} from "../../redux/auth-reducer";
 
@@ -12,7 +11,7 @@ type FormValuesType = {
 }
 export const Login = () => {
     const dispatch = useAppDispatch()
-    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
+    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
 
     const formik = useFormik({
         validate: (values) => {
