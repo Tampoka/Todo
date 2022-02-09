@@ -53,7 +53,7 @@ function App({demo = false}: PropsType) {
 
 
     return (
-        <BrowserRouter>
+        <BrowserRouter basename={process.env.PUBLIC_URL}>
             <ThemeProvider theme={themeOptions}>
                 <div className="App">
                     <Box sx={{flexGrow: 1}}>
