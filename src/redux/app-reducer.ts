@@ -9,6 +9,7 @@ export const initializeAppTC = createAsyncThunk('app/initializeApp', async (para
         const res = await authApi.me()
         if (res.data.resultCode === ResultCodes.success) {
             dispatch(setIsLoggedInAC({value: true}))
+            dispatch(setAppStatusAC({status: 'succeeded'}));
         } else {
             handleServerAppError(res.data, dispatch)
             return rejectWithValue({})
@@ -16,6 +17,9 @@ export const initializeAppTC = createAsyncThunk('app/initializeApp', async (para
     } catch (error) {
         handleServerNetworkAError(error, dispatch)
         return rejectWithValue({})
+    }
+    finally {
+        dispatch(setIsInitializedAC({isInitialized:true}))
     }
 })
 
@@ -32,17 +36,15 @@ const slice = createSlice({
         },
         setAppStatusAC(state, action: PayloadAction<{ status: RequestStatusType }>) {
             state.status = action.payload.status
+        },
+        setIsInitializedAC(state, action:PayloadAction<{isInitialized:boolean}>){
+            state.isInitialized=action.payload.isInitialized
         }
     },
-    extraReducers: builder => {
-        builder.addCase(initializeAppTC.fulfilled, (state) => {
-            state.isInitialized = true
-        })
-    }
 })
 export const appReducer = slice.reducer
 
-export const {setAppErrorAC, setAppStatusAC} = slice.actions
+export const {setAppErrorAC, setAppStatusAC,setIsInitializedAC} = slice.actions
 
 //Types
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
