@@ -1,18 +1,5 @@
 import axios, {AxiosResponse} from "axios";
-
-/*const instance = axios.create({
-    baseURL: 'https://social-network.samuraijs.com/api/1.1/',
-    withCredentials: true,
-    headers: {
-        'API-KEY': '73fdf213-e363-4a31-ad92-85b5d437ac0f'
-    },
-})*/
-
-const instance = axios.create({
-    baseURL: 'https://social-network.samuraijs.com/api/1.1/',
-    // withCredentials: true,
-})
-
+import { instance } from "./config";
 
 //API
 export const todolistApi = {

@@ -1,4 +1,4 @@
-import  {useCallback, useEffect} from 'react';
+import {useCallback, useEffect} from 'react';
 import './App.css';
 import Box from '@mui/material/Box';
 import {Menu} from "@mui/icons-material";
@@ -50,7 +50,6 @@ function App({demo = false}: PropsType) {
                                      marginLeft: '-20px',
                                  }}/>
     }
-
 
     return (
         <BrowserRouter basename={process.env.PUBLIC_URL}>
