@@ -1,5 +1,5 @@
-import axios, {AxiosResponse} from "axios";
-import { instance } from "./config";
+import {AxiosResponse} from "axios";
+import {instance} from "./config";
 
 //API
 export const todolistApi = {

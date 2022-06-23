@@ -16,14 +16,14 @@ const rootReducer = combineReducers({
     auth: authReducer
 })
 
-// const middlewareEnhancer = applyMiddleware(thunkMiddleware)
-// const composeEnhancers = composeWithDevTools(middlewareEnhancer)
-// export const store = createStore(rootReducer, composeEnhancers)
+/*const middlewareEnhancer = applyMiddleware(thunkMiddleware)
+const composeEnhancers = composeWithDevTools(middlewareEnhancer)
+export const store = createStore(rootReducer, composeEnhancers)*/
 
 export const store = configureStore({
     reducer: rootReducer,
     middleware: getDefaultMiddleware => getDefaultMiddleware().prepend(thunkMiddleware)
-        // .concat(logger)
+        .concat(logger)
 })
 export type AppRootStateType = ReturnType<typeof rootReducer>
 
@@ -31,5 +31,3 @@ type AppDispatchType = typeof store.dispatch
 export const useAppDispatch = () => useDispatch<AppDispatchType>()
 export const useAppSelector: TypedUseSelectorHook<AppRootStateType> = useSelector
 
-// @ts-ignore
-window.store = store

@@ -20,11 +20,11 @@ type PropsType = {
     demo?: boolean
 }
 export const TodolistsList: React.FC<PropsType> = ({demo = false, ...props}) => {
+    const dispatch = useDispatch()
 
     const todolists = useAppSelector(state => state.todolists)
     const tasks = useAppSelector(state=>state.tasks)
     const isLoggedIn =useAppSelector(state => state.auth.isLoggedIn)
-    const dispatch = useDispatch()
 
     useEffect(() => {
         if (demo || !isLoggedIn) return

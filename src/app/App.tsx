@@ -9,7 +9,6 @@ import {useDispatch} from "react-redux";
 import {useAppSelector} from "../redux/store";
 import {initializeAppTC} from "../redux/app-reducer";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import Login from "../features/Login/Login";
 import {logoutTC} from "../redux/auth-reducer";
 import CircularProgress from "@mui/material/CircularProgress";
 import ThemeProvider from '@mui/material/styles/ThemeProvider';
@@ -20,16 +19,18 @@ import Toolbar from '@mui/material/Toolbar';
 import Button from '@mui/material/Button';
 import LinearProgress from '@mui/material/LinearProgress';
 import Container from '@mui/material/Container';
+import {Login} from '../features/Login';
 
 type PropsType = {
     demo?: boolean
 }
 
 function App({demo = false}: PropsType) {
+    const dispatch = useDispatch()
+
     const status = useAppSelector(state => state.app.status)
     const isInitialized = useAppSelector(state => state.app.isInitialized)
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
-    const dispatch = useDispatch()
 
     const logoutHandler = useCallback(() => {
         dispatch(logoutTC())
@@ -76,7 +77,6 @@ function App({demo = false}: PropsType) {
                             <Route path="*" element={<TodolistsList demo={demo}/>}/>
                             <Route path="/login" element={<Login/>}/>
                         </Routes>
-
                     </Container>
                 </div>
             </ThemeProvider>
