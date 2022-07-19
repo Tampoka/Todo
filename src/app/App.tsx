@@ -8,7 +8,7 @@ import {ErrorSnackBar} from "../components/ErrorSnackBar/ErrorSnackBar";
 import {useDispatch} from "react-redux";
 import {useAppSelector} from "../redux/store";
 import {initializeAppTC} from "../redux/app-reducer";
-import {BrowserRouter, Route, Routes} from "react-router-dom";
+import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
 import {logoutTC} from "../redux/auth-reducer";
 import CircularProgress from "@mui/material/CircularProgress";
 import ThemeProvider from '@mui/material/styles/ThemeProvider';
@@ -51,7 +51,7 @@ function App({demo = false}: PropsType) {
                                      marginLeft: '-20px',
                                  }}/>
     }
-
+ 
     return (
         <BrowserRouter basename={process.env.PUBLIC_URL}>
             <ThemeProvider theme={themeOptions}>
@@ -64,7 +64,7 @@ function App({demo = false}: PropsType) {
                                     <Menu/>
                                 </IconButton>
                                 <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
-                                    News
+                                    My Todos
                                 </Typography>
                                 {isLoggedIn && <Button color={"inherit"} onClick={logoutHandler}>Log out</Button>}
                             </Toolbar>
