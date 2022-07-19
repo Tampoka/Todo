@@ -27,8 +27,8 @@ export const Login = () => {
             }
         },
         initialValues: {
-            email: '',
-            password: '',
+            email: 'free@samuraijs.com',
+            password: 'free',
             rememberMe: false,
         },
         onSubmit: async (values: FormValuesType, formikHelpers: FormikHelpers<FormValuesType>) => {
